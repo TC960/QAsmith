@@ -49,12 +49,20 @@ class APIConfig(BaseModel):
     cors_origins: list[str] = ["http://localhost:3000", "http://localhost:5173"]
 
 
+class Neo4jConfig(BaseModel):
+    """Neo4j graph database configuration."""
+    uri: str = "neo4j://localhost:7687"
+    user: str = "neo4j"
+    password: str
+
+
 class Config(BaseSettings):
     """Main configuration class."""
     llm: LLMConfig
     crawler: CrawlerConfig
     runner: RunnerConfig
     storage: StorageConfig
+    neo4j: Neo4jConfig
     api: APIConfig
 
     @classmethod
