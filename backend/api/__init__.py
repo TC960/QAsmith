@@ -1,5 +1,6 @@
 """FastAPI backend."""
 
-from .main import app
+# Remove the import to avoid circular import issues when running from backend directory
+# The app will be imported directly via uvicorn backend.api.main:app
 
-__all__ = ["app"]
+__all__ = []

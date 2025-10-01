@@ -7,6 +7,9 @@ pydantic-settings==2.1.0
 # LLM
 anthropic==0.18.1
 
+# Graph Database
+neo4j==5.16.0
+
 # Playwright
 playwright==1.41.0
 

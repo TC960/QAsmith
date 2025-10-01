@@ -69,3 +69,7 @@ Thumbs.db
 .coverage
 htmlcov/
 .pytest_cache/
+
+
+.env
+graph_redo/

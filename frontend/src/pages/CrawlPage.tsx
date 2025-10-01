@@ -1,30 +1,174 @@
-import React, { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import React, { useState, useRef, useEffect } from 'react';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import CrawlerSettings, { CrawlerConfig } from '../components/CrawlerSettings';
 import './CrawlPage.css';
+
+interface CrawlProgress {
+  type: string;
+  url?: string;
+  title?: string;
+  depth?: number;
+  visited?: number;
+  page_id?: string;
+  error?: string;
+  crawl_id?: string;
+  summary?: any;
+}
 
 const CrawlPage: React.FC = () => {
   const [url, setUrl] = useState('');
-
-  const crawlMutation = useMutation({
-    mutationFn: async (targetUrl: string) => {
-      const response = await axios.post('/api/crawl', { url: targetUrl });
+  const [useWebSocket, setUseWebSocket] = useState(true);
+  const [crawlProgress, setCrawlProgress] = useState<CrawlProgress[]>([]);
+  const [isWebSocketCrawling, setIsWebSocketCrawling] = useState(false);
+  const [crawlerSettings, setCrawlerSettings] = useState<CrawlerConfig>({
+    max_depth: 2,
+    max_pages: 20,
+    timeout: 15000,
+    screenshot: false,
+    page_delay_ms: 300,
+    skip_embeddings: true
+  });
+  const wsRef = useRef<WebSocket | null>(null);
+  const navigate = useNavigate();
+  
+  // Fetch current crawler config
+  const { data: configData } = useQuery<CrawlerConfig>({
+    queryKey: ['crawler-config'],
+    queryFn: async () => {
+      const response = await axios.get('/api/config/crawler');
       return response.data;
     },
     onSuccess: (data) => {
-      console.log('Crawl complete:', data);
-      alert(`Successfully crawled ${data.total_pages} pages!`);
+      setCrawlerSettings(data);
     },
     onError: (error) => {
-      console.error('Crawl failed:', error);
-      alert('Crawl failed. Check console for details.');
+      console.error('Failed to fetch crawler config:', error);
+    }
+  });
+
+  const crawlMutation = useMutation({
+    mutationFn: async (targetUrl: string) => {
+      console.log('🚀 FRONTEND: Starting crawl request for:', targetUrl);
+      try {
+        const response = await axios.post('/api/crawl', { url: targetUrl });
+        console.log('✅ FRONTEND: Crawl API response:', response.data);
+        return response.data;
+      } catch (error) {
+        console.error('❌ FRONTEND: Crawl API error:', error);
+        if (axios.isAxiosError(error)) {
+          console.error('❌ FRONTEND: Response data:', error.response?.data);
+          console.error('❌ FRONTEND: Response status:', error.response?.status);
+        }
+        throw error;
+      }
+    },
+    onSuccess: (data) => {
+      console.log('🎉 FRONTEND: Crawl completed successfully:', data);
+      console.log('🔄 FRONTEND: Redirecting to tests page...');
+      // Redirect to tests page with crawl data
+      navigate(`/tests?crawl_id=${data.crawl_id}&base_url=${encodeURIComponent(data.base_url)}`);
+    },
+    onError: (error) => {
+      console.error('❌ FRONTEND: Crawl mutation failed:', error);
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data?.detail || error.message;
+        alert(`Crawl failed: ${errorMessage}`);
+      } else {
+        alert('Crawl failed. Check console for details.');
+      }
     },
   });
+
+  // Cleanup WebSocket on unmount
+  useEffect(() => {
+    return () => {
+      if (wsRef.current) {
+        wsRef.current.close();
+      }
+    };
+  }, []);
+
+  const startWebSocketCrawl = (targetUrl: string) => {
+    console.log('🔌 FRONTEND: Starting WebSocket crawl for:', targetUrl);
+    setCrawlProgress([]);
+    setIsWebSocketCrawling(true);
+    
+    // Generate session ID
+    const sessionId = `crawl_${Date.now()}`;
+    
+    // Connect to WebSocket
+    const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsUrl = `${wsProtocol}//${window.location.hostname}:8000/ws/crawl/${sessionId}`;
+    
+    console.log('🔌 FRONTEND: Connecting to WebSocket:', wsUrl);
+    const ws = new WebSocket(wsUrl);
+    wsRef.current = ws;
+    
+    ws.onopen = () => {
+      console.log('✅ FRONTEND: WebSocket connected');
+      // Send the URL and settings to crawl
+      ws.send(JSON.stringify({ 
+        url: targetUrl,
+        settings: crawlerSettings
+      }));
+      console.log('📤 FRONTEND: Sent crawl settings:', crawlerSettings);
+      setCrawlProgress(prev => [...prev, { type: 'connected', url: targetUrl }]);
+    };
+    
+    ws.onmessage = (event) => {
+      const data: CrawlProgress = JSON.parse(event.data);
+      
+      // Skip heartbeats from logs (but still process them to keep connection alive)
+      if (data.type !== 'heartbeat') {
+        console.log('📡 FRONTEND: WebSocket message:', data);
+        setCrawlProgress(prev => [...prev, data]);
+      }
+      
+      if (data.type === 'crawl_complete') {
+        console.log('🎉 FRONTEND: Crawl complete via WebSocket:', data);
+        setIsWebSocketCrawling(false);
+        ws.close();
+        
+        // Navigate to tests page
+        setTimeout(() => {
+          navigate(`/tests?crawl_id=${data.crawl_id}&base_url=${encodeURIComponent(targetUrl)}`);
+        }, 1000);
+      } else if (data.type === 'error') {
+        console.error('❌ FRONTEND: WebSocket crawl error:', data.error);
+        setIsWebSocketCrawling(false);
+        ws.close();
+        alert(`Crawl failed: ${data.error}`);
+      }
+      
+      // Update progress stats for UI
+      if (data.type === 'page_complete') {
+        const completedPages = crawlProgress.filter(p => p.type === 'page_complete').length + 1;
+        console.log(`📊 FRONTEND: Crawled ${completedPages} pages so far`);
+      }
+    };
+    
+    ws.onerror = (error) => {
+      console.error('❌ FRONTEND: WebSocket error:', error);
+      setIsWebSocketCrawling(false);
+      setCrawlProgress(prev => [...prev, { type: 'error', error: 'WebSocket connection failed' }]);
+    };
+    
+    ws.onclose = () => {
+      console.log('🔌 FRONTEND: WebSocket closed');
+      setIsWebSocketCrawling(false);
+    };
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (url) {
-      crawlMutation.mutate(url);
+      if (useWebSocket) {
+        startWebSocketCrawl(url);
+      } else {
+        crawlMutation.mutate(url);
+      }
     }
   };
 
@@ -45,19 +189,69 @@ const CrawlPage: React.FC = () => {
             onChange={(e) => setUrl(e.target.value)}
             placeholder="https://example.com"
             required
-            disabled={crawlMutation.isPending}
+            disabled={crawlMutation.isPending || isWebSocketCrawling}
             className="url-input"
           />
         </div>
 
+        <div className="form-group">
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              checked={useWebSocket}
+              onChange={(e) => setUseWebSocket(e.target.checked)}
+              disabled={crawlMutation.isPending || isWebSocketCrawling}
+            />
+            <span>Real-time progress updates (WebSocket)</span>
+          </label>
+        </div>
+        
+        {/* Crawler Settings Panel */}
+        <CrawlerSettings 
+          settings={crawlerSettings}
+          onSettingsChange={setCrawlerSettings}
+          disabled={crawlMutation.isPending || isWebSocketCrawling}
+        />
+
         <button
           type="submit"
-          disabled={crawlMutation.isPending}
+          disabled={crawlMutation.isPending || isWebSocketCrawling}
           className="submit-button"
         >
-          {crawlMutation.isPending ? 'Crawling...' : 'Start Crawl'}
+          {(crawlMutation.isPending || isWebSocketCrawling) ? 'Crawling...' : 'Start Crawl'}
         </button>
       </form>
+
+      {/* Real-time progress display */}
+      {isWebSocketCrawling && crawlProgress.length > 0 && (
+        <div className="progress-container">
+          <h3>🕷️ Crawl Progress</h3>
+          <div className="progress-log">
+            {crawlProgress.slice(-10).reverse().map((progress, idx) => (
+              <div key={idx} className={`progress-item ${progress.type}`}>
+                {progress.type === 'page_loading' && (
+                  <span>🔍 Loading: {progress.url} (depth: {progress.depth})</span>
+                )}
+                {progress.type === 'page_complete' && (
+                  <span>✅ Completed: {progress.title || progress.url}</span>
+                )}
+                {progress.type === 'page_error' && (
+                  <span>❌ Error: {progress.url} - {progress.error}</span>
+                )}
+                {progress.type === 'crawl_start' && (
+                  <span>🚀 Starting crawl for: {progress.url}</span>
+                )}
+                {progress.type === 'crawl_complete' && (
+                  <span>🎉 Crawl complete! Found {progress.summary?.page_count || 0} pages</span>
+                )}
+              </div>
+            ))}
+          </div>
+          <div className="progress-stats">
+            <p>Pages visited: {crawlProgress.filter(p => p.type === 'page_complete').length}</p>
+          </div>
+        </div>
+      )}
 
       {crawlMutation.isPending && (
         <div className="status-message info">
