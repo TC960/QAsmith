@@ -12,7 +12,7 @@ class LLMConfig(BaseModel):
     """LLM configuration."""
     provider: str = "anthropic"
     model: str = "claude-3-5-sonnet-20241022"
-    api_key: str
+    api_key: str = ""  # Can be empty if using environment variable
     max_tokens: int = 4096
     temperature: float = 0.7
 
@@ -90,9 +90,17 @@ class Config(BaseSettings):
         with open(config_path, "r") as f:
             config_data = json.load(f)
 
-        # Override with environment variables if available
-        if "llm" in config_data and os.getenv("ANTHROPIC_API_KEY"):
-            config_data["llm"]["api_key"] = os.getenv("ANTHROPIC_API_KEY")
+        # Prioritize environment variable for API key
+        anthropic_key = os.getenv("ANTHROPIC_API_KEY")
+        if anthropic_key:
+            if "llm" not in config_data:
+                config_data["llm"] = {}
+            config_data["llm"]["api_key"] = anthropic_key
+            print("✅ CONFIG: Using ANTHROPIC_API_KEY from environment variable")
+        elif "llm" in config_data and not config_data["llm"].get("api_key"):
+            raise ValueError(
+                "ANTHROPIC_API_KEY must be set in environment variable or config.json"
+            )
 
         return cls(**config_data)
 
