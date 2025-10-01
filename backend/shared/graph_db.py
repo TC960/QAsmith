@@ -2,7 +2,8 @@
 
 from typing import List, Dict, Any, Optional
 from neo4j import GraphDatabase, Driver
-from backend.shared.types import AppMap, Page, PageElement, PageAction, SelectorStrategy, ActionType
+from .types import AppMap, PageInfo, PageElement, PageAction, SelectorStrategy, ActionType
+from .utils import get_timestamp
 import json
 
 
@@ -64,9 +65,11 @@ class GraphDB:
             return result.single()["crawl_id"]
 
     def add_page(self, crawl_id: str, url: str, title: str, depth: int,
-                 screenshot_path: Optional[str] = None) -> str:
+                 screenshot_path: Optional[str] = None,
+                 content_data: Optional[Dict[str, Any]] = None,
+                 embedding: Optional[List[float]] = None) -> str:
         """
-        Add a page node to the graph.
+        Add a page node to the graph with rich content data.
 
         Args:
             crawl_id: Crawl this page belongs to
@@ -74,11 +77,29 @@ class GraphDB:
             title: Page title
             depth: Crawl depth level
             screenshot_path: Optional path to screenshot
+            content_data: Optional dict with meta_description, content_text, headers, etc.
+            embedding: Optional embedding vector for semantic search
 
         Returns:
             page_id: Unique identifier for this page
         """
         with self.driver.session() as session:
+            # Prepare content fields
+            meta_description = ""
+            content_text = ""
+            content_length = 0
+            link_count = 0
+            image_count = 0
+            headers_json = "{}"
+            
+            if content_data:
+                meta_description = content_data.get("meta_description", "")
+                content_text = content_data.get("content_text", "")[:10000]  # Limit
+                content_length = content_data.get("content_length", 0)
+                link_count = content_data.get("link_count", 0)
+                image_count = content_data.get("image_count", 0)
+                headers_json = json.dumps(content_data.get("headers", {}))
+            
             result = session.run("""
                 MATCH (c:Crawl {crawl_id: $crawl_id})
                 CREATE (p:Page {
@@ -88,12 +109,22 @@ class GraphDB:
                     title: $title,
                     depth: $depth,
                     screenshot_path: $screenshot_path,
+                    meta_description: $meta_description,
+                    content_text: $content_text,
+                    content_length: $content_length,
+                    link_count: $link_count,
+                    image_count: $image_count,
+                    headers: $headers_json,
+                    embedding: $embedding,
                     created_at: datetime()
                 })
                 CREATE (c)-[:HAS_PAGE]->(p)
                 RETURN p.page_id as page_id
             """, crawl_id=crawl_id, url=url, title=title, depth=depth,
-               screenshot_path=screenshot_path)
+               screenshot_path=screenshot_path, meta_description=meta_description,
+               content_text=content_text, content_length=content_length,
+               link_count=link_count, image_count=image_count,
+               headers_json=headers_json, embedding=embedding or [])
             return result.single()["page_id"]
 
     def add_element(self, page_id: str, selector: str, selector_strategy: str,
@@ -324,19 +355,36 @@ class GraphDB:
                             attributes=json.loads(elem["attributes"]) if elem["attributes"] else {}
                         ))
 
-                pages.append(Page(
+                # Create actions from elements
+                actions = []
+                for elem in page_data["elements"]:
+                    if elem["selector"]:  # Skip null elements
+                        for action in elem["actions"]:
+                            if action["action_type"]:  # Skip null actions
+                                actions.append(PageAction(
+                                    action_type=ActionType(action["action_type"]),
+                                    element=PageElement(
+                                        selector=elem["selector"],
+                                        selector_strategy=SelectorStrategy(elem["selector_strategy"]),
+                                        element_type=elem["element_type"],
+                                        text=elem["text"],
+                                        attributes=json.loads(elem["attributes"]) if elem["attributes"] else {}
+                                    ),
+                                    description=f"{action['action_type']} on {elem['element_type']}"
+                                ))
+
+                pages.append(PageInfo(
                     url=page_data["url"],
                     title=page_data["title"],
-                    screenshot_path=page_data["screenshot_path"],
                     elements=elements,
-                    actions=[]  # Actions are derived from elements in this model
+                    actions=actions,
+                    screenshot_path=page_data["screenshot_path"]
                 ))
 
             return AppMap(
                 base_url=record["base_url"],
-                domain=record["domain"],
                 pages=pages,
-                crawl_depth=len(pages),  # Path length
+                crawl_timestamp=get_timestamp(),
                 total_pages=len(pages)
             )
 
