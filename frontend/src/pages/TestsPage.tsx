@@ -59,6 +59,9 @@ const TestsPage: React.FC = () => {
     queryFn: async () => {
       if (!crawlId) throw new Error('No crawl ID provided');
       const response = await axios.get(`/api/graph/${crawlId}/visualize`);
+      console.log('🔍 TESTS PAGE: Raw API response:', response.data);
+      console.log('🔍 TESTS PAGE: Nodes:', response.data.nodes?.length, 'Edges:', response.data.edges?.length);
+      console.log('🔍 TESTS PAGE: First edge:', response.data.edges?.[0]);
       return response.data;
     },
     enabled: !!crawlId,

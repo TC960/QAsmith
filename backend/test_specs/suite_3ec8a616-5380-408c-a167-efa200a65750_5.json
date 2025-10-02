@@ -1,0 +1,150 @@
+{
+  "suite_id": "suite_3ec8a616-5380-408c-a167-efa200a65750_5",
+  "crawl_id": "3ec8a616-5380-408c-a167-efa200a65750",
+  "test_count": 5,
+  "tests": [
+    {
+      "name": "Homepage Navigation Test",
+      "description": "Verifies main navigation links are working on CVS homepage",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/"
+        },
+        {
+          "action": "expect",
+          "selector": "a:text('Shop')",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Shop')"
+        },
+        {
+          "action": "expect",
+          "selector": ".shop-homepage",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Photo')"
+        },
+        {
+          "action": "expect",
+          "selector": ".photo-services",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Vaccine Scheduling Flow",
+      "description": "Tests the vaccine scheduling functionality",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Schedule a Vaccine')"
+        },
+        {
+          "action": "expect",
+          "selector": ".vaccine-scheduler",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Choose a vaccine",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Prescription Refill Page Test",
+      "description": "Verifies prescription refill page functionality",
+      "page_url": "https://www.cvs.com/content/refill",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/content/refill"
+        },
+        {
+          "action": "expect",
+          "selector": "a:text('Create an account to get start')",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "a:text('prescription status')",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Home')"
+        },
+        {
+          "action": "expect",
+          "selector": "homepage-container",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Pharmacy Insurance Information",
+      "description": "Validates pharmacy insurance information accessibility",
+      "page_url": "https://www.cvs.com/content/refill",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/content/refill"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Pharmacy')"
+        },
+        {
+          "action": "expect",
+          "selector": ".pharmacy-section",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "text=accepts most insurance plans",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "MinuteClinic Services Access",
+      "description": "Tests MinuteClinic services navigation and availability",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('MinuteClinic Services')"
+        },
+        {
+          "action": "expect",
+          "selector": ".minuteclinic-services",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Find a clinic",
+          "assertion": "toBeVisible"
+        }
+      ]
+    }
+  ]
+}

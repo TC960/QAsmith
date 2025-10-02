@@ -1,0 +1,144 @@
+{
+  "suite_id": "suite_3ec8a616-5380-408c-a167-efa200a65750_4",
+  "crawl_id": "3ec8a616-5380-408c-a167-efa200a65750",
+  "test_count": 4,
+  "tests": [
+    {
+      "name": "Clinic Locator Search",
+      "description": "Tests the MinuteClinic location finder functionality",
+      "page_url": "https://www.cvs.com/minuteclinic/clinic-locator/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/minuteclinic/clinic-locator/"
+        },
+        {
+          "action": "expect",
+          "selector": ".clinic-locator",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "fill",
+          "selector": "#location-search",
+          "value": "10001"
+        },
+        {
+          "action": "click",
+          "selector": "#search-button"
+        },
+        {
+          "action": "expect",
+          "selector": ".results-list",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Purchase History Navigation",
+      "description": "Tests navigation between different purchase history sections",
+      "page_url": "https://www.cvs.com/account/order/order-history",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/account/order/order-history"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Photo purchases')"
+        },
+        {
+          "action": "expect",
+          "selector": ".photo-orders",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Contacts and glasses')"
+        },
+        {
+          "action": "expect",
+          "selector": ".vision-orders",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Other prescriptions')"
+        },
+        {
+          "action": "expect",
+          "selector": ".rx-orders",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Security Page Links",
+      "description": "Verifies all security page links are accessible",
+      "page_url": "https://www.cvs.com/retail/help/security",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/retail/help/security"
+        },
+        {
+          "action": "expect",
+          "selector": "a:text('MinuteClinic Services')",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "a:text('Shop')",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "a:text('Savings & Rewards')",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "a[href='https://www.cvs.com/rx/dotm/ca']",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "a:text('Schedule a Vaccine')",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Security Page Navigation",
+      "description": "Tests navigation from security page to key sections",
+      "page_url": "https://www.cvs.com/retail/help/security",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/retail/help/security"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('MinuteClinic Services')"
+        },
+        {
+          "action": "expect",
+          "selector": ".minuteclinic-services",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/retail/help/security"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Schedule a Vaccine')"
+        },
+        {
+          "action": "expect",
+          "selector": ".vaccine-scheduler",
+          "assertion": "toBeVisible"
+        }
+      ]
+    }
+  ]
+}

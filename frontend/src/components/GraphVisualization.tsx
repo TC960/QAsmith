@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Network } from 'vis-network/standalone';
+import { Network, DataSet } from 'vis-network/standalone';
 import './GraphVisualization.css';
 
 interface Node {
@@ -12,6 +12,7 @@ interface Node {
 interface Edge {
   from_url: string;
   to_url: string;
+  label?: string;
 }
 
 interface GraphData {
@@ -41,6 +42,9 @@ const GraphVisualization: React.FC<GraphVisualizationProps> = ({ graphData, onNo
       urlToId.set(node.url, idx);
     });
 
+    console.log('🗺️ GRAPH: URL to ID mapping:', Array.from(urlToId.entries()).slice(0, 5));
+    console.log('🔗 GRAPH: Sample edge URLs:', graphData.edges.slice(0, 3).map(e => ({ from: e.from_url, to: e.to_url })));
+
     // Calculate stats
     const maxDepth = Math.max(...graphData.nodes.map(n => n.depth));
     setStats({
@@ -51,76 +55,104 @@ const GraphVisualization: React.FC<GraphVisualizationProps> = ({ graphData, onNo
 
     // Prepare nodes for vis-network
     const visNodes = graphData.nodes.map((node, idx) => {
-      // Color by depth
+      // IMPROVED: Magenta for home, blue for depth 1, green for depth 2
       const colors = [
-        '#667eea', // depth 0 - purple
-        '#48bb78', // depth 1 - green
-        '#ed8936', // depth 2 - orange
-        '#f56565', // depth 3 - red
-        '#9f7aea', // depth 4 - purple
-        '#38b2ac', // depth 5 - teal
-        '#4299e1', // depth 6+ - blue
+        '#e91e63', // depth 0 - magenta (homepage)
+        '#3b82f6', // depth 1 - blue
+        '#10b981', // depth 2 - green
+        '#f59e0b', // depth 3 - amber
+        '#8b5cf6', // depth 4 - purple
+        '#06b6d4', // depth 5 - cyan
+        '#ef4444', // depth 6+ - red
       ];
-      
+
       const color = colors[Math.min(node.depth, colors.length - 1)];
-      
-      // Size by depth (deeper = smaller)
-      const size = Math.max(15, 35 - (node.depth * 3));
-      
+
+      // IMPROVED: Larger nodes for better visibility
+      const size = Math.max(25, 50 - (node.depth * 4));
+
+      // IMPROVED: Shorter, cleaner labels
+      const urlPath = new URL(node.url).pathname;
+      const shortLabel = node.title?.substring(0, 30) || urlPath.split('/').filter(Boolean).pop() || 'Home';
+
       return {
         id: idx,
-        label: node.title || new URL(node.url).pathname || '/',
+        label: shortLabel,
         title: `${node.title}\n${node.url}\nDepth: ${node.depth}`,
+        level: node.depth, // IMPROVED: Use depth as hierarchical level
         color: {
           background: color,
-          border: color,
+          border: '#ffffff', // White border for better contrast
           highlight: {
             background: '#ffd700',
-            border: '#ffa500'
+            border: '#ff6b00'
           }
         },
         font: {
-          color: '#ffffff',
-          size: 12,
-          face: 'Arial'
+          color: '#1a202c', // IMPROVED: Dark text (better contrast)
+          size: 14, // IMPROVED: Larger font
+          face: 'Inter, system-ui, -apple-system, sans-serif',
+          bold: true, // IMPROVED: Bold text
+          strokeWidth: 3, // IMPROVED: Text outline for readability
+          strokeColor: '#ffffff' // White outline
         },
         size: size,
         shape: node.depth === 0 ? 'star' : 'dot',
-        borderWidth: 2
+        borderWidth: 3, // IMPROVED: Thicker borders
+        shadow: {
+          enabled: true,
+          color: 'rgba(0, 0, 0, 0.3)',
+          size: 10,
+          x: 0,
+          y: 2
+        }
       };
     });
 
     // Prepare edges for vis-network
-    const visEdges = graphData.edges.map(edge => {
+    const visEdges = graphData.edges.map((edge, idx) => {
       const fromId = urlToId.get(edge.from_url);
       const toId = urlToId.get(edge.to_url);
-      
+
       if (fromId === undefined || toId === undefined) {
-        console.warn('🚨 GRAPH: Edge references unknown node:', edge);
+        console.warn('🚨 GRAPH: Edge references unknown node:', {
+          edge,
+          fromId,
+          toId,
+          fromExists: urlToId.has(edge.from_url),
+          toExists: urlToId.has(edge.to_url)
+        });
         return null;
       }
-      
+
+      if (idx < 3) {
+        console.log('✅ GRAPH: Creating edge', fromId, '->', toId, edge.from_url, '->', edge.to_url);
+      }
+
       return {
         from: fromId,
         to: toId,
         arrows: 'to',
-        color: {
-          color: '#cbd5e0',
-          highlight: '#4299e1',
-          hover: '#4299e1'
-        },
-        width: 1,
-        smooth: {
-          type: 'continuous',
-          roundness: 0.5
-        }
+        color: '#000000', // STARK BLACK for maximum visibility
+        width: 6, // Even thicker
+        shadow: true,
+        smooth: false, // Straight lines - easier to see
+        physics: true,
+        hidden: false, // Explicitly not hidden
+        selectionWidth: 2
       };
     }).filter(edge => edge !== null);
 
-    // Create network
+    console.log('🎨 GRAPH: Created', visEdges.length, 'edges');
+    console.log('🔍 GRAPH: Sample edges:', visEdges.slice(0, 3));
+
+    // Create network using DataSet for better control
+    const nodes = new DataSet(visNodes);
+    const edges = new DataSet(visEdges);
+
     const data = {
-      nodes: visNodes,
-      edges: visEdges
+      nodes: nodes,
+      edges: edges
     };
 
     const options = {
@@ -131,37 +163,74 @@ const GraphVisualization: React.FC<GraphVisualizationProps> = ({ graphData, onNo
         }
       },
       edges: {
-        font: {
-          color: '#333',
-          size: 10
-        }
+        // CRITICAL: Set default edge appearance
+        color: {
+          color: '#000000',
+          highlight: '#ef4444',
+          hover: '#f59e0b',
+          inherit: false,
+          opacity: 1.0
+        },
+        width: 6,
+        arrows: {
+          to: {
+            enabled: true,
+            scaleFactor: 1.5
+          }
+        },
+        smooth: {
+          enabled: false // Straight lines
+        },
+        shadow: {
+          enabled: true,
+          color: 'rgba(0,0,0,0.5)',
+          size: 10,
+          x: 2,
+          y: 2
+        },
+        hidden: false,
+        physics: true,
+        selectionWidth: 3,
+        hoverWidth: 0.5
       },
       physics: {
         enabled: true,
         stabilization: {
           enabled: true,
-          iterations: 200,
-          updateInterval: 25
+          iterations: 400,
+          updateInterval: 25,
+          fit: true
         },
+        // IMPROVED: Use force-directed layout (like Neo4j) instead of hierarchical
         barnesHut: {
-          gravitationalConstant: -2000,
-          centralGravity: 0.3,
-          springLength: 150,
+          gravitationalConstant: -3000, // Stronger repulsion for better spacing
+          centralGravity: 0.15, // Pull towards center
+          springLength: 180, // Edge length
           springConstant: 0.04,
           damping: 0.09,
-          avoidOverlap: 0.1
-        }
+          avoidOverlap: 0.2 // Prevent node overlap
+        },
+        solver: 'barnesHut',
+        adaptiveTimestep: true
       },
       interaction: {
         hover: true,
         tooltipDelay: 100,
         zoomView: true,
-        dragView: true
+        dragView: true,
+        hoverConnectedEdges: true, // Highlight edges on hover
+        selectConnectedEdges: true,
+        dragNodes: true, // Allow dragging nodes
+        navigationButtons: true, // Show zoom controls
+        keyboard: {
+          enabled: true
+        }
       },
       layout: {
         improvedLayout: true,
+        randomSeed: 42, // Consistent layout on reload
         hierarchical: {
-          enabled: false
+          enabled: false // IMPROVED: Disable hierarchical, use organic force-directed
         }
       }
     };
@@ -174,6 +243,19 @@ const GraphVisualization: React.FC<GraphVisualizationProps> = ({ graphData, onNo
     // Create new network
     const network = new Network(containerRef.current, data, options);
     networkRef.current = network;
+
+    // DEBUGGING: Force redraw and check edges
+    network.on('afterDrawing', (ctx) => {
+      console.log('🎨 GRAPH: Canvas drawn');
+    });
+
+    network.on('stabilizationIterationsDone', () => {
+      console.log('✅ GRAPH: Physics stabilized');
+      network.fit();
+    });
+
+    // Log edge dataset
+    console.log('📊 GRAPH: Edge dataset:', network.body.data.edges.get());
 
     // Add click handler
     network.on('click', (params) => {

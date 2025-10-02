@@ -17,6 +17,9 @@ class ActionType(str, Enum):
     UNCHECK = "uncheck"
     GOTO = "goto"
     EXPECT = "expect"
+    GO_BACK = "goBack"
+    RELOAD = "reload"
+    WAIT = "wait"
 
 
 class SelectorStrategy(str, Enum):

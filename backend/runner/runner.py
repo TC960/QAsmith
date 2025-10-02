@@ -60,6 +60,9 @@ class TestRunner:
 
     def _create_playwright_config(self, artifacts_dir: Path) -> str:
         """Generate Playwright configuration."""
+        # Get timeout from config, default to 60000ms (60s)
+        timeout = getattr(self.config.runner, 'timeout', 60000)
+
         config = f"""
 import {{ defineConfig, devices }} from '@playwright/test';
 
@@ -69,6 +72,7 @@ export default defineConfig({{
   forbidOnly: !!process.env.CI,
   retries: 0,
   workers: 1,
+  timeout: {timeout},
   reporter: [
     ['html', {{ outputFolder: '{artifacts_dir}/html-report' }}],
     ['junit', {{ outputFile: '{artifacts_dir}/results.xml' }}],
@@ -79,6 +83,8 @@ export default defineConfig({{
     trace: '{self.config.runner.trace and "on" or "off"}',
     video: '{self.config.runner.video and "on" or "off"}',
     screenshot: '{self.config.runner.screenshot}',
+    actionTimeout: {timeout // 2},
+    navigationTimeout: {timeout // 2},
   }},
   projects: [
     {{

@@ -1,0 +1,67 @@
+{
+  "suite_id": "suite_3db21b84-1d29-4c94-86ff-017604261ccb_3",
+  "crawl_id": "3db21b84-1d29-4c94-86ff-017604261ccb",
+  "test_count": 3,
+  "tests": [
+    {
+      "name": "Load portfolio homepage",
+      "description": "Verify that the portfolio homepage loads successfully",
+      "page_url": "https://tc960.github.io/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://tc960.github.io/"
+        },
+        {
+          "action": "expect",
+          "selector": "body",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "title",
+          "assertion": "toContainText",
+          "text": "Mohak Akul Prakash | Data Science & AI Portfolio"
+        }
+      ]
+    },
+    {
+      "name": "Check page metadata",
+      "description": "Verify that the page has proper metadata and title",
+      "page_url": "https://tc960.github.io/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://tc960.github.io/"
+        },
+        {
+          "action": "expect",
+          "selector": "head meta[name='viewport']",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "head meta[charset='UTF-8']",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Verify page loads with no errors",
+      "description": "Check that the page loads without any console errors",
+      "page_url": "https://tc960.github.io/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://tc960.github.io/"
+        },
+        {
+          "action": "expect",
+          "selector": "body",
+          "assertion": "not.toContainText",
+          "text": "Error"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "suite_id": "suite_3ec8a616-5380-408c-a167-efa200a65750_3",
+  "crawl_id": "3ec8a616-5380-408c-a167-efa200a65750",
+  "test_count": 3,
+  "tests": [
+    {
+      "name": "Purchase History Page Load",
+      "description": "Verify the purchase history page loads correctly and displays all navigation links",
+      "page_url": "https://www.cvs.com/account/order/order-history",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/account/order/order-history"
+        },
+        {
+          "action": "expect",
+          "selector": "a:text('Photo purchases')",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "a:text('My Account')",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "a:text('Contacts and glasses')",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "a:text('Other prescriptions')",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Navigation Link Functionality",
+      "description": "Test that all navigation links are clickable and navigate to correct pages",
+      "page_url": "https://www.cvs.com/account/order/order-history",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/account/order/order-history"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Photo purchases')"
+        },
+        {
+          "action": "expect",
+          "selector": "url",
+          "assertion": "toContain",
+          "value": "photo"
+        },
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/account/order/order-history"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('My Account')"
+        },
+        {
+          "action": "expect",
+          "selector": "url",
+          "assertion": "toContain",
+          "value": "account"
+        },
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/account/order/order-history"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Contacts and glasses')"
+        },
+        {
+          "action": "expect",
+          "selector": "url",
+          "assertion": "toContain",
+          "value": "optical"
+        }
+      ]
+    },
+    {
+      "name": "Purchase History Authentication",
+      "description": "Verify purchase history requires authentication and redirects to login when not authenticated",
+      "page_url": "https://www.cvs.com/account/order/order-history",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/account/order/order-history"
+        },
+        {
+          "action": "expect",
+          "selector": "url",
+          "assertion": "toContain",
+          "value": "login"
+        },
+        {
+          "action": "expect",
+          "selector": "input[type='email']",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "input[type='password']",
+          "assertion": "toBeVisible"
+        }
+      ]
+    }
+  ]
+}

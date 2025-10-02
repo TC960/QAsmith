@@ -103,6 +103,9 @@
   display: grid;
   gap: 1rem;
   margin-bottom: 2rem;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
 }
 
 .node-item {
@@ -186,6 +189,9 @@
   margin-top: 2rem;
   padding-top: 2rem;
   border-top: 1px solid #dee2e6;
+  position: relative;
+  z-index: 1;
+  clear: both;
 }
 
 .edges-list {
@@ -227,6 +233,8 @@
   border-radius: 8px;
   padding: 1.5rem;
   margin-top: 2rem;
+  position: relative;
+  z-index: 5;
 }
 
 .test-generation-section h2 {
@@ -385,6 +393,8 @@
   border-radius: 12px;
   padding: 2rem;
   margin-top: 2rem;
+  position: relative;
+  z-index: 10;
 }
 
 .test-results-section h2 {

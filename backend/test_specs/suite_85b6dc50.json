@@ -1,0 +1,128 @@
+{
+  "suite_id": "suite_85b6dc50",
+  "crawl_id": "49d38436-be4e-4082-90d5-65917b90245a",
+  "test_count": 5,
+  "tests": [
+    {
+      "test_id": "NAV_001",
+      "name": "Navigate to GitHub Education page",
+      "description": "Verify navigation to Education page and correct page title",
+      "page_url": "https://github.com/edu",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://github.com/edu",
+          "description": "Navigate to GitHub Education page",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "NAV_002",
+      "name": "Navigate to GitHub AI Features page",
+      "description": "Verify navigation to AI Features page and correct content",
+      "page_url": "https://github.com/edu",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://github.com/features/ai",
+          "description": "Navigate to GitHub AI Features page",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "NAV_003",
+      "name": "Navigate to GitHub Enterprise page",
+      "description": "Verify navigation to Enterprise page and correct content",
+      "page_url": "https://github.com/edu",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://github.com/enterprise",
+          "description": "Navigate to GitHub Enterprise page",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "NAV_004",
+      "name": "Navigate between all main pages",
+      "description": "Verify seamless navigation between main sections",
+      "page_url": "https://github.com/edu",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://github.com/edu",
+          "description": "Navigate to Education page",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://github.com/features/ai",
+          "description": "Navigate to AI Features page",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://github.com/enterprise",
+          "description": "Navigate to Enterprise page",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "PERF_001",
+      "name": "Verify page load performance",
+      "description": "Check load times for main pages are within acceptable range",
+      "page_url": "https://github.com/edu",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://github.com/edu",
+          "description": "Load Education page",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://github.com/features/ai",
+          "description": "Load AI Features page",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://github.com/enterprise",
+          "description": "Load Enterprise page",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    }
+  ]
+}

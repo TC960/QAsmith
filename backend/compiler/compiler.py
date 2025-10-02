@@ -71,20 +71,56 @@ class TestCompiler:
         # Handle different action types
         if step.action == ActionType.GOTO:
             action_code = action_template.format(url=step.url or step.value or "")
+        elif step.action in [ActionType.GO_BACK, ActionType.RELOAD, ActionType.WAIT]:
+            # Actions that don't need selectors or values
+            action_code = action_template
         elif step.action == ActionType.EXPECT:
-            # Format selector - escape single quotes
-            escaped_selector = step.selector.replace("'", "\\'") if step.selector else ""
-            selector_code = f"page.locator('{escaped_selector}')" if step.selector else "page"
-            # Format assertion value
-            escaped_value = step.value.replace("'", "\\'") if step.value else ""
-            value_str = f"'{escaped_value}'" if step.value else ""
-            if not value_str and step.assertion in ['toBeVisible', 'toBeHidden', 'toBeEnabled', 'toBeDisabled']:
-                value_str = ""  # No value needed for these assertions
-            action_code = action_template.format(
-                selector=selector_code,
-                assertion=step.assertion or "toBeVisible",
-                value=value_str
-            )
+            # Special handling for title assertions
+            if step.selector and step.selector.lower() == 'title':
+                # Use page.toHaveTitle() for title assertions
+                if step.value:
+                    escaped_value = step.value.replace("'", "\\'")
+                    # Use regex pattern for flexible matching
+                    action_code = f"    await expect(page).toHaveTitle(/{escaped_value}/);"
+                else:
+                    action_code = "    // SKIPPED: Title assertion requires a value"
+            else:
+                # Format selector - use _generate_selector for :visible + .first() support
+                if step.selector:
+                    escaped_selector = step.selector.replace("'", "\\'")
+                    if step.selector_strategy:
+                        selector_code = self._generate_selector(escaped_selector, step.selector_strategy)
+                    else:
+                        # No strategy - use .first() fallback
+                        selector_code = f"page.locator('{escaped_selector}').first()"
+                else:
+                    selector_code = "page"
+
+                # Assertions that don't need values
+                no_value_assertions = [
+                    'toBeVisible', 'toBeHidden', 'toBeEnabled', 'toBeDisabled',
+                    'toBeChecked', 'toBeEditable', 'toBeEmpty', 'toBeFocused',
+                    'toBeAttached', 'toBeInViewport'
+                ]
+
+                assertion = step.assertion or "toBeVisible"
+
+                # Check if this assertion needs a value
+                if assertion in no_value_assertions:
+                    # No value needed - generate without parentheses content
+                    action_code = f"    await expect({selector_code}).{assertion}();"
+                elif step.value:
+                    # Has a value - use it
+                    escaped_value = step.value.replace("'", "\\'")
+                    value_str = f"'{escaped_value}'"
+                    action_code = action_template.format(
+                        selector=selector_code,
+                        assertion=assertion,
+                        value=value_str
+                    )
+                else:
+                    # Assertion requires value but none provided - skip or use default
+                    action_code = f"    // SKIPPED: {assertion} requires a value but none was provided"
         else:
             # Regular actions with selectors - escape quotes
             if step.selector:
@@ -92,7 +128,8 @@ class TestCompiler:
                 if step.selector_strategy:
                     selector_code = self._generate_selector(escaped_selector, step.selector_strategy)
                 else:
-                    selector_code = f"page.locator('{escaped_selector}')"
+                    # No strategy - use .first() fallback
+                    selector_code = f"page.locator('{escaped_selector}').first()"
             else:
                 selector_code = "page"
 
@@ -107,13 +144,24 @@ class TestCompiler:
     def _generate_selector(self, selector: str, strategy: SelectorStrategy) -> str:
         """Generate Playwright selector code based on strategy."""
         if not strategy:
-            return f"page.locator('{selector}')"  # Default to CSS selector
+            # Default to CSS selector with .first()
+            return f"page.locator('{selector}').first()"
 
         template = SELECTOR_TEMPLATES.get(strategy)
         if not template:
-            return f"page.locator('{selector}')"  # Default to CSS selector
+            # Default to CSS selector with .first()
+            return f"page.locator('{selector}').first()"
 
-        return template.format(selector=selector)
+        # Generate base selector
+        base_selector = template.format(selector=selector)
+
+        # Add .first() for potentially ambiguous selectors
+        # Don't add for getByTestId (should be unique) or xpath with specific paths
+        if strategy in [SelectorStrategy.TEXT, SelectorStrategy.CSS]:
+            # These strategies often match multiple elements
+            return f"{base_selector}.first()"
+
+        return base_selector
 
     def _save_spec_file(self, suite_id: str, content: str) -> Path:
         """Save the compiled spec to a file."""

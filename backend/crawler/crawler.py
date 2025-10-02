@@ -1,5 +1,6 @@
 """Main crawler implementation using Playwright BFS with Neo4j integration."""
 
+import asyncio
 from pathlib import Path
 from typing import Set, List, Optional, Dict, Any
 from urllib.parse import urlparse
@@ -57,14 +58,15 @@ class Crawler:
                 print(f"📄 CRAWLER: Created new page with viewport {self.config.crawler.viewport}")
 
                 queue = [base_url]
-                depth_map = {base_url: 0}
                 page_id_map = {}  # URL -> page_id mapping for linking
-                
+
                 print(f"🎯 CRAWLER: Starting BFS crawl (max_depth: {self.config.crawler.max_depth}, max_pages: {self.config.crawler.max_pages})")
 
                 while queue and len(self.visited_urls) < self.config.crawler.max_pages:
                     current_url = queue.pop(0)
-                    current_depth = depth_map[current_url]
+
+                    # Calculate depth based on URL path segments (not BFS order)
+                    current_depth = self._calculate_url_depth(current_url, base_url)
 
                     if current_url in self.visited_urls or current_depth > self.config.crawler.max_depth:
                         print(f"⏭️  CRAWLER: Skipping {current_url} (visited: {current_url in self.visited_urls}, depth: {current_depth})")
@@ -78,17 +80,19 @@ class Crawler:
                         self.visited_urls.add(current_url)
                         print(f"✅ CRAWLER: Successfully crawled {current_url} -> page_id: {page_id}")
 
-                        # Extract links for BFS and create relationships
+                        # Extract links for BFS crawling
                         if current_depth < self.config.crawler.max_depth:
                             print(f"🔗 CRAWLER: Extracting links from {current_url}...")
                             links = await self._extract_links(page, base_url)
                             print(f"🔗 CRAWLER: Found {len(links)} internal links")
-                            
+
                             for link in links:
+                                # Add to crawl queue if not visited
                                 if link not in self.visited_urls and link not in queue:
-                                    queue.append(link)
-                                    depth_map[link] = current_depth + 1
-                                    print(f"➕ CRAWLER: Added to queue: {link} (depth: {current_depth + 1})")
+                                    link_depth = self._calculate_url_depth(link, base_url)
+                                    if link_depth <= self.config.crawler.max_depth:
+                                        queue.append(link)
+                                        print(f"➕ CRAWLER: Added to queue: {link} (depth: {link_depth})")
                         
                         # Add configurable delay between pages (to be respectful to servers)
                         page_delay_ms = getattr(self.config.crawler, 'page_delay_ms', 0)
@@ -103,11 +107,11 @@ class Crawler:
                         print(f"🔍 CRAWLER: Traceback: {traceback.format_exc()}")
                         continue
 
-                # Create page relationships after all pages are crawled
-                print(f"🔗 CRAWLER: Creating page relationships for {len(page_id_map)} pages...")
-                await self._create_page_links(page, page_id_map, base_url)
-                print("✅ CRAWLER: Page relationships created")
-                
+                # Create hierarchical parent-child relationships based on URL structure
+                print(f"🔗 CRAWLER: Creating hierarchical parent-child relationships...")
+                self._create_hierarchical_links(page_id_map, base_url)
+                print(f"✅ CRAWLER: Hierarchical relationships created")
+
                 await browser.close()
                 print("🔒 CRAWLER: Browser closed")
 
@@ -165,9 +169,10 @@ class Crawler:
         # Extract comprehensive page content (SKIP IF DISABLED FOR SPEED)
         content_data = None
         embedding = None
-        
-        skip_embeddings = getattr(self.config.crawler, 'skip_embeddings', False)
-        
+
+        skip_embeddings = getattr(self.config.crawler, 'skip_embeddings', True)  # Default to True (skip for speed)
+        print(f"🔍 PAGE: skip_embeddings setting = {skip_embeddings}")
+
         if not skip_embeddings:
             try:
                 print(f"📊 PAGE: Extracting page content...")
@@ -184,12 +189,12 @@ class Crawler:
         else:
             print(f"⏩ PAGE: Skipping embeddings for speed")
 
-        # Take screenshot
+        # Take screenshot (viewport only for speed - not full page)
         screenshot_path = None
         if self.config.crawler.screenshot:
             try:
                 screenshot_path = self._get_screenshot_path(url)
-                await page.screenshot(path=screenshot_path, full_page=True)
+                await page.screenshot(path=screenshot_path, full_page=False)  # Changed to False for speed
                 print(f"📸 PAGE: Screenshot saved to {screenshot_path}")
             except Exception as e:
                 print(f"❌ PAGE: Failed to take screenshot: {e}")
@@ -225,7 +230,7 @@ class Crawler:
         # Analyze page elements and add to graph (SIMPLIFIED FOR SPEED)
         try:
             # Check if we should do full element extraction or simplified version
-            skip_detailed_elements = getattr(self.config.crawler, 'skip_embeddings', False)
+            skip_detailed_elements = getattr(self.config.crawler, 'skip_embeddings', True)  # Default to True (skip for speed)
             
             if skip_detailed_elements:
                 # FAST MODE: Just extract links and basic elements in bulk
@@ -310,22 +315,114 @@ class Crawler:
         print(f"🎉 PAGE: Successfully processed {url}")
         return page_id
 
+    def _create_hierarchical_links(self, page_id_map: dict, base_url: str):
+        """Create parent-child links based on URL hierarchy.
+
+        Examples:
+            github.com/tc960 -> parent: github.com
+            github.com/tc960/munch -> parent: github.com/tc960
+            github.com/omega/lol -> parent: github.com (no tc960 in path)
+
+        If a parent URL doesn't exist in the crawl, attach to the nearest ancestor
+        that does exist (including the base URL).
+        """
+        clean_base = base_url.split("#")[0].split("?")[0].rstrip("/")
+
+        for child_url, child_page_id in page_id_map.items():
+            # Skip the base URL itself (it has no parent)
+            clean_child = child_url.split("#")[0].split("?")[0].rstrip("/")
+            if clean_child == clean_base:
+                continue
+
+            # Find the parent URL by removing the last path segment
+            path_after_base = clean_child.replace(clean_base, "")
+            segments = [s for s in path_after_base.split("/") if s]
+
+            if not segments:
+                continue
+
+            # Try to find the most specific parent first, then work backwards
+            parent_url = None
+            for i in range(len(segments) - 1, 0, -1):
+                potential_parent = clean_base + "/" + "/".join(segments[:i])
+                if potential_parent in page_id_map:
+                    parent_url = potential_parent
+                    break
+
+            # If no intermediate parent exists, link directly to base URL
+            if not parent_url:
+                parent_url = clean_base
+
+            # Create the hierarchical link
+            if parent_url in page_id_map:
+                parent_page_id = page_id_map[parent_url]
+                try:
+                    # Extract link text (last segment of child URL)
+                    link_text = segments[-1] if segments else ""
+                    self.graph_db.link_pages(parent_page_id, child_page_id, link_text)
+                    print(f"🔗 HIERARCHICAL LINK: {parent_url} -> {clean_child}")
+                except Exception as e:
+                    print(f"⚠️ CRAWLER: Failed to create hierarchical link {parent_url} -> {clean_child}: {e}")
+
+    def _calculate_url_depth(self, url: str, base_url: str) -> int:
+        """Calculate depth based on URL path segments.
+
+        Examples:
+            github.com -> depth 0
+            github.com/tc960 -> depth 1
+            github.com/tc960/munch -> depth 2
+        """
+        # Normalize URLs by removing trailing slashes, fragments, and query params
+        clean_url = url.split("#")[0].split("?")[0].rstrip("/")
+        clean_base = base_url.split("#")[0].split("?")[0].rstrip("/")
+
+        # If it's the base URL itself, depth is 0
+        if clean_url == clean_base:
+            return 0
+
+        # Get the path after the base URL
+        if not clean_url.startswith(clean_base):
+            return 0  # Not a child of base URL
+
+        path = clean_url.replace(clean_base, "")
+
+        # Count non-empty path segments
+        segments = [s for s in path.split("/") if s]
+        return len(segments)
+
     async def _extract_links(self, page: Page, base_url: str) -> List[str]:
-        """Extract all internal links from the current page."""
+        """Extract internal links, prioritizing top-level navigation."""
         links = await page.eval_on_selector_all(
             "a[href]",
             """elements => elements.map(el => el.href).filter(href => href)"""
         )
 
-        # Filter to same-origin links only
-        internal_links = []
+        # Filter to same-origin links only and categorize by depth
+        top_level_links = []  # e.g., github.com/about
+        deeper_links = []     # e.g., github.com/solutions/industry/manufacturing
+
         for link in links:
             if link.startswith(base_url) and link not in self.visited_urls:
                 # Remove fragments and query params for deduplication
-                clean_link = link.split("#")[0].split("?")[0]
-                internal_links.append(clean_link)
+                clean_link = link.split("#")[0].split("?")[0].rstrip("/")
 
-        return list(set(internal_links))
+                # Skip if same as base URL
+                if clean_link == base_url.rstrip("/"):
+                    continue
+
+                # Use the new depth calculation method
+                depth = self._calculate_url_depth(clean_link, base_url)
+
+                # Prioritize top-level links (depth 1-2)
+                if depth <= 2:
+                    top_level_links.append(clean_link)
+                else:
+                    deeper_links.append(clean_link)
+
+        # Return top-level links first, then deeper ones
+        all_links = list(set(top_level_links)) + list(set(deeper_links))
+        print(f"🔗 LINK PRIORITY: {len(top_level_links)} top-level, {len(deeper_links)} deeper links")
+        return all_links
 
     async def _add_element_actions(self, element: PageElement, element_id: str):
         """Add possible actions for an element to the graph."""

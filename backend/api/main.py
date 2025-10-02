@@ -10,6 +10,7 @@ from pathlib import Path
 from backend.shared.config import get_config, update_config
 from backend.shared.graph_db import GraphDB
 from backend.shared.types import TestSuite, TestRunResult
+from backend.shared.utils import get_timestamp
 from backend.crawler.crawler import Crawler
 from backend.generator.generator import TestGenerator
 from backend.compiler.compiler import TestCompiler
@@ -40,6 +41,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Include advanced testing routers
+from backend.api.test_type_endpoints import router as test_types_router
+app.include_router(test_types_router)
 
 
 @app.get("/")
@@ -258,7 +263,7 @@ async def get_crawl_pages(crawl_id: str):
     """Get all pages for a crawl."""
     try:
         graph_db = GraphDB(config.neo4j.uri, config.neo4j.user, config.neo4j.password)
-        pages = graph_db.get_crawl_pages(crawl_id)
+        pages = graph_db.get_all_pages(crawl_id)
         graph_db.close()
         return pages
     except Exception as e:
@@ -300,19 +305,29 @@ async def generate_tests(request: GenerateTestsRequest):
         graph_db = GraphDB(config.neo4j.uri, config.neo4j.user, config.neo4j.password)
         print("✅ API: Neo4j connection established")
 
-        # Get page IDs for selected URLs
+        # Get page IDs for selected URLs (with URL normalization)
         print(f"🔍 API: Fetching page data for selected URLs...")
         page_ids = []
         for url in request.page_urls:
-            # Query to get page_id from URL
+            # Normalize URL by removing trailing slash
+            normalized_url = url.rstrip('/')
+
+            # Query to get page_id from URL (try both with and without trailing slash)
             with graph_db.driver.session() as session:
                 result = session.run("""
-                    MATCH (p:Page {crawl_id: $crawl_id, url: $url})
+                    MATCH (p:Page {crawl_id: $crawl_id})
+                    WHERE p.url = $url OR p.url = $url_with_slash OR p.url = $url_without_slash
                     RETURN p.page_id as page_id
-                """, crawl_id=request.crawl_id, url=url)
+                    LIMIT 1
+                """, crawl_id=request.crawl_id, url=url,
+                     url_with_slash=normalized_url + '/',
+                     url_without_slash=normalized_url)
                 record = result.single()
                 if record:
                     page_ids.append(record["page_id"])
+                    print(f"✅ API: Found page_id for {url}")
+                else:
+                    print(f"⚠️ API: No page found for {url}")
 
         if not page_ids:
             raise HTTPException(status_code=404, detail="No pages found for selected URLs")
@@ -324,69 +339,39 @@ async def generate_tests(request: GenerateTestsRequest):
         app_map = graph_db.export_path_to_appmap(request.crawl_id, page_ids)
         print(f"✅ API: Exported AppMap with {len(app_map.pages)} pages")
 
-        # Generate tests using AI/LLM
-        print("🤖 API: Generating tests with AI...")
-        from anthropic import Anthropic
-        client = Anthropic(api_key=config.llm.api_key)
+        # Generate tests using TestGenerator (uses proper prompts and selector strategies)
+        print("🤖 API: Generating tests with TestGenerator...")
+        generator = TestGenerator()
+        test_suite = generator.generate_tests(app_map)
+        print(f"✅ API: Generated {len(test_suite.test_cases)} test cases")
 
-        # Create prompt for test generation
-        prompt = f"""Generate Playwright test cases for the following web pages.
+        # Convert TestSuite to the expected format
+        tests = [
+            {
+                "test_id": tc.test_id,
+                "name": tc.name,
+                "description": tc.description,
+                "page_url": str(app_map.pages[0].url) if app_map.pages else "",
+                "steps": [
+                    {
+                        "action": step.action.value,
+                        "selector": step.selector,
+                        "selector_strategy": step.selector_strategy.value if step.selector_strategy else None,
+                        "value": step.value,
+                        "description": step.description,
+                        "url": step.url,
+                        "assertion": step.assertion
+                    }
+                    for step in tc.steps
+                ]
+            }
+            for tc in test_suite.test_cases
+        ]
 
-Website: {app_map.base_url}
-Pages to test ({len(app_map.pages)}):
-
-"""
-        for i, page in enumerate(app_map.pages, 1):
-            prompt += f"\n{i}. {page.title} ({page.url})\n"
-            prompt += f"   Elements: {len(page.elements)}\n"
-            for elem in page.elements[:5]:  # Show first 5 elements
-                prompt += f"   - {elem.element_type}: {elem.selector}\n"
-
-        prompt += f"""
-
-Generate comprehensive E2E test cases that:
-1. Test each page's core functionality
-2. Test interactive elements (buttons, forms, links)
-3. Include assertions to verify expected behavior
-4. Cover positive and edge cases
-
-Return ONLY a JSON array of test objects with this structure:
-[
-  {{
-    "name": "Test case name",
-    "description": "What this test does",
-    "page_url": "URL to test",
-    "steps": [
-      {{"action": "goto", "url": "..."}},
-      {{"action": "click", "selector": "..."}},
-      {{"action": "fill", "selector": "...", "value": "..."}},
-      {{"action": "expect", "selector": "...", "assertion": "toBeVisible"}}
-    ]
-  }}
-]"""
-
-        response = client.messages.create(
-            model=config.llm.model,
-            max_tokens=4096,
-            messages=[{"role": "user", "content": prompt}]
-        )
-
-        # Parse AI response
+        # Save tests using consistent format
         import json
-        response_text = response.content[0].text
-        # Extract JSON from response (handle markdown code blocks)
-        if "```json" in response_text:
-            response_text = response_text.split("```json")[1].split("```")[0].strip()
-        elif "```" in response_text:
-            response_text = response_text.split("```")[1].split("```")[0].strip()
-
-        tests = json.loads(response_text)
-        print(f"✅ API: Generated {len(tests)} test cases")
-
-        # Save tests to disk
-        import os
         from pathlib import Path
-        suite_id = f"suite_{request.crawl_id}_{len(tests)}"
+        suite_id = test_suite.suite_id
         test_specs_dir = Path(config.storage.test_specs_path)
         test_specs_dir.mkdir(parents=True, exist_ok=True)
 
@@ -404,14 +389,14 @@ Return ONLY a JSON array of test objects with this structure:
         graph_db.close()
         print("🔒 API: Neo4j connection closed")
 
-        response = TestGenerationResponse(
+        api_response = TestGenerationResponse(
             crawl_id=request.crawl_id,
             test_suite_id=suite_id,
             test_count=len(tests),
             tests=tests
         )
         print(f"🎉 API: Returning response with {len(tests)} tests")
-        return response
+        return api_response
 
     except HTTPException:
         raise
@@ -556,22 +541,34 @@ async def run_tests(request: RunTestsRequest):
         # Parse JSON results
         try:
             test_results_json = json.loads(result.stdout)
-            total_tests = len(test_results_json.get('suites', [{}])[0].get('specs', []))
-            passed = sum(1 for spec in test_results_json.get('suites', [{}])[0].get('specs', [])
-                        if spec.get('ok', False))
+            
+            # Navigate to the actual test specs (they're nested in suites[0].suites[0].specs)
+            outer_suites = test_results_json.get('suites', [])
+            if outer_suites and len(outer_suites) > 0:
+                inner_suites = outer_suites[0].get('suites', [])
+                if inner_suites and len(inner_suites) > 0:
+                    specs = inner_suites[0].get('specs', [])
+                else:
+                    # Fallback: try direct specs if no nested suites
+                    specs = outer_suites[0].get('specs', [])
+            else:
+                specs = []
+            
+            total_tests = len(specs)
+            passed = sum(1 for spec in specs if spec.get('ok', False))
             failed = total_tests - passed
 
             # Extract individual test results
             test_results = []
-            for spec in test_results_json.get('suites', [{}])[0].get('specs', []):
+            for spec in specs:
                 test_results.append({
                     'name': spec.get('title', 'Unknown test'),
                     'status': 'passed' if spec.get('ok', False) else 'failed',
                     'error': spec.get('tests', [{}])[0].get('results', [{}])[0].get('error', {}).get('message') if not spec.get('ok', False) else None
                 })
-        except (json.JSONDecodeError, KeyError, IndexError):
+        except (json.JSONDecodeError, KeyError, IndexError) as e:
             # Fallback to text parsing
-            print("⚠️ API: Failed to parse JSON output, using text parsing")
+            print(f"⚠️ API: Failed to parse JSON output: {e}, using text parsing")
             total_tests = result.stdout.count(' expected')
             passed = result.stdout.count(' passed')
             failed = result.stdout.count(' failed')
@@ -579,37 +576,70 @@ async def run_tests(request: RunTestsRequest):
 
         print(f"✅ API: Test run complete - {passed}/{total_tests} passed")
 
-        # Generate AI summary using Anthropic
-        print("🤖 API: Generating AI summary of test results...")
+        # Generate AI summary using Anthropic with enhanced prompt
+        print("🤖 API: Generating comprehensive AI test analysis...")
         ai_summary = None
         try:
             from anthropic import Anthropic
             client = Anthropic(api_key=config.llm.api_key)
 
-            # Create prompt for AI summary
-            summary_prompt = f"""Analyze these test results and provide a concise summary.
+            # Enhanced AI prompt for detailed, professional analysis
+            summary_prompt = f"""You are a senior QA engineer analyzing E2E test results for a production web application. Provide a comprehensive, data-driven test execution report.
 
-Test Suite: {suite_data.get('tests', [])}
+**Test Suite Configuration:**
+Suite ID: {request.suite_id}
+Total Test Cases: {len(suite_data.get('tests', []))}
 
-Test Results:
-- Total Tests: {total_tests}
-- Passed: {passed}
-- Failed: {failed}
+**Test Specifications:**
+{json.dumps(suite_data.get('tests', []), indent=2)}
 
-Individual Results:
+**Execution Results:**
+- Total Tests Executed: {total_tests}
+- Passed: {passed} ({(passed/total_tests*100) if total_tests > 0 else 0:.1f}%)
+- Failed: {failed} ({(failed/total_tests*100) if total_tests > 0 else 0:.1f}%)
+- Exit Code: {result.returncode}
+
+**Individual Test Outcomes:**
 {json.dumps(test_results, indent=2)}
 
-Provide a brief, user-friendly summary that:
-1. Describes what functionality was tested (based on test names and steps)
-2. Highlights what passed and what failed
-3. Suggests potential issues if any tests failed
+**Raw Playwright Output:**
+{result.stdout[:1000]}
 
-Keep it concise (3-5 sentences) and non-technical."""
+**TASK: Generate a professional QA test report with the following structure:**
+
+1. **Executive Summary** (2-3 sentences)
+   - Overall test execution status
+   - Key findings and critical issues
+   - Recommendation (ship/hold/re-test)
+
+2. **Functionality Coverage Analysis** (bullet points)
+   - List each tested user journey/feature
+   - Specify expected vs actual behavior
+   - Identify any gaps in test coverage
+
+3. **Root Cause Analysis** (if failures exist)
+   - Technical reasons for each failure
+   - Whether failures are due to: test logic errors, application bugs, environmental issues, or data problems
+   - Impact severity (critical/high/medium/low)
+
+4. **Actionable Recommendations** (numbered list)
+   - Specific steps to fix failures
+   - Suggestions for test improvement
+   - Areas requiring additional test coverage
+
+**Style Guidelines:**
+- Use precise, technical language appropriate for engineers
+- Avoid unnecessary pleasantries or filler text
+- Focus on facts, data, and logical conclusions
+- Be direct and actionable
+- Maximum length: 400 words
+
+Begin your analysis now:"""
 
             response = client.messages.create(
                 model=config.llm.model,
-                max_tokens=500,
-                temperature=0.3,
+                max_tokens=1500,
+                temperature=0.2,  # Lower temperature for more consistent, factual output
                 messages=[{
                     "role": "user",
                     "content": summary_prompt
@@ -617,11 +647,41 @@ Keep it concise (3-5 sentences) and non-technical."""
             )
 
             ai_summary = response.content[0].text
-            print(f"✅ API: Generated AI summary: {ai_summary[:100]}...")
+            print(f"✅ API: Generated AI analysis ({len(ai_summary)} chars)")
 
         except Exception as e:
             print(f"⚠️ API: Failed to generate AI summary: {e}")
-            ai_summary = f"Test run completed with {passed}/{total_tests} tests passing."
+            ai_summary = f"Test run completed with {passed}/{total_tests} tests passing. AI analysis unavailable."
+
+        # Save comprehensive test report to test_run_output
+        report_dir = Path("backend/test_run_output/reports")
+        report_dir.mkdir(parents=True, exist_ok=True)
+
+        report_data = {
+            "run_id": run_id,
+            "suite_id": request.suite_id,
+            "timestamp": get_timestamp(),
+            "execution_summary": {
+                "total_tests": total_tests,
+                "passed": passed,
+                "failed": failed,
+                "pass_rate": f"{(passed/total_tests*100) if total_tests > 0 else 0:.1f}%",
+                "exit_code": result.returncode
+            },
+            "test_specifications": suite_data.get('tests', []),
+            "individual_results": test_results,
+            "ai_analysis": ai_summary,
+            "playwright_output": {
+                "stdout": result.stdout,
+                "stderr": result.stderr,
+                "raw_json": result.stdout if '{' in result.stdout else None
+            }
+        }
+
+        report_file = report_dir / f"{run_id}_report.json"
+        with open(report_file, 'w') as f:
+            json.dump(report_data, f, indent=2)
+        print(f"💾 API: Saved detailed report to {report_file}")
 
         return RunTestsResponse(
             suite_id=request.suite_id,
@@ -629,7 +689,7 @@ Keep it concise (3-5 sentences) and non-technical."""
             total_tests=total_tests,
             passed=passed,
             failed=failed,
-            report_path=None,
+            report_path=str(report_file),
             ai_summary=ai_summary,
             test_results=test_results if test_results else None
         )

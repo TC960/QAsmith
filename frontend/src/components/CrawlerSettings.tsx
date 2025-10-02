@@ -61,6 +61,66 @@ const CrawlerSettings: React.FC<CrawlerSettingsProps> = ({
     onSettingsChange(presets[preset]);
   };
 
+  // Calculate estimated time with proper logic
+  const calculateEstimatedTime = () => {
+    const {
+      max_pages,
+      page_delay_ms,
+      skip_embeddings,
+      screenshot
+    } = settings;
+
+    // Base time per page (loading + DOM ready)
+    let timePerPageMs = 1500; // ~1.5s base
+
+    // Add delays
+    timePerPageMs += page_delay_ms;
+
+    // Add screenshot time if enabled (viewport screenshots are fast)
+    if (screenshot) {
+      timePerPageMs += 800; // ~0.8s for viewport screenshot
+    }
+
+    // Add content extraction time based on mode
+    if (!skip_embeddings) {
+      // With embeddings: content extraction + AI embedding
+      timePerPageMs += 2500; // ~2.5s for fast extraction + embedding
+    } else {
+      // Fast mode: minimal extraction
+      timePerPageMs += 300; // ~0.3s for fast element extraction
+    }
+
+    // Total time in seconds
+    const totalSeconds = (max_pages * timePerPageMs) / 1000;
+
+    // Format output
+    if (totalSeconds < 60) {
+      return `${Math.ceil(totalSeconds)} seconds`;
+    } else {
+      const minutes = Math.ceil(totalSeconds / 60);
+      return `${minutes} minute${minutes > 1 ? 's' : ''}`;
+    }
+  };
+
+  // Get tooltip explanation
+  const getTimeEstimateTooltip = () => {
+    const {
+      max_pages,
+      page_delay_ms,
+      skip_embeddings,
+      screenshot
+    } = settings;
+
+    return `Calculation breakdown:
+• Base loading: ~1.5s/page
+• Page delay: ${(page_delay_ms / 1000).toFixed(1)}s/page
+• Screenshots: ${screenshot ? '~0.8s/page' : 'OFF'}
+• ${skip_embeddings ? 'Fast mode: ~0.3s/page' : 'Embeddings: ~2.5s/page'}
+• Total pages: ${max_pages}
+
+Note: Actual time may vary based on network speed and website complexity.`;
+  };
+
   return (
     <div className="crawler-settings">
       <div className="settings-header" onClick={() => setIsExpanded(!isExpanded)}>
@@ -218,9 +278,10 @@ const CrawlerSettings: React.FC<CrawlerSettingsProps> = ({
           {/* Estimated Time */}
           <div className="estimate-section">
             <div className="estimate">
-              ⏱️ Estimated time: <strong>
-                {Math.ceil((settings.max_pages * (settings.timeout + settings.page_delay_ms)) / 1000 / 60)} minutes
-              </strong>
+              <span title={getTimeEstimateTooltip()}>
+                ⏱️ Estimated time: <strong>{calculateEstimatedTime()}</strong>
+                <span className="help-icon" style={{ cursor: 'help', marginLeft: '5px' }}>ℹ️</span>
+              </span>
             </div>
           </div>
         </div>

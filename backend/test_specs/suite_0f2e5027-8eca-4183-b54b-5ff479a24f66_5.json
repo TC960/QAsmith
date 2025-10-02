@@ -1,0 +1,185 @@
+{
+  "suite_id": "suite_0f2e5027-8eca-4183-b54b-5ff479a24f66_5",
+  "crawl_id": "0f2e5027-8eca-4183-b54b-5ff479a24f66",
+  "test_count": 5,
+  "tests": [
+    {
+      "name": "GitHub AI Page Core Navigation Test",
+      "description": "Tests main navigation and link functionality on the GitHub AI features page",
+      "page_url": "https://github.com/features/ai",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/features/ai"
+        },
+        {
+          "action": "expect",
+          "selector": "h1",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "text=GitHub Models"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Models",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "text=GitHub Copilot"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Copilot",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "text=Register now"
+        },
+        {
+          "action": "expect",
+          "selector": "form[action*='signup']",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "GitHub Startups Page Authentication Flow",
+      "description": "Validates authentication options and registration flow on Startups page",
+      "page_url": "https://github.com/enterprise/startups",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/enterprise/startups"
+        },
+        {
+          "action": "expect",
+          "selector": "text=GitHub for Startups",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "text=Sign in"
+        },
+        {
+          "action": "expect",
+          "selector": "form[action*='session']",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "text=Register now"
+        },
+        {
+          "action": "expect",
+          "selector": "form[action*='signup']",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Collections Page Links Verification",
+      "description": "Verifies all major navigation links on Collections page are functional",
+      "page_url": "https://github.com/collections",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/collections"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Collections",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "text=GitHub Copilot"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Copilot",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goto",
+          "url": "https://github.com/collections"
+        },
+        {
+          "action": "click",
+          "selector": "text=GitHub Advanced Security"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Security",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Cross-Page Navigation Test",
+      "description": "Tests navigation between different GitHub feature pages",
+      "page_url": "https://github.com/features/ai",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/features/ai"
+        },
+        {
+          "action": "click",
+          "selector": "text=GitHub Spark"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Spark",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goto",
+          "url": "https://github.com/enterprise/startups"
+        },
+        {
+          "action": "click",
+          "selector": "text=GitHub Models"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Models",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Authentication Links Consistency Test",
+      "description": "Verifies authentication links are present and functional across pages",
+      "page_url": "https://github.com/collections",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/collections"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Sign in",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goto",
+          "url": "https://github.com/enterprise/startups"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Sign in",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Register now",
+          "assertion": "toBeVisible"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "suite_id": "suite_aaa0fbea-4cd1-49f4-ad19-a0ee90e57abd_4",
+  "crawl_id": "aaa0fbea-4cd1-49f4-ad19-a0ee90e57abd",
+  "test_count": 4,
+  "tests": [
+    {
+      "name": "Resources Articles Page Navigation Test",
+      "description": "Tests navigation and link functionality on the GitHub Resources Articles page",
+      "page_url": "https://github.com/resources/articles",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/resources/articles"
+        },
+        {
+          "action": "expect",
+          "selector": "h1",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Copilot')"
+        },
+        {
+          "action": "expect",
+          "selector": "text=GitHub Copilot",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goBack",
+          "url": ""
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Spark')"
+        },
+        {
+          "action": "expect",
+          "selector": "text=GitHub Spark",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "GitHub Mobile Page Functionality Test",
+      "description": "Verifies core functionality and links on GitHub Mobile page",
+      "page_url": "https://github.com/mobile",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/mobile"
+        },
+        {
+          "action": "expect",
+          "selector": "text=GitHub Mobile",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Register now.')"
+        },
+        {
+          "action": "expect",
+          "selector": "form[action='/signup']",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goBack",
+          "url": ""
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Universe 2025')"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Universe",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Diversity Page Links and Content Test",
+      "description": "Tests accessibility and content on GitHub Diversity page",
+      "page_url": "https://github.com/about/diversity",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/about/diversity"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Skip to content')"
+        },
+        {
+          "action": "expect",
+          "selector": "main",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Models')"
+        },
+        {
+          "action": "expect",
+          "selector": "text=GitHub Models",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goBack",
+          "url": ""
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Sign in')"
+        },
+        {
+          "action": "expect",
+          "selector": "form[action='/session']",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Cross-Page Navigation Test",
+      "description": "Tests common navigation elements across all three pages",
+      "page_url": "https://github.com",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/resources/articles"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Advanced Security')"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Advanced Security",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goto",
+          "url": "https://github.com/mobile"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Copilot')"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Copilot",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goto",
+          "url": "https://github.com/about/diversity"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Advanced Security')"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Advanced Security",
+          "assertion": "toBeVisible"
+        }
+      ]
+    }
+  ]
+}

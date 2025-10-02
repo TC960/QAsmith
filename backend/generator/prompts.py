@@ -16,10 +16,18 @@ Generate test cases that cover:
 
 REQUIREMENTS:
 - Return ONLY valid JSON, no explanations
-- Use stable selectors (data-testid, aria-label, or text when available)
+- **CRITICAL**: Use ONLY the selectors provided in the application map - do NOT make up or guess selectors
+- **CRITICAL**: Selectors MUST be UNIQUE - avoid generic selectors like 'h1', 'form', 'button' that match multiple elements
+- **CRITICAL**: AVOID selectors that commonly match hidden accessibility elements (like 'h1' which often matches sr-only headings)
+- **CRITICAL**: When using text selectors, include enough context to match only ONE VISIBLE element (e.g., 'Sign in to your account' not just 'Sign in')
+- **CRITICAL**: For heading assertions, use page title or specific visible heading text, NOT generic 'h1' selectors
+- When a selector is provided in the action description, use it exactly as shown
+- Use the selector_strategy that matches the provided selector (if specified)
+- Prefer specific selectors: data-testid > aria-label > unique visible text > CSS with IDs/classes > generic CSS
 - Each test should be independent and not rely on previous tests
 - Include clear assertions for expected outcomes
 - Be realistic about what data to use in forms
+- Avoid asserting visibility on generic elements - use specific content checks instead
 
 Output format:
 {
@@ -41,11 +49,19 @@ Output format:
         },
         {
           "action": "fill",
-          "selector": "[data-testid='email']",
+          "selector": "email",
           "selector_strategy": "test-id",
           "value": "user@example.com",
           "description": "Enter email",
           "expected_outcome": "Email field contains entered value"
+        },
+        {
+          "action": "submit",
+          "selector": "#login-form button[type='submit']",
+          "selector_strategy": "css",
+          "value": "",
+          "description": "Submit login form",
+          "expected_outcome": "Form is submitted"
         }
       ],
       "assertions": [

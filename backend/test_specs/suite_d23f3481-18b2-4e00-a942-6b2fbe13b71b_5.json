@@ -1,0 +1,218 @@
+{
+  "suite_id": "suite_d23f3481-18b2-4e00-a942-6b2fbe13b71b_5",
+  "crawl_id": "d23f3481-18b2-4e00-a942-6b2fbe13b71b",
+  "test_count": 5,
+  "tests": [
+    {
+      "name": "Industry Solutions Page Basic Navigation",
+      "description": "Tests main navigation and links on Industry Solutions page",
+      "page_url": "https://github.com/solutions/industry",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/solutions/industry"
+        },
+        {
+          "action": "expect",
+          "selector": "title",
+          "assertion": "toContain",
+          "value": "GitHub Industry Solutions"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Copilot')"
+        },
+        {
+          "action": "expect",
+          "selector": "body",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goto",
+          "url": "https://github.com/solutions/industry"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Register now')"
+        },
+        {
+          "action": "expect",
+          "selector": "form[action='/signup']",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "GitHub Actions Features Page",
+      "description": "Verifies GitHub Actions page functionality and links",
+      "page_url": "https://github.com/features/actions",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/features/actions"
+        },
+        {
+          "action": "expect",
+          "selector": "title",
+          "assertion": "toContain",
+          "value": "GitHub Actions"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Models')"
+        },
+        {
+          "action": "expect",
+          "selector": "body",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goto",
+          "url": "https://github.com/features/actions"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Sign in')"
+        },
+        {
+          "action": "expect",
+          "selector": "form[action='/session']",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Customer Stories Navigation Test",
+      "description": "Tests navigation and content on Customer Stories page",
+      "page_url": "https://github.com/customer-stories",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/customer-stories"
+        },
+        {
+          "action": "expect",
+          "selector": "title",
+          "assertion": "toContain",
+          "value": "Customer stories"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Skip to content')"
+        },
+        {
+          "action": "expect",
+          "selector": "main",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Universe 2025')"
+        },
+        {
+          "action": "expect",
+          "selector": "body",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Pricing Page Features Test",
+      "description": "Tests pricing page links and features",
+      "page_url": "https://github.com/pricing",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/pricing"
+        },
+        {
+          "action": "expect",
+          "selector": "title",
+          "assertion": "toContain",
+          "value": "Pricing"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Spark')"
+        },
+        {
+          "action": "expect",
+          "selector": "body",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goto",
+          "url": "https://github.com/pricing"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Advanced Security')"
+        },
+        {
+          "action": "expect",
+          "selector": "body",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goto",
+          "url": "https://github.com/pricing"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Actions')"
+        },
+        {
+          "action": "expect",
+          "selector": "body",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Cross-Page Navigation Test",
+      "description": "Tests navigation between different GitHub pages",
+      "page_url": "https://github.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/solutions/industry"
+        },
+        {
+          "action": "click",
+          "selector": "a[href='https://github.com/']"
+        },
+        {
+          "action": "expect",
+          "selector": "body",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goto",
+          "url": "https://github.com/features/actions"
+        },
+        {
+          "action": "click",
+          "selector": "a[href='https://github.com/']"
+        },
+        {
+          "action": "expect",
+          "selector": "body",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goto",
+          "url": "https://github.com/pricing"
+        },
+        {
+          "action": "click",
+          "selector": "a[href='https://github.com/']"
+        },
+        {
+          "action": "expect",
+          "selector": "body",
+          "assertion": "toBeVisible"
+        }
+      ]
+    }
+  ]
+}

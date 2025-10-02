@@ -1,0 +1,181 @@
+{
+  "suite_id": "suite_960e6320-6507-4b97-991a-9c7a0044dfd9_5",
+  "crawl_id": "960e6320-6507-4b97-991a-9c7a0044dfd9",
+  "test_count": 5,
+  "tests": [
+    {
+      "name": "Industry Solutions Page Navigation",
+      "description": "Tests basic navigation and link functionality on the Industry Solutions page",
+      "page_url": "https://github.com/solutions/industry",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/solutions/industry"
+        },
+        {
+          "action": "expect",
+          "selector": "h1",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Sign in')"
+        },
+        {
+          "action": "expect",
+          "selector": "#login",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goto",
+          "url": "https://github.com/solutions/industry"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Copilot')"
+        },
+        {
+          "action": "expect",
+          "selector": "text=GitHub Copilot",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Login Page Functionality",
+      "description": "Tests login form functionality and error handling",
+      "page_url": "https://github.com/login",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/login"
+        },
+        {
+          "action": "expect",
+          "selector": "#login",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "fill",
+          "selector": "input[name='login']",
+          "value": "testuser"
+        },
+        {
+          "action": "fill",
+          "selector": "input[name='password']",
+          "value": "wrongpassword"
+        },
+        {
+          "action": "click",
+          "selector": "input[type='submit']"
+        },
+        {
+          "action": "expect",
+          "selector": ".flash-error",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Forgot password?')"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Reset your password",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Duolingo Customer Story Page",
+      "description": "Tests navigation and content visibility on Duolingo story page",
+      "page_url": "https://github.com/customer-stories/duolingo",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/customer-stories/duolingo"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Duolingo",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Skip to content')"
+        },
+        {
+          "action": "expect",
+          "selector": "main",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Advanced Security')"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Advanced Security",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Homepage Logo Navigation",
+      "description": "Tests navigation back to homepage from different pages",
+      "page_url": "https://github.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/solutions/industry"
+        },
+        {
+          "action": "click",
+          "selector": "a[href='https://github.com/']"
+        },
+        {
+          "action": "expect",
+          "selector": ".home-campaign",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goto",
+          "url": "https://github.com/customer-stories/duolingo"
+        },
+        {
+          "action": "click",
+          "selector": "a[href='https://github.com/']"
+        },
+        {
+          "action": "expect",
+          "selector": ".home-campaign",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Page Load Error Handling",
+      "description": "Tests reload functionality when page fails to load",
+      "page_url": "https://github.com/login",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/login"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Reload')"
+        },
+        {
+          "action": "expect",
+          "selector": "#login",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": ".flash-error",
+          "assertion": "not.toBeVisible"
+        }
+      ]
+    }
+  ]
+}

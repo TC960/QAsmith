@@ -254,118 +254,64 @@ class PageAnalyzer:
         return forms
     
     async def extract_page_content(self, page: Page) -> Dict[str, Any]:
-        """Extract comprehensive page content for AI embeddings."""
+        """Extract FAST, lightweight page content for AI embeddings."""
         try:
             content_data = {}
-            
-            # Extract title
-            content_data["title"] = await page.title()
-            
-            # Extract meta description
-            try:
-                meta_desc = await page.locator('meta[name="description"]').get_attribute("content")
-                content_data["meta_description"] = meta_desc or ""
-            except:
-                content_data["meta_description"] = ""
-            
-            # Extract meta keywords
-            try:
-                meta_keywords = await page.locator('meta[name="keywords"]').get_attribute("content")
-                content_data["meta_keywords"] = meta_keywords or ""
-            except:
-                content_data["meta_keywords"] = ""
-            
-            # Extract main text content
-            try:
-                # Get body text content, excluding scripts and styles
-                body_text = await page.evaluate("""
-                    () => {
-                        // Remove script and style elements
-                        const clone = document.body.cloneNode(true);
-                        clone.querySelectorAll('script, style, noscript').forEach(el => el.remove());
-                        
-                        // Get text content
-                        let text = clone.textContent || clone.innerText || '';
-                        
-                        // Clean whitespace
-                        text = text.replace(/\\s+/g, ' ').trim();
-                        
-                        return text;
-                    }
-                """)
-                content_data["content_text"] = body_text[:10000]  # Limit for storage
-            except Exception as e:
-                print(f"Error extracting body text: {e}")
-                content_data["content_text"] = ""
-            
-            # Extract header hierarchy (h1-h6)
-            headers = {}
-            for i in range(1, 7):
-                try:
-                    header_elements = await page.locator(f"h{i}").all_text_contents()
-                    headers[f"h{i}"] = [h.strip() for h in header_elements if h.strip()]
-                except:
-                    headers[f"h{i}"] = []
-            
-            content_data["headers"] = headers
-            
-            # Extract images with alt text
-            try:
-                images = await page.evaluate("""
-                    () => {
-                        const imgs = Array.from(document.querySelectorAll('img'));
-                        return imgs.slice(0, 50).map(img => ({
-                            src: img.src,
-                            alt: img.alt || '',
-                            title: img.title || ''
-                        }));
-                    }
-                """)
-                content_data["images"] = images
-            except:
-                content_data["images"] = []
-            
-            # Extract links for content analysis
-            try:
-                links = await page.evaluate("""
-                    () => {
-                        const links = Array.from(document.querySelectorAll('a[href]'));
-                        return links.slice(0, 100).map(a => ({
-                            href: a.href,
-                            text: a.textContent?.trim() || '',
-                            title: a.title || ''
-                        }));
-                    }
-                """)
-                content_data["links"] = links
-            except:
-                content_data["links"] = []
-            
-            # Calculate content metrics
-            content_data["content_length"] = len(content_data.get("content_text", ""))
-            content_data["link_count"] = len(content_data.get("links", []))
-            content_data["image_count"] = len(content_data.get("images", []))
-            
-            # Create embedding text (combine title, description, headers, and content)
+
+            # Extract everything in ONE evaluate call for speed
+            extracted = await page.evaluate("""
+                () => {
+                    // Title
+                    const title = document.title || '';
+
+                    // Meta description
+                    const metaDesc = document.querySelector('meta[name="description"]')?.content || '';
+
+                    // H1 tags only (most important)
+                    const h1s = Array.from(document.querySelectorAll('h1'))
+                        .map(h => h.textContent?.trim())
+                        .filter(t => t);
+
+                    // First 500 chars of visible text (MUCH faster than full body)
+                    const mainContent = document.querySelector('main, article, [role="main"], body');
+                    let text = mainContent?.textContent || '';
+                    text = text.replace(/\\s+/g, ' ').trim().substring(0, 500);
+
+                    return {
+                        title,
+                        meta_description: metaDesc,
+                        h1_tags: h1s,
+                        content_snippet: text
+                    };
+                }
+            """)
+
+            content_data = {
+                "title": extracted.get("title", ""),
+                "meta_description": extracted.get("meta_description", ""),
+                "headers": {"h1": extracted.get("h1_tags", [])},
+                "content_text": extracted.get("content_snippet", ""),
+                "content_length": len(extracted.get("content_snippet", ""))
+            }
+
+            # Create embedding text (lightweight - just title, description, h1s, snippet)
             embedding_text_parts = [
                 content_data.get("title", ""),
-                content_data.get("meta_description", ""),
-                content_data.get("meta_keywords", ""),
+                content_data.get("meta_description", "")
             ]
-            
-            # Add headers
-            for level, header_texts in headers.items():
-                embedding_text_parts.extend(header_texts)
-            
-            # Add main content
+
+            # Add h1 headers
+            embedding_text_parts.extend(content_data["headers"].get("h1", []))
+
+            # Add content snippet
             embedding_text_parts.append(content_data.get("content_text", ""))
-            
+
             # Combine and clean
-            embedding_text = " ".join(embedding_text_parts)
+            embedding_text = " ".join([p for p in embedding_text_parts if p])
             embedding_text = re.sub(r'\s+', ' ', embedding_text).strip()
-            
-            content_data["embedding_text"] = embedding_text[:8000]  # Limit for OpenAI API
-            
+
+            content_data["embedding_text"] = embedding_text[:2000]  # Limit to 2000 chars (much faster)
+
             return content_data
             
         except Exception as e:
@@ -373,13 +319,8 @@ class PageAnalyzer:
             return {
                 "title": "",
                 "meta_description": "",
-                "meta_keywords": "",
                 "content_text": "",
                 "headers": {},
-                "images": [],
-                "links": [],
                 "content_length": 0,
-                "link_count": 0,
-                "image_count": 0,
                 "embedding_text": ""
             }

@@ -432,8 +432,8 @@ class GraphDB:
                         depth: p.depth
                     }) as nodes,
                     collect(DISTINCT {
-                        source: p.page_id,
-                        target: target.page_id,
+                        from_url: p.url,
+                        to_url: target.url,
                         label: l.link_text
                     }) as edges
             """, crawl_id=crawl_id)
@@ -441,7 +441,7 @@ class GraphDB:
             record = result.single()
             return {
                 "nodes": record["nodes"] if record else [],
-                "edges": [e for e in (record["edges"] if record else []) if e["target"]]
+                "edges": [e for e in (record["edges"] if record else []) if e["to_url"]]
             }
 
     def list_all_crawls(self) -> List[Dict[str, Any]]:

@@ -53,6 +53,12 @@ TEST_STEP_TEMPLATES = {
     ActionType.UNCHECK: "    await {selector}.uncheck();",
 
     ActionType.EXPECT: "    await expect({selector}).{assertion}({value});",
+
+    ActionType.GO_BACK: "    await page.goBack();",
+
+    ActionType.RELOAD: "    await page.reload();",
+
+    ActionType.WAIT: "    await page.waitForTimeout(1000); // Wait 1 second",
 }
 
 

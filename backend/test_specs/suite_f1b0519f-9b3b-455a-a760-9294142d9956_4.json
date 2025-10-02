@@ -1,0 +1,194 @@
+{
+  "suite_id": "suite_f1b0519f-9b3b-455a-a760-9294142d9956_4",
+  "crawl_id": "f1b0519f-9b3b-455a-a760-9294142d9956",
+  "test_count": 4,
+  "tests": [
+    {
+      "name": "About GitHub Page Navigation Test",
+      "description": "Verifies core navigation and link functionality on the About page",
+      "page_url": "https://github.com/about",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/about"
+        },
+        {
+          "action": "expect",
+          "selector": "title",
+          "assertion": "toContain",
+          "value": "About GitHub"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Copilot')"
+        },
+        {
+          "action": "expect",
+          "selector": "h1",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goBack"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Actions')"
+        },
+        {
+          "action": "expect",
+          "selector": "h1",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Universe 2025')"
+        },
+        {
+          "action": "expect",
+          "selector": "h1",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Why GitHub Page Content Test",
+      "description": "Tests content visibility and link functionality on Why GitHub page",
+      "page_url": "https://github.com/why-github",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/why-github"
+        },
+        {
+          "action": "expect",
+          "selector": "title",
+          "assertion": "toContain",
+          "value": "Why Choose GitHub"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Register now.')"
+        },
+        {
+          "action": "expect",
+          "selector": "form",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goBack"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Copilot')"
+        },
+        {
+          "action": "expect",
+          "selector": "h1",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Models')"
+        },
+        {
+          "action": "expect",
+          "selector": "h1",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Mercado Libre Customer Story Page Test",
+      "description": "Validates customer story page content and navigation",
+      "page_url": "https://github.com/customer-stories/mercado-libre",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/customer-stories/mercado-libre"
+        },
+        {
+          "action": "expect",
+          "selector": "title",
+          "assertion": "toContain",
+          "value": "Mercado Libre"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Sign in')"
+        },
+        {
+          "action": "expect",
+          "selector": "form",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goBack"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Spark')"
+        },
+        {
+          "action": "expect",
+          "selector": "h1",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Advanced Security')"
+        },
+        {
+          "action": "expect",
+          "selector": "h1",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Cross-Page Navigation Test",
+      "description": "Tests navigation between different GitHub pages",
+      "page_url": "https://github.com/about",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://github.com/about"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Copilot')"
+        },
+        {
+          "action": "expect",
+          "selector": "h1",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goto",
+          "url": "https://github.com/why-github"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Models')"
+        },
+        {
+          "action": "expect",
+          "selector": "h1",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "goto",
+          "url": "https://github.com/customer-stories/mercado-libre"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('GitHub Advanced Security')"
+        },
+        {
+          "action": "expect",
+          "selector": "h1",
+          "assertion": "toBeVisible"
+        }
+      ]
+    }
+  ]
+}

@@ -68,15 +68,19 @@ class TestGenerator:
 
             if page.forms:
                 page_summary += "Forms:\n"
-                for form in page.forms:
+                for i, form in enumerate(page.forms, 1):
                     fields = ", ".join([f["name"] for f in form["fields"]])
-                    page_summary += f"  - {form['method']} form with fields: {fields}\n"
+                    # Include form selector if available for specificity
+                    form_id = form.get("id", "")
+                    form_selector = f"#{form_id}" if form_id else form.get("selector", "form")
+                    page_summary += f"  - Form {i} (selector: {form_selector}): {form['method']} with fields: {fields}\n"
 
             if page.actions:
                 page_summary += f"Actions ({len(page.actions)}):\n"
                 # Limit to first 10 actions to avoid token limits
                 for action in page.actions[:10]:
-                    page_summary += f"  - {action.description}\n"
+                    selector_info = f" (selector: {action.element.selector}, strategy: {action.element.selector_strategy.value})" if action.element.selector else ""
+                    page_summary += f"  - {action.description}{selector_info}\n"
 
             summary_parts.append(page_summary)
 
