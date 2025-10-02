@@ -1,0 +1,88 @@
+{
+  "run_id": "run_suite_71fa2a60_3c1f828e",
+  "suite_id": "suite_71fa2a60",
+  "timestamp": "2025-10-02T15:59:40.204559",
+  "execution_summary": {
+    "total_tests": 3,
+    "passed": 3,
+    "failed": 0,
+    "pass_rate": "100.0%",
+    "exit_code": 0
+  },
+  "test_specifications": [
+    {
+      "test_id": "nav_001",
+      "name": "Navigate to homepage",
+      "description": "Verify user can access homepage",
+      "page_url": "https://rraval.vercel.app/work",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://rraval.vercel.app/",
+          "description": "Navigate to homepage",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "nav_002",
+      "name": "Navigate to non-existent work page",
+      "description": "Verify 404 page shown for invalid routes",
+      "page_url": "https://rraval.vercel.app/work",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://rraval.vercel.app/work",
+          "description": "Navigate to non-existent work page",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "nav_003",
+      "name": "Navigate to invalid URL",
+      "description": "Verify 404 handling for random invalid URLs",
+      "page_url": "https://rraval.vercel.app/work",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://rraval.vercel.app/invalid-page-xyz",
+          "description": "Navigate to invalid URL",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    }
+  ],
+  "individual_results": [
+    {
+      "name": "Navigate to homepage",
+      "status": "passed",
+      "error": null
+    },
+    {
+      "name": "Navigate to non-existent work page",
+      "status": "passed",
+      "error": null
+    },
+    {
+      "name": "Navigate to invalid URL",
+      "status": "passed",
+      "error": null
+    }
+  ],
+  "ai_analysis": "# E2E Test Execution Report - Suite ID: suite_71fa2a60\n**Date:** [Current Date]\n\n## 1. Executive Summary\nAll 3 navigation-focused E2E tests executed successfully with 100% pass rate. Test coverage validated basic routing functionality and 404 error handling scenarios. Based on results, recommendation is to SHIP with additional coverage recommendations.\n\n## 2. Functionality Coverage Analysis\n**Tested Scenarios:**\n- Homepage navigation (nav_001)\n  * Expected: Successfully load homepage\n  * Actual: \u2713 Page loaded correctly\n\n- Non-existent work page (nav_002)\n  * Expected: Display 404 page for /work route\n  * Actual: \u2713 404 handling confirmed\n\n- Random invalid URL (nav_003)\n  * Expected: Display 404 page for invalid route\n  * Actual: \u2713 404 handling confirmed\n\n**Coverage Gaps:**\n- No validation of 404 page content/structure\n- Missing tests for internal navigation flows\n- No performance metrics collected\n- Absence of cross-browser testing\n- No mobile viewport testing\n\n## 3. Root Cause Analysis\nNo failures to analyze in current test execution.\n\n## 4. Actionable Recommendations\n1. Expand Test Coverage:\n   - Add assertions for 404 page content verification\n   - Implement internal navigation flow tests\n   - Include cross-browser compatibility tests\n   - Add mobile responsive testing scenarios\n\n2. Enhance Test Quality:\n   - Add performance timing measurements\n   - Implement visual regression testing\n   - Add network error handling scenarios\n   - Include accessibility testing\n\n3. Technical Improvements:\n   - Configure parallel test execution\n   - Implement retry logic for flaky scenarios\n   - Add screenshot capture on navigation completion\n   - Include console error logging\n\n4. Test Data Management:\n   - Create test data fixtures for URLs\n   - Document expected behaviors for each route\n   - Add negative testing scenarios\n\nPriority: Medium\nTimeline: Implement recommendations before next release cycle to ensure comprehensive coverage of navigation functionality.",
+  "playwright_output": {
+    "stdout": "{\n  \"config\": {\n    \"rootDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend\",\n    \"forbidOnly\": false,\n    \"fullyParallel\": false,\n    \"globalSetup\": null,\n    \"globalTeardown\": null,\n    \"globalTimeout\": 0,\n    \"grep\": {},\n    \"grepInvert\": null,\n    \"maxFailures\": 0,\n    \"metadata\": {\n      \"actualWorkers\": 1\n    },\n    \"preserveOutput\": \"always\",\n    \"reporter\": [\n      [\n        \"json\"\n      ]\n    ],\n    \"reportSlowTests\": {\n      \"max\": 5,\n      \"threshold\": 300000\n    },\n    \"quiet\": false,\n    \"projects\": [\n      {\n        \"outputDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results\",\n        \"repeatEach\": 1,\n        \"retries\": 0,\n        \"metadata\": {\n          \"actualWorkers\": 1\n        },\n        \"id\": \"\",\n        \"name\": \"\",\n        \"testDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend\",\n        \"testIgnore\": [],\n        \"testMatch\": [\n          \"**/*.@(spec|test).?(c|m)[jt]s?(x)\"\n        ],\n        \"timeout\": 30000\n      }\n    ],\n    \"shard\": null,\n    \"updateSnapshots\": \"missing\",\n    \"updateSourceMethod\": \"patch\",\n    \"version\": \"1.55.1\",\n    \"workers\": 4,\n    \"webServer\": null\n  },\n  \"suites\": [\n    {\n      \"title\": \"test_specs/compiled/suite_71fa2a60.spec.ts\",\n      \"file\": \"test_specs/compiled/suite_71fa2a60.spec.ts\",\n      \"column\": 0,\n      \"line\": 0,\n      \"specs\": [],\n      \"suites\": [\n        {\n          \"title\": \"Generated E2E Tests\",\n          \"file\": \"test_specs/compiled/suite_71fa2a60.spec.ts\",\n          \"line\": 3,\n          \"column\": 6,\n          \"specs\": [\n            {\n              \"title\": \"Navigate to homepage\",\n              \"ok\": true,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"passed\",\n                      \"duration\": 1095,\n                      \"errors\": [],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T15:59:27.152Z\",\n                      \"annotations\": [],\n                      \"attachments\": []\n                    }\n                  ],\n                  \"status\": \"expected\"\n                }\n              ],\n              \"id\": \"3da75494f5ea90348ef1-07334020d8744e8783cc\",\n              \"file\": \"test_specs/compiled/suite_71fa2a60.spec.ts\",\n              \"line\": 8,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Navigate to non-existent work page\",\n              \"ok\": true,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"passed\",\n                      \"duration\": 660,\n                      \"errors\": [],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T15:59:29.033Z\",\n                      \"annotations\": [],\n                      \"attachments\": []\n                    }\n                  ],\n                  \"status\": \"expected\"\n                }\n              ],\n              \"id\": \"3da75494f5ea90348ef1-ffafa14c289213d9fcdd\",\n              \"file\": \"test_specs/compiled/suite_71fa2a60.spec.ts\",\n              \"line\": 17,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Navigate to invalid URL\",\n              \"ok\": true,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"passed\",\n                      \"duration\": 623,\n                      \"errors\": [],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T15:59:29.702Z\",\n                      \"annotations\": [],\n                      \"attachments\": []\n                    }\n                  ],\n                  \"status\": \"expected\"\n                }\n              ],\n              \"id\": \"3da75494f5ea90348ef1-ad39041c3188d71f8339\",\n              \"file\": \"test_specs/compiled/suite_71fa2a60.spec.ts\",\n              \"line\": 26,\n              \"column\": 7\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"errors\": [],\n  \"stats\": {\n    \"startTime\": \"2025-10-02T15:59:26.833Z\",\n    \"duration\": 3668.434,\n    \"expected\": 3,\n    \"skipped\": 0,\n    \"unexpected\": 0,\n    \"flaky\": 0\n  }\n}\n",
+    "stderr": "",
+    "raw_json": "{\n  \"config\": {\n    \"rootDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend\",\n    \"forbidOnly\": false,\n    \"fullyParallel\": false,\n    \"globalSetup\": null,\n    \"globalTeardown\": null,\n    \"globalTimeout\": 0,\n    \"grep\": {},\n    \"grepInvert\": null,\n    \"maxFailures\": 0,\n    \"metadata\": {\n      \"actualWorkers\": 1\n    },\n    \"preserveOutput\": \"always\",\n    \"reporter\": [\n      [\n        \"json\"\n      ]\n    ],\n    \"reportSlowTests\": {\n      \"max\": 5,\n      \"threshold\": 300000\n    },\n    \"quiet\": false,\n    \"projects\": [\n      {\n        \"outputDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results\",\n        \"repeatEach\": 1,\n        \"retries\": 0,\n        \"metadata\": {\n          \"actualWorkers\": 1\n        },\n        \"id\": \"\",\n        \"name\": \"\",\n        \"testDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend\",\n        \"testIgnore\": [],\n        \"testMatch\": [\n          \"**/*.@(spec|test).?(c|m)[jt]s?(x)\"\n        ],\n        \"timeout\": 30000\n      }\n    ],\n    \"shard\": null,\n    \"updateSnapshots\": \"missing\",\n    \"updateSourceMethod\": \"patch\",\n    \"version\": \"1.55.1\",\n    \"workers\": 4,\n    \"webServer\": null\n  },\n  \"suites\": [\n    {\n      \"title\": \"test_specs/compiled/suite_71fa2a60.spec.ts\",\n      \"file\": \"test_specs/compiled/suite_71fa2a60.spec.ts\",\n      \"column\": 0,\n      \"line\": 0,\n      \"specs\": [],\n      \"suites\": [\n        {\n          \"title\": \"Generated E2E Tests\",\n          \"file\": \"test_specs/compiled/suite_71fa2a60.spec.ts\",\n          \"line\": 3,\n          \"column\": 6,\n          \"specs\": [\n            {\n              \"title\": \"Navigate to homepage\",\n              \"ok\": true,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"passed\",\n                      \"duration\": 1095,\n                      \"errors\": [],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T15:59:27.152Z\",\n                      \"annotations\": [],\n                      \"attachments\": []\n                    }\n                  ],\n                  \"status\": \"expected\"\n                }\n              ],\n              \"id\": \"3da75494f5ea90348ef1-07334020d8744e8783cc\",\n              \"file\": \"test_specs/compiled/suite_71fa2a60.spec.ts\",\n              \"line\": 8,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Navigate to non-existent work page\",\n              \"ok\": true,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"passed\",\n                      \"duration\": 660,\n                      \"errors\": [],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T15:59:29.033Z\",\n                      \"annotations\": [],\n                      \"attachments\": []\n                    }\n                  ],\n                  \"status\": \"expected\"\n                }\n              ],\n              \"id\": \"3da75494f5ea90348ef1-ffafa14c289213d9fcdd\",\n              \"file\": \"test_specs/compiled/suite_71fa2a60.spec.ts\",\n              \"line\": 17,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Navigate to invalid URL\",\n              \"ok\": true,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"passed\",\n                      \"duration\": 623,\n                      \"errors\": [],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T15:59:29.702Z\",\n                      \"annotations\": [],\n                      \"attachments\": []\n                    }\n                  ],\n                  \"status\": \"expected\"\n                }\n              ],\n              \"id\": \"3da75494f5ea90348ef1-ad39041c3188d71f8339\",\n              \"file\": \"test_specs/compiled/suite_71fa2a60.spec.ts\",\n              \"line\": 26,\n              \"column\": 7\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"errors\": [],\n  \"stats\": {\n    \"startTime\": \"2025-10-02T15:59:26.833Z\",\n    \"duration\": 3668.434,\n    \"expected\": 3,\n    \"skipped\": 0,\n    \"unexpected\": 0,\n    \"flaky\": 0\n  }\n}\n"
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "run_id": "run_suite_ea41d9cd_f0ab1dbe",
+  "suite_id": "suite_ea41d9cd",
+  "timestamp": "2025-10-02T18:27:23.526655",
+  "execution_summary": {
+    "total_tests": 5,
+    "passed": 2,
+    "failed": 3,
+    "pass_rate": "40.0%",
+    "exit_code": 1
+  },
+  "test_specifications": [
+    {
+      "test_id": "CVS_HOME_001",
+      "name": "Verify CVS Homepage Loads Successfully",
+      "description": "Validate that the CVS homepage loads with all key elements visible",
+      "page_url": "http://cvs.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "http://cvs.com/",
+          "description": "Navigate to CVS homepage",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "CVS_SEARCH_001",
+      "name": "Verify Search Functionality",
+      "description": "Test the search functionality with a valid product name",
+      "page_url": "http://cvs.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "http://cvs.com/",
+          "description": "Navigate to CVS homepage",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "fill",
+          "selector": "[data-testid='search-input']",
+          "selector_strategy": "css",
+          "value": "aspirin",
+          "description": "Enter search term in search box",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "submit",
+          "selector": "[data-testid='search-submit']",
+          "selector_strategy": "css",
+          "value": "",
+          "description": "Submit search",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "CVS_PHARMACY_001",
+      "name": "Access Pharmacy Services Section",
+      "description": "Verify navigation to pharmacy services section",
+      "page_url": "http://cvs.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "http://cvs.com/",
+          "description": "Navigate to CVS homepage",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "Pharmacy",
+          "selector_strategy": "text",
+          "value": "",
+          "description": "Click on Pharmacy link in navigation",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "CVS_STORE_LOCATOR_001",
+      "name": "Test Store Locator Functionality",
+      "description": "Verify store locator search with valid zip code",
+      "page_url": "http://cvs.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "http://cvs.com/",
+          "description": "Navigate to CVS homepage",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "Store Locator",
+          "selector_strategy": "text",
+          "value": "",
+          "description": "Click on Store Locator link",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "fill",
+          "selector": "[data-testid='store-search-input']",
+          "selector_strategy": "css",
+          "value": "02110",
+          "description": "Enter ZIP code",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "submit",
+          "selector": "[data-testid='store-search-submit']",
+          "selector_strategy": "css",
+          "value": "",
+          "description": "Submit store search",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "CVS_MINUTE_CLINIC_001",
+      "name": "Access MinuteClinic Services",
+      "description": "Verify navigation to MinuteClinic services section",
+      "page_url": "http://cvs.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "http://cvs.com/",
+          "description": "Navigate to CVS homepage",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "MinuteClinic",
+          "selector_strategy": "text",
+          "value": "",
+          "description": "Click on MinuteClinic link",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    }
+  ],
+  "individual_results": [
+    {
+      "name": "Verify CVS Homepage Loads Successfully",
+      "status": "passed",
+      "error": null
+    },
+    {
+      "name": "Verify Search Functionality",
+      "status": "failed",
+      "error": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+    },
+    {
+      "name": "Access Pharmacy Services Section",
+      "status": "failed",
+      "error": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+    },
+    {
+      "name": "Test Store Locator Functionality",
+      "status": "failed",
+      "error": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+    },
+    {
+      "name": "Access MinuteClinic Services",
+      "status": "passed",
+      "error": null
+    }
+  ],
+  "ai_analysis": "# E2E Test Execution Report - CVS.com\n**Date**: [Current Date] | **Suite ID**: suite_ea41d9cd | **Build**: Production\n\n## Executive Summary\nCritical test suite failure with 60% of E2E tests failing due to timeout issues, primarily affecting core user journeys including search, pharmacy access, and store location features. Only homepage and MinuteClinic navigation passed successfully. Given the critical nature of failed functionalities, recommendation is to HOLD deployment and prioritize immediate investigation of performance degradation.\n\n## Functionality Coverage Analysis\n\u2705 **Passing Flows**:\n- Homepage loading and rendering\n- MinuteClinic section navigation\n\n\u274c **Failed Flows**:\n- Product search functionality\n- Pharmacy services access\n- Store locator with ZIP code search\n\n**Coverage Gaps Identified**:\n- No assertions for content validation after navigation\n- Missing error handling scenarios\n- Lack of performance threshold validations\n\n## Root Cause Analysis\n1. **Search Functionality (CVS_SEARCH_001)**\n   - Cause: 30s timeout exceeded during search execution\n   - Type: Performance degradation\n   - Severity: Critical\n   - Impact: Blocks core e-commerce functionality\n\n2. **Pharmacy Services (CVS_PHARMACY_001)**\n   - Cause: Navigation timeout after clicking Pharmacy link\n   - Type: Potential server-side latency\n   - Severity: Critical\n   - Impact: Blocks access to prescription services\n\n3. **Store Locator (CVS_STORE_LOCATOR_001)**\n   - Cause: Timeout during store search submission\n   - Type: API response delay or frontend rendering issue\n   - Severity: High\n   - Impact: Prevents store discovery\n\n## Actionable Recommendations\n1. **Immediate Actions**\n   - Increase test timeout threshold to 60s temporarily to validate if issues are timeout-related\n   - Deploy performance monitoring tools to identify bottlenecks\n   - Review server logs during test execution timeframe\n\n2. **Test Framework Improvements**\n   - Implement custom wait conditions instead of fixed timeouts\n   - Add performance baseline assertions\n   - Include network request monitoring\n   - Add retry logic for flaky operations\n\n3. **Additional Test Coverage Needed**\n   - API health checks before UI interactions\n   - Error state handling\n   - Load testing for search and store locator endpoints\n   - Cross-browser compatibility verification\n\n4. **Performance Optimization**\n   - Analyze server response times for affected endpoints\n   - Review frontend rendering performance\n   - Implement caching where appropriate\n\n**Next Steps**: Schedule immediate investigation with DevOps and Backend teams to address performance degradation before re-running test suite.",
+  "playwright_output": {
+    "stdout": "{\n  \"config\": {\n    \"rootDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend\",\n    \"forbidOnly\": false,\n    \"fullyParallel\": false,\n    \"globalSetup\": null,\n    \"globalTeardown\": null,\n    \"globalTimeout\": 0,\n    \"grep\": {},\n    \"grepInvert\": null,\n    \"maxFailures\": 0,\n    \"metadata\": {\n      \"actualWorkers\": 1\n    },\n    \"preserveOutput\": \"always\",\n    \"reporter\": [\n      [\n        \"json\"\n      ]\n    ],\n    \"reportSlowTests\": {\n      \"max\": 5,\n      \"threshold\": 300000\n    },\n    \"quiet\": false,\n    \"projects\": [\n      {\n        \"outputDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results\",\n        \"repeatEach\": 1,\n        \"retries\": 0,\n        \"metadata\": {\n          \"actualWorkers\": 1\n        },\n        \"id\": \"\",\n        \"name\": \"\",\n        \"testDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend\",\n        \"testIgnore\": [],\n        \"testMatch\": [\n          \"**/*.@(spec|test).?(c|m)[jt]s?(x)\"\n        ],\n        \"timeout\": 30000\n      }\n    ],\n    \"shard\": null,\n    \"updateSnapshots\": \"missing\",\n    \"updateSourceMethod\": \"patch\",\n    \"version\": \"1.55.1\",\n    \"workers\": 4,\n    \"webServer\": null\n  },\n  \"suites\": [\n    {\n      \"title\": \"test_specs/compiled/suite_ea41d9cd.spec.ts\",\n      \"file\": \"test_specs/compiled/suite_ea41d9cd.spec.ts\",\n      \"column\": 0,\n      \"line\": 0,\n      \"specs\": [],\n      \"suites\": [\n        {\n          \"title\": \"Generated E2E Tests\",\n          \"file\": \"test_specs/compiled/suite_ea41d9cd.spec.ts\",\n          \"line\": 3,\n          \"column\": 6,\n          \"specs\": [\n            {\n              \"title\": \"Verify CVS Homepage Loads Successfully\",\n              \"ok\": true,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"passed\",\n                      \"duration\": 4822,\n                      \"errors\": [],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T18:25:25.713Z\",\n                      \"annotations\": [],\n                      \"attachments\": []\n                    }\n                  ],\n                  \"status\": \"expected\"\n                }\n              ],\n              \"id\": \"3f3086c94752d98048eb-9d497844b41ce51a5e01\",\n              \"file\": \"test_specs/compiled/suite_ea41d9cd.spec.ts\",\n              \"line\": 8,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Verify Search Functionality\",\n              \"ok\": false,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"timedOut\",\n                      \"duration\": 30099,\n                      \"error\": {\n                        \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\",\n                        \"stack\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                      },\n                      \"errors\": [\n                        {\n                          \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                        },\n                        {\n                          \"location\": {\n                            \"file\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_ea41d9cd.spec.ts\",\n                            \"column\": 62,\n                            \"line\": 23\n                          },\n                          \"message\": \"Error: locator.fill: Test timeout of 30000ms exceeded.\\nCall log:\\n\\u001b[2m  - waiting for getByTestId('[data-testid=\\\\'search-input\\\\']')\\u001b[22m\\n\\n\\n  21 |     await page.goto('http://cvs.com/');\\n  22 |     // Step 2: Enter search term in search box\\n> 23 |     await page.getByTestId('[data-testid=\\\\'search-input\\\\']').fill('aspirin');\\n     |                                                              ^\\n  24 |     // Step 3: Submit search\\n  25 |     await page.getByTestId('[data-testid=\\\\'search-submit\\\\']').click(); // Submit form\\n  26 |\\n    at /Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_ea41d9cd.spec.ts:23:62\"\n                        }\n                      ],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T18:25:31.725Z\",\n                      \"annotations\": [],\n                      \"attachments\": [\n                        {\n                          \"name\": \"error-context\",\n                          \"contentType\": \"text/markdown\",\n                          \"path\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results/test_specs-compiled-suite_-5fc69-Verify-Search-Functionality/error-context.md\"\n                        }\n                      ]\n                    }\n                  ],\n                  \"status\": \"unexpected\"\n                }\n              ],\n              \"id\": \"3f3086c94752d98048eb-05df9b30828ed5b93779\",\n              \"file\": \"test_specs/compiled/suite_ea41d9cd.spec.ts\",\n              \"line\": 17,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Access Pharmacy Services Section\",\n              \"ok\": false,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 1,\n                      \"parallelIndex\": 0,\n                      \"status\": \"timedOut\",\n                      \"duration\": 30105,\n                      \"error\": {\n                        \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\",\n                        \"stack\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                      },\n                      \"errors\": [\n                        {\n                          \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                        },\n                        {\n                          \"location\": {\n                            \"file\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_ea41d9cd.spec.ts\",\n                            \"column\": 46,\n                            \"line\": 36\n                          },\n                          \"message\": \"Error: locator.click: Test timeout of 30000ms exceeded.\\nCall log:\\n\\u001b[2m  - waiting for getByText('Pharmacy').first()\\u001b[22m\\n\\u001b[2m    - locator resolved to <a target=\\\"_self\\\" c-id=\\\"28.8.4.0\\\" href=\\\"/pharmacy/v2/\\\" class=\\\"sc-cvs-header-menu-item\\\">\u2026</a>\\u001b[22m\\n\\u001b[2m  - attempting click action\\u001b[22m\\n\\u001b[2m    - waiting for element to be visible, enabled and stable\\u001b[22m\\n\\u001b[2m  - element was detached from the DOM, retrying\\u001b[22m\\n\\u001b[2m    - locator resolved to <h3 class=\\\"head3\\\">Get what you need from the pharmacy</h3>\\u001b[22m\\n\\u001b[2m  - attempting click action\\u001b[22m\\n\\u001b[2m    2 \u00d7 waiting for element to be visible, enabled and stable\\u001b[22m\\n\\u001b[2m      - element is not visible\\u001b[22m\\n\\u001b[2m    - retrying click action\\u001b[22m\\n\\u001b[2m    - waiting 20ms\\u001b[22m\\n\\u001b[2m    2 \u00d7 waiting for element to be visible, enabled and stable\\u001b[22m\\n\\u001b[2m      - element is not visible\\u001b[22m\\n\\u001b[2m    - retrying click action\\u001b[22m\\n\\u001b[2m      - waiting 100ms\\u001b[22m\\n\\u001b[2m    45 \u00d7 waiting for element to be visible, enabled and stable\\u001b[22m\\n\\u001b[2m       - element is not visible\\u001b[22m\\n\\u001b[2m     - retrying click action\\u001b[22m\\n\\u001b[2m       - waiting 500ms\\u001b[22m\\n\\n\\n  34 |     await page.goto('http://cvs.com/');\\n  35 |     // Step 2: Click on Pharmacy link in navigation\\n> 36 |     await page.getByText('Pharmacy').first().click();\\n     |                                              ^\\n  37 |\\n  38 |     // No explicit assertions\\n  39 |   });\\n    at /Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_ea41d9cd.spec.ts:36:46\"\n                        }\n                      ],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T18:26:02.295Z\",\n                      \"annotations\": [],\n                      \"attachments\": [\n                        {\n                          \"name\": \"error-context\",\n                          \"contentType\": \"text/markdown\",\n                          \"path\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results/test_specs-compiled-suite_-1e8dd-s-Pharmacy-Services-Section/error-context.md\"\n                        }\n                      ]\n                    }\n                  ],\n                  \"status\": \"unexpected\"\n                }\n              ],\n              \"id\": \"3f3086c94752d98048eb-9eefdc205f4eb20a2cac\",\n              \"file\": \"test_specs/compiled/suite_ea41d9cd.spec.ts\",\n              \"line\": 30,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Test Store Locator Functionality\",\n              \"ok\": false,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 2,\n                      \"parallelIndex\": 0,\n                      \"status\": \"timedOut\",\n                      \"duration\": 30255,\n                      \"error\": {\n                        \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\",\n                        \"stack\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                      },\n                      \"errors\": [\n                        {\n                          \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                        },\n                        {\n                          \"location\": {\n                            \"file\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_ea41d9cd.spec.ts\",\n                            \"column\": 68,\n                            \"line\": 49\n                          },\n                          \"message\": \"Error: locator.fill: Test timeout of 30000ms exceeded.\\nCall log:\\n\\u001b[2m  - waiting for getByTestId('[data-testid=\\\\'store-search-input\\\\']')\\u001b[22m\\n\\n\\n  47 |     await page.getByText('Store Locator').first().click();\\n  48 |     // Step 3: Enter ZIP code\\n> 49 |     await page.getByTestId('[data-testid=\\\\'store-search-input\\\\']').fill('02110');\\n     |                                                                    ^\\n  50 |     // Step 4: Submit store search\\n  51 |     await page.getByTestId('[data-testid=\\\\'store-search-submit\\\\']').click(); // Submit form\\n  52 |\\n    at /Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_ea41d9cd.spec.ts:49:68\"\n                        }\n                      ],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T18:26:33.439Z\",\n                      \"annotations\": [],\n                      \"attachments\": [\n                        {\n                          \"name\": \"error-context\",\n                          \"contentType\": \"text/markdown\",\n                          \"path\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results/test_specs-compiled-suite_-0829e-Store-Locator-Functionality/error-context.md\"\n                        }\n                      ]\n                    }\n                  ],\n                  \"status\": \"unexpected\"\n                }\n              ],\n              \"id\": \"3f3086c94752d98048eb-84a49a4a97ca37d61cb1\",\n              \"file\": \"test_specs/compiled/suite_ea41d9cd.spec.ts\",\n              \"line\": 41,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Access MinuteClinic Services\",\n              \"ok\": true,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 3,\n                      \"parallelIndex\": 0,\n                      \"status\": \"passed\",\n                      \"duration\": 4782,\n                      \"errors\": [],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T18:27:04.718Z\",\n                      \"annotations\": [],\n                      \"attachments\": []\n                    }\n                  ],\n                  \"status\": \"expected\"\n                }\n              ],\n              \"id\": \"3f3086c94752d98048eb-b86f195dcc8b4cf0cb16\",\n              \"file\": \"test_specs/compiled/suite_ea41d9cd.spec.ts\",\n              \"line\": 56,\n              \"column\": 7\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"errors\": [],\n  \"stats\": {\n    \"startTime\": \"2025-10-02T18:25:25.055Z\",\n    \"duration\": 105220.17400000001,\n    \"expected\": 2,\n    \"skipped\": 0,\n    \"unexpected\": 3,\n    \"flaky\": 0\n  }\n}\n",
+    "stderr": "",
+    "raw_json": "{\n  \"config\": {\n    \"rootDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend\",\n    \"forbidOnly\": false,\n    \"fullyParallel\": false,\n    \"globalSetup\": null,\n    \"globalTeardown\": null,\n    \"globalTimeout\": 0,\n    \"grep\": {},\n    \"grepInvert\": null,\n    \"maxFailures\": 0,\n    \"metadata\": {\n      \"actualWorkers\": 1\n    },\n    \"preserveOutput\": \"always\",\n    \"reporter\": [\n      [\n        \"json\"\n      ]\n    ],\n    \"reportSlowTests\": {\n      \"max\": 5,\n      \"threshold\": 300000\n    },\n    \"quiet\": false,\n    \"projects\": [\n      {\n        \"outputDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results\",\n        \"repeatEach\": 1,\n        \"retries\": 0,\n        \"metadata\": {\n          \"actualWorkers\": 1\n        },\n        \"id\": \"\",\n        \"name\": \"\",\n        \"testDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend\",\n        \"testIgnore\": [],\n        \"testMatch\": [\n          \"**/*.@(spec|test).?(c|m)[jt]s?(x)\"\n        ],\n        \"timeout\": 30000\n      }\n    ],\n    \"shard\": null,\n    \"updateSnapshots\": \"missing\",\n    \"updateSourceMethod\": \"patch\",\n    \"version\": \"1.55.1\",\n    \"workers\": 4,\n    \"webServer\": null\n  },\n  \"suites\": [\n    {\n      \"title\": \"test_specs/compiled/suite_ea41d9cd.spec.ts\",\n      \"file\": \"test_specs/compiled/suite_ea41d9cd.spec.ts\",\n      \"column\": 0,\n      \"line\": 0,\n      \"specs\": [],\n      \"suites\": [\n        {\n          \"title\": \"Generated E2E Tests\",\n          \"file\": \"test_specs/compiled/suite_ea41d9cd.spec.ts\",\n          \"line\": 3,\n          \"column\": 6,\n          \"specs\": [\n            {\n              \"title\": \"Verify CVS Homepage Loads Successfully\",\n              \"ok\": true,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"passed\",\n                      \"duration\": 4822,\n                      \"errors\": [],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T18:25:25.713Z\",\n                      \"annotations\": [],\n                      \"attachments\": []\n                    }\n                  ],\n                  \"status\": \"expected\"\n                }\n              ],\n              \"id\": \"3f3086c94752d98048eb-9d497844b41ce51a5e01\",\n              \"file\": \"test_specs/compiled/suite_ea41d9cd.spec.ts\",\n              \"line\": 8,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Verify Search Functionality\",\n              \"ok\": false,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"timedOut\",\n                      \"duration\": 30099,\n                      \"error\": {\n                        \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\",\n                        \"stack\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                      },\n                      \"errors\": [\n                        {\n                          \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                        },\n                        {\n                          \"location\": {\n                            \"file\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_ea41d9cd.spec.ts\",\n                            \"column\": 62,\n                            \"line\": 23\n                          },\n                          \"message\": \"Error: locator.fill: Test timeout of 30000ms exceeded.\\nCall log:\\n\\u001b[2m  - waiting for getByTestId('[data-testid=\\\\'search-input\\\\']')\\u001b[22m\\n\\n\\n  21 |     await page.goto('http://cvs.com/');\\n  22 |     // Step 2: Enter search term in search box\\n> 23 |     await page.getByTestId('[data-testid=\\\\'search-input\\\\']').fill('aspirin');\\n     |                                                              ^\\n  24 |     // Step 3: Submit search\\n  25 |     await page.getByTestId('[data-testid=\\\\'search-submit\\\\']').click(); // Submit form\\n  26 |\\n    at /Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_ea41d9cd.spec.ts:23:62\"\n                        }\n                      ],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T18:25:31.725Z\",\n                      \"annotations\": [],\n                      \"attachments\": [\n                        {\n                          \"name\": \"error-context\",\n                          \"contentType\": \"text/markdown\",\n                          \"path\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results/test_specs-compiled-suite_-5fc69-Verify-Search-Functionality/error-context.md\"\n                        }\n                      ]\n                    }\n                  ],\n                  \"status\": \"unexpected\"\n                }\n              ],\n              \"id\": \"3f3086c94752d98048eb-05df9b30828ed5b93779\",\n              \"file\": \"test_specs/compiled/suite_ea41d9cd.spec.ts\",\n              \"line\": 17,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Access Pharmacy Services Section\",\n              \"ok\": false,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 1,\n                      \"parallelIndex\": 0,\n                      \"status\": \"timedOut\",\n                      \"duration\": 30105,\n                      \"error\": {\n                        \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\",\n                        \"stack\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                      },\n                      \"errors\": [\n                        {\n                          \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                        },\n                        {\n                          \"location\": {\n                            \"file\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_ea41d9cd.spec.ts\",\n                            \"column\": 46,\n                            \"line\": 36\n                          },\n                          \"message\": \"Error: locator.click: Test timeout of 30000ms exceeded.\\nCall log:\\n\\u001b[2m  - waiting for getByText('Pharmacy').first()\\u001b[22m\\n\\u001b[2m    - locator resolved to <a target=\\\"_self\\\" c-id=\\\"28.8.4.0\\\" href=\\\"/pharmacy/v2/\\\" class=\\\"sc-cvs-header-menu-item\\\">\u2026</a>\\u001b[22m\\n\\u001b[2m  - attempting click action\\u001b[22m\\n\\u001b[2m    - waiting for element to be visible, enabled and stable\\u001b[22m\\n\\u001b[2m  - element was detached from the DOM, retrying\\u001b[22m\\n\\u001b[2m    - locator resolved to <h3 class=\\\"head3\\\">Get what you need from the pharmacy</h3>\\u001b[22m\\n\\u001b[2m  - attempting click action\\u001b[22m\\n\\u001b[2m    2 \u00d7 waiting for element to be visible, enabled and stable\\u001b[22m\\n\\u001b[2m      - element is not visible\\u001b[22m\\n\\u001b[2m    - retrying click action\\u001b[22m\\n\\u001b[2m    - waiting 20ms\\u001b[22m\\n\\u001b[2m    2 \u00d7 waiting for element to be visible, enabled and stable\\u001b[22m\\n\\u001b[2m      - element is not visible\\u001b[22m\\n\\u001b[2m    - retrying click action\\u001b[22m\\n\\u001b[2m      - waiting 100ms\\u001b[22m\\n\\u001b[2m    45 \u00d7 waiting for element to be visible, enabled and stable\\u001b[22m\\n\\u001b[2m       - element is not visible\\u001b[22m\\n\\u001b[2m     - retrying click action\\u001b[22m\\n\\u001b[2m       - waiting 500ms\\u001b[22m\\n\\n\\n  34 |     await page.goto('http://cvs.com/');\\n  35 |     // Step 2: Click on Pharmacy link in navigation\\n> 36 |     await page.getByText('Pharmacy').first().click();\\n     |                                              ^\\n  37 |\\n  38 |     // No explicit assertions\\n  39 |   });\\n    at /Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_ea41d9cd.spec.ts:36:46\"\n                        }\n                      ],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T18:26:02.295Z\",\n                      \"annotations\": [],\n                      \"attachments\": [\n                        {\n                          \"name\": \"error-context\",\n                          \"contentType\": \"text/markdown\",\n                          \"path\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results/test_specs-compiled-suite_-1e8dd-s-Pharmacy-Services-Section/error-context.md\"\n                        }\n                      ]\n                    }\n                  ],\n                  \"status\": \"unexpected\"\n                }\n              ],\n              \"id\": \"3f3086c94752d98048eb-9eefdc205f4eb20a2cac\",\n              \"file\": \"test_specs/compiled/suite_ea41d9cd.spec.ts\",\n              \"line\": 30,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Test Store Locator Functionality\",\n              \"ok\": false,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 2,\n                      \"parallelIndex\": 0,\n                      \"status\": \"timedOut\",\n                      \"duration\": 30255,\n                      \"error\": {\n                        \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\",\n                        \"stack\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                      },\n                      \"errors\": [\n                        {\n                          \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                        },\n                        {\n                          \"location\": {\n                            \"file\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_ea41d9cd.spec.ts\",\n                            \"column\": 68,\n                            \"line\": 49\n                          },\n                          \"message\": \"Error: locator.fill: Test timeout of 30000ms exceeded.\\nCall log:\\n\\u001b[2m  - waiting for getByTestId('[data-testid=\\\\'store-search-input\\\\']')\\u001b[22m\\n\\n\\n  47 |     await page.getByText('Store Locator').first().click();\\n  48 |     // Step 3: Enter ZIP code\\n> 49 |     await page.getByTestId('[data-testid=\\\\'store-search-input\\\\']').fill('02110');\\n     |                                                                    ^\\n  50 |     // Step 4: Submit store search\\n  51 |     await page.getByTestId('[data-testid=\\\\'store-search-submit\\\\']').click(); // Submit form\\n  52 |\\n    at /Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_ea41d9cd.spec.ts:49:68\"\n                        }\n                      ],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T18:26:33.439Z\",\n                      \"annotations\": [],\n                      \"attachments\": [\n                        {\n                          \"name\": \"error-context\",\n                          \"contentType\": \"text/markdown\",\n                          \"path\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results/test_specs-compiled-suite_-0829e-Store-Locator-Functionality/error-context.md\"\n                        }\n                      ]\n                    }\n                  ],\n                  \"status\": \"unexpected\"\n                }\n              ],\n              \"id\": \"3f3086c94752d98048eb-84a49a4a97ca37d61cb1\",\n              \"file\": \"test_specs/compiled/suite_ea41d9cd.spec.ts\",\n              \"line\": 41,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Access MinuteClinic Services\",\n              \"ok\": true,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 3,\n                      \"parallelIndex\": 0,\n                      \"status\": \"passed\",\n                      \"duration\": 4782,\n                      \"errors\": [],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T18:27:04.718Z\",\n                      \"annotations\": [],\n                      \"attachments\": []\n                    }\n                  ],\n                  \"status\": \"expected\"\n                }\n              ],\n              \"id\": \"3f3086c94752d98048eb-b86f195dcc8b4cf0cb16\",\n              \"file\": \"test_specs/compiled/suite_ea41d9cd.spec.ts\",\n              \"line\": 56,\n              \"column\": 7\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"errors\": [],\n  \"stats\": {\n    \"startTime\": \"2025-10-02T18:25:25.055Z\",\n    \"duration\": 105220.17400000001,\n    \"expected\": 2,\n    \"skipped\": 0,\n    \"unexpected\": 3,\n    \"flaky\": 0\n  }\n}\n"
+  }
+}

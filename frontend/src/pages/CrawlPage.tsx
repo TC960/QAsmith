@@ -90,10 +90,18 @@ const CrawlPage: React.FC = () => {
     };
   }, []);
 
+  // Progress step when on crawl page
+  useEffect(() => {
+    window.localStorage.setItem('qa_progress_step', '2');
+    window.dispatchEvent(new Event('qa_progress_changed'));
+  }, []);
+
   const startWebSocketCrawl = (targetUrl: string) => {
     console.log('🔌 FRONTEND: Starting WebSocket crawl for:', targetUrl);
     setCrawlProgress([]);
     setIsWebSocketCrawling(true);
+    window.localStorage.setItem('qa_progress_step', '2');
+    window.dispatchEvent(new Event('qa_progress_changed'));
     
     // Generate session ID
     const sessionId = `crawl_${Date.now()}`;

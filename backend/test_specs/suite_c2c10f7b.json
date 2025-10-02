@@ -1,0 +1,58 @@
+{
+  "suite_id": "suite_c2c10f7b",
+  "crawl_id": "f9381de3-dba3-45d1-a6b9-23a139d241f2",
+  "test_count": 3,
+  "tests": [
+    {
+      "test_id": "HOME_001",
+      "name": "Verify home page loads successfully",
+      "description": "Validate that the home page loads with correct title and content",
+      "page_url": "http://rraval.vercel.app/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "http://rraval.vercel.app/",
+          "description": "Navigate to home page",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "NAV_001",
+      "name": "Verify page navigation and content loading",
+      "description": "Validate that the page navigation works and content loads correctly",
+      "page_url": "http://rraval.vercel.app/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "http://rraval.vercel.app/",
+          "description": "Navigate to home page",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "PERF_001",
+      "name": "Verify page load performance",
+      "description": "Validate that the page loads within acceptable time limits",
+      "page_url": "http://rraval.vercel.app/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "http://rraval.vercel.app/",
+          "description": "Navigate to home page",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    }
+  ]
+}

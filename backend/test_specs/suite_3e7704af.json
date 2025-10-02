@@ -1,0 +1,245 @@
+{
+  "suite_id": "suite_3e7704af",
+  "crawl_id": "a7662d25-8ae3-4da4-bd7c-45a726113892",
+  "test_count": 5,
+  "tests": [
+    {
+      "test_id": "nav_to_home",
+      "name": "Navigate to Guru99 homepage",
+      "description": "Verify user can access homepage and main content loads",
+      "page_url": "https://www.guru99.com/#tutorials-library",
+      "steps": [
+        {
+          "action": "goto",
+          "selector": "",
+          "selector_strategy": null,
+          "value": null,
+          "description": "",
+          "url": "https://www.guru99.com/#tutorials-library",
+          "assertion": null
+        },
+        {
+          "action": "expect",
+          "selector": "text=Guru99: Free Online Tutorials and Business Software Reviews",
+          "selector_strategy": "text",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "test_id": "search_tutorials",
+      "name": "Search for tutorials",
+      "description": "Verify search functionality shows relevant results",
+      "page_url": "https://www.guru99.com/#tutorials-library",
+      "steps": [
+        {
+          "action": "goto",
+          "selector": "",
+          "selector_strategy": null,
+          "value": null,
+          "description": "",
+          "url": "https://www.guru99.com/#tutorials-library",
+          "assertion": null
+        },
+        {
+          "action": "fill",
+          "selector": "input[type='search']",
+          "selector_strategy": "css",
+          "value": "selenium",
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "wait",
+          "selector": "",
+          "selector_strategy": null,
+          "value": "500",
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "expect",
+          "selector": ".search-results",
+          "selector_strategy": "css",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Selenium Tutorial",
+          "selector_strategy": "text",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "test_id": "tutorials_nav",
+      "name": "Access Tutorials Library",
+      "description": "Verify tutorials section is accessible and loads content",
+      "page_url": "https://www.guru99.com/#tutorials-library",
+      "steps": [
+        {
+          "action": "goto",
+          "selector": "",
+          "selector_strategy": null,
+          "value": null,
+          "description": "",
+          "url": "https://www.guru99.com/#tutorials-library",
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "text=Tutorials Library",
+          "selector_strategy": "text",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "expect",
+          "selector": ".tutorials-grid",
+          "selector_strategy": "css",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Popular Tutorials",
+          "selector_strategy": "text",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "test_id": "category_filter",
+      "name": "Filter tutorials by category",
+      "description": "Verify tutorial filtering functionality works",
+      "page_url": "https://www.guru99.com/#tutorials-library",
+      "steps": [
+        {
+          "action": "goto",
+          "selector": "",
+          "selector_strategy": null,
+          "value": null,
+          "description": "",
+          "url": "https://www.guru99.com/#tutorials-library",
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": ".category-dropdown",
+          "selector_strategy": "css",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "expect",
+          "selector": ".dropdown-options",
+          "selector_strategy": "css",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "text=Software Testing",
+          "selector_strategy": "text",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "expect",
+          "selector": "text=Software Testing Tutorials",
+          "selector_strategy": "text",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "test_id": "mobile_menu",
+      "name": "Mobile menu functionality",
+      "description": "Verify mobile menu opens and closes correctly",
+      "page_url": "https://www.guru99.com/#tutorials-library",
+      "steps": [
+        {
+          "action": "goto",
+          "selector": "",
+          "selector_strategy": null,
+          "value": null,
+          "description": "",
+          "url": "https://www.guru99.com/#tutorials-library",
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": ".mobile-menu-button",
+          "selector_strategy": "css",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "expect",
+          "selector": ".mobile-menu",
+          "selector_strategy": "css",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Tutorials Library",
+          "selector_strategy": "text",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": ".close-menu",
+          "selector_strategy": "css",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "expect",
+          "selector": ".mobile-menu",
+          "selector_strategy": "css",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "not.toBeVisible"
+        }
+      ]
+    }
+  ]
+}

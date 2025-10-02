@@ -58,7 +58,7 @@ TEST_STEP_TEMPLATES = {
 
     ActionType.RELOAD: "    await page.reload();",
 
-    ActionType.WAIT: "    await page.waitForTimeout(1000); // Wait 1 second",
+    ActionType.WAIT: "    await page.waitForTimeout({value}); // Wait {value}ms for dynamic content",
 }
 
 

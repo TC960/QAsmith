@@ -1,0 +1,67 @@
+{
+  "suite_id": "suite_a6a2a881",
+  "crawl_id": "470d898b-8a18-431a-ae9b-9950e2d0e2a4",
+  "test_count": 3,
+  "tests": [
+    {
+      "test_id": "NAV_001",
+      "name": "Navigate to homepage",
+      "description": "Verify user can access the homepage and correct content is displayed",
+      "page_url": "https://example.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://example.com/",
+          "description": "Navigate to homepage",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "NAV_002",
+      "name": "Verify homepage direct URL access",
+      "description": "Verify user can directly access homepage via URL",
+      "page_url": "https://example.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://example.com/",
+          "description": "Navigate directly to homepage URL",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "NAV_003",
+      "name": "Verify homepage refresh",
+      "description": "Verify homepage can be refreshed and maintains state",
+      "page_url": "https://example.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://example.com/",
+          "description": "Navigate to homepage",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://example.com/",
+          "description": "Refresh the page",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    }
+  ]
+}

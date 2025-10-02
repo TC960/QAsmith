@@ -1,0 +1,58 @@
+{
+  "suite_id": "suite_0a449010",
+  "crawl_id": "a4faf729-6c74-4921-8e4d-46bbf678c1a9",
+  "test_count": 3,
+  "tests": [
+    {
+      "test_id": "NAV_001",
+      "name": "Navigate to homepage",
+      "description": "Verify user can access the homepage and correct content is displayed",
+      "page_url": "https://example.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://example.com/",
+          "description": "Navigate to homepage",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "NAV_002",
+      "name": "Verify homepage direct URL access",
+      "description": "Verify user can access homepage directly via URL",
+      "page_url": "https://example.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://example.com/",
+          "description": "Navigate directly to homepage URL",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "NAV_003",
+      "name": "Verify 404 page for invalid URL",
+      "description": "Verify appropriate 404 page is shown for non-existent URLs",
+      "page_url": "https://example.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://example.com/non-existent-page",
+          "description": "Navigate to invalid URL",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    }
+  ]
+}

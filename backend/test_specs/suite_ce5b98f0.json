@@ -1,0 +1,59 @@
+{
+  "suite_id": "suite_ce5b98f0",
+  "crawl_id": "ca734336-7efb-45a2-8c15-d9b1d2b6bcc5",
+  "test_count": 2,
+  "tests": [
+    {
+      "test_id": "homepage_loads",
+      "name": "Homepage loads with correct title",
+      "description": "Verify homepage loads with expected title and content",
+      "page_url": "https://rraval.vercel.app/",
+      "steps": [
+        {
+          "action": "goto",
+          "selector": "",
+          "selector_strategy": null,
+          "value": null,
+          "description": "",
+          "url": "https://rraval.vercel.app/",
+          "assertion": null
+        },
+        {
+          "action": "expect",
+          "selector": "text=AfterTheTrade \u2014 Portfolio (Not Advice)",
+          "selector_strategy": "text",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "test_id": "verify_disclaimer",
+      "name": "Homepage displays disclaimer",
+      "description": "Verify the disclaimer text is visible on homepage",
+      "page_url": "https://rraval.vercel.app/",
+      "steps": [
+        {
+          "action": "goto",
+          "selector": "",
+          "selector_strategy": null,
+          "value": null,
+          "description": "",
+          "url": "https://rraval.vercel.app/",
+          "assertion": null
+        },
+        {
+          "action": "expect",
+          "selector": "text=(Not Advice)",
+          "selector_strategy": "text",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        }
+      ]
+    }
+  ]
+}

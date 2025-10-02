@@ -1,0 +1,88 @@
+{
+  "run_id": "run_suite_c2c10f7b_9539e045",
+  "suite_id": "suite_c2c10f7b",
+  "timestamp": "2025-10-02T18:34:52.441389",
+  "execution_summary": {
+    "total_tests": 3,
+    "passed": 3,
+    "failed": 0,
+    "pass_rate": "100.0%",
+    "exit_code": 0
+  },
+  "test_specifications": [
+    {
+      "test_id": "HOME_001",
+      "name": "Verify home page loads successfully",
+      "description": "Validate that the home page loads with correct title and content",
+      "page_url": "http://rraval.vercel.app/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "http://rraval.vercel.app/",
+          "description": "Navigate to home page",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "NAV_001",
+      "name": "Verify page navigation and content loading",
+      "description": "Validate that the page navigation works and content loads correctly",
+      "page_url": "http://rraval.vercel.app/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "http://rraval.vercel.app/",
+          "description": "Navigate to home page",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "PERF_001",
+      "name": "Verify page load performance",
+      "description": "Validate that the page loads within acceptable time limits",
+      "page_url": "http://rraval.vercel.app/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "http://rraval.vercel.app/",
+          "description": "Navigate to home page",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    }
+  ],
+  "individual_results": [
+    {
+      "name": "Verify home page loads successfully",
+      "status": "passed",
+      "error": null
+    },
+    {
+      "name": "Verify page navigation and content loading",
+      "status": "passed",
+      "error": null
+    },
+    {
+      "name": "Verify page load performance",
+      "status": "passed",
+      "error": null
+    }
+  ],
+  "ai_analysis": "# E2E Test Execution Report - Suite C2C10F7B\n**Date:** [Current Date]\n\n## 1. Executive Summary\nAll 3 test cases executed successfully across core functionality of the web application (http://rraval.vercel.app/). Test suite achieved 100% pass rate with no detected failures or performance degradation. Based on current results, recommendation is to SHIP, though coverage expansion is advised.\n\n## 2. Functionality Coverage Analysis\n**Tested Flows:**\n- Homepage rendering and initial load (HOME_001)\n- Navigation system functionality (NAV_001)\n- Page load performance metrics (PERF_001)\n\n**Coverage Gaps:**\n- Limited test step depth (each test contains single navigation step)\n- Missing interaction validations (clicks, form submissions)\n- No error state or edge case coverage\n- Absent cross-browser testing specifications\n\n## 3. Root Cause Analysis\nNo failures detected in current execution. However, test architecture presents potential reliability risks:\n- Single-step test cases may miss cascading failures\n- Lack of explicit assertions could mask subtle rendering issues\n- Performance test lacks specific timing thresholds\n\n## 4. Actionable Recommendations\n1. **Expand Test Coverage**\n   - Add DOM element presence validations\n   - Implement specific performance thresholds\n   - Include error state handling\n\n2. **Enhance Test Architecture**\n   - Add explicit assertions for each test\n   - Implement cross-browser execution\n   - Add network condition simulations\n\n3. **Improve Test Robustness**\n   - Add retry logic for flaky scenarios\n   - Implement proper test isolation\n   - Add detailed logging for debugging\n\n4. **Technical Debt**\n   - Implement proper selector strategies\n   - Add test data management\n   - Configure environment-specific variables\n\n## Technical Metrics\n- Execution Time: Not provided\n- Browser: Not specified\n- Environment: Production\n- Test Framework: Playwright\n\nWhile all tests passed, the minimal test steps and assertions suggest this is an initial test implementation requiring significant expansion for production reliability.",
+  "playwright_output": {
+    "stdout": "{\n  \"config\": {\n    \"rootDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend\",\n    \"forbidOnly\": false,\n    \"fullyParallel\": false,\n    \"globalSetup\": null,\n    \"globalTeardown\": null,\n    \"globalTimeout\": 0,\n    \"grep\": {},\n    \"grepInvert\": null,\n    \"maxFailures\": 0,\n    \"metadata\": {\n      \"actualWorkers\": 1\n    },\n    \"preserveOutput\": \"always\",\n    \"reporter\": [\n      [\n        \"json\"\n      ]\n    ],\n    \"reportSlowTests\": {\n      \"max\": 5,\n      \"threshold\": 300000\n    },\n    \"quiet\": false,\n    \"projects\": [\n      {\n        \"outputDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results\",\n        \"repeatEach\": 1,\n        \"retries\": 0,\n        \"metadata\": {\n          \"actualWorkers\": 1\n        },\n        \"id\": \"\",\n        \"name\": \"\",\n        \"testDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend\",\n        \"testIgnore\": [],\n        \"testMatch\": [\n          \"**/*.@(spec|test).?(c|m)[jt]s?(x)\"\n        ],\n        \"timeout\": 30000\n      }\n    ],\n    \"shard\": null,\n    \"updateSnapshots\": \"missing\",\n    \"updateSourceMethod\": \"patch\",\n    \"version\": \"1.55.1\",\n    \"workers\": 4,\n    \"webServer\": null\n  },\n  \"suites\": [\n    {\n      \"title\": \"test_specs/compiled/suite_c2c10f7b.spec.ts\",\n      \"file\": \"test_specs/compiled/suite_c2c10f7b.spec.ts\",\n      \"column\": 0,\n      \"line\": 0,\n      \"specs\": [],\n      \"suites\": [\n        {\n          \"title\": \"Generated E2E Tests\",\n          \"file\": \"test_specs/compiled/suite_c2c10f7b.spec.ts\",\n          \"line\": 3,\n          \"column\": 6,\n          \"specs\": [\n            {\n              \"title\": \"Verify home page loads successfully\",\n              \"ok\": true,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"passed\",\n                      \"duration\": 1339,\n                      \"errors\": [],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T18:34:37.249Z\",\n                      \"annotations\": [],\n                      \"attachments\": []\n                    }\n                  ],\n                  \"status\": \"expected\"\n                }\n              ],\n              \"id\": \"1255486da27d8c25fca3-6bcb06d126bfb5b645e8\",\n              \"file\": \"test_specs/compiled/suite_c2c10f7b.spec.ts\",\n              \"line\": 8,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Verify page navigation and content loading\",\n              \"ok\": true,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"passed\",\n                      \"duration\": 903,\n                      \"errors\": [],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T18:34:39.569Z\",\n                      \"annotations\": [],\n                      \"attachments\": []\n                    }\n                  ],\n                  \"status\": \"expected\"\n                }\n              ],\n              \"id\": \"1255486da27d8c25fca3-5cc7cc3bc27cde4f734a\",\n              \"file\": \"test_specs/compiled/suite_c2c10f7b.spec.ts\",\n              \"line\": 17,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Verify page load performance\",\n              \"ok\": true,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"passed\",\n                      \"duration\": 959,\n                      \"errors\": [],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T18:34:40.482Z\",\n                      \"annotations\": [],\n                      \"attachments\": []\n                    }\n                  ],\n                  \"status\": \"expected\"\n                }\n              ],\n              \"id\": \"1255486da27d8c25fca3-ab4bca80ca86d57aec56\",\n              \"file\": \"test_specs/compiled/suite_c2c10f7b.spec.ts\",\n              \"line\": 26,\n              \"column\": 7\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"errors\": [],\n  \"stats\": {\n    \"startTime\": \"2025-10-02T18:34:36.858Z\",\n    \"duration\": 4805.287,\n    \"expected\": 3,\n    \"skipped\": 0,\n    \"unexpected\": 0,\n    \"flaky\": 0\n  }\n}\n",
+    "stderr": "",
+    "raw_json": "{\n  \"config\": {\n    \"rootDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend\",\n    \"forbidOnly\": false,\n    \"fullyParallel\": false,\n    \"globalSetup\": null,\n    \"globalTeardown\": null,\n    \"globalTimeout\": 0,\n    \"grep\": {},\n    \"grepInvert\": null,\n    \"maxFailures\": 0,\n    \"metadata\": {\n      \"actualWorkers\": 1\n    },\n    \"preserveOutput\": \"always\",\n    \"reporter\": [\n      [\n        \"json\"\n      ]\n    ],\n    \"reportSlowTests\": {\n      \"max\": 5,\n      \"threshold\": 300000\n    },\n    \"quiet\": false,\n    \"projects\": [\n      {\n        \"outputDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results\",\n        \"repeatEach\": 1,\n        \"retries\": 0,\n        \"metadata\": {\n          \"actualWorkers\": 1\n        },\n        \"id\": \"\",\n        \"name\": \"\",\n        \"testDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend\",\n        \"testIgnore\": [],\n        \"testMatch\": [\n          \"**/*.@(spec|test).?(c|m)[jt]s?(x)\"\n        ],\n        \"timeout\": 30000\n      }\n    ],\n    \"shard\": null,\n    \"updateSnapshots\": \"missing\",\n    \"updateSourceMethod\": \"patch\",\n    \"version\": \"1.55.1\",\n    \"workers\": 4,\n    \"webServer\": null\n  },\n  \"suites\": [\n    {\n      \"title\": \"test_specs/compiled/suite_c2c10f7b.spec.ts\",\n      \"file\": \"test_specs/compiled/suite_c2c10f7b.spec.ts\",\n      \"column\": 0,\n      \"line\": 0,\n      \"specs\": [],\n      \"suites\": [\n        {\n          \"title\": \"Generated E2E Tests\",\n          \"file\": \"test_specs/compiled/suite_c2c10f7b.spec.ts\",\n          \"line\": 3,\n          \"column\": 6,\n          \"specs\": [\n            {\n              \"title\": \"Verify home page loads successfully\",\n              \"ok\": true,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"passed\",\n                      \"duration\": 1339,\n                      \"errors\": [],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T18:34:37.249Z\",\n                      \"annotations\": [],\n                      \"attachments\": []\n                    }\n                  ],\n                  \"status\": \"expected\"\n                }\n              ],\n              \"id\": \"1255486da27d8c25fca3-6bcb06d126bfb5b645e8\",\n              \"file\": \"test_specs/compiled/suite_c2c10f7b.spec.ts\",\n              \"line\": 8,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Verify page navigation and content loading\",\n              \"ok\": true,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"passed\",\n                      \"duration\": 903,\n                      \"errors\": [],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T18:34:39.569Z\",\n                      \"annotations\": [],\n                      \"attachments\": []\n                    }\n                  ],\n                  \"status\": \"expected\"\n                }\n              ],\n              \"id\": \"1255486da27d8c25fca3-5cc7cc3bc27cde4f734a\",\n              \"file\": \"test_specs/compiled/suite_c2c10f7b.spec.ts\",\n              \"line\": 17,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Verify page load performance\",\n              \"ok\": true,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"passed\",\n                      \"duration\": 959,\n                      \"errors\": [],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T18:34:40.482Z\",\n                      \"annotations\": [],\n                      \"attachments\": []\n                    }\n                  ],\n                  \"status\": \"expected\"\n                }\n              ],\n              \"id\": \"1255486da27d8c25fca3-ab4bca80ca86d57aec56\",\n              \"file\": \"test_specs/compiled/suite_c2c10f7b.spec.ts\",\n              \"line\": 26,\n              \"column\": 7\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"errors\": [],\n  \"stats\": {\n    \"startTime\": \"2025-10-02T18:34:36.858Z\",\n    \"duration\": 4805.287,\n    \"expected\": 3,\n    \"skipped\": 0,\n    \"unexpected\": 0,\n    \"flaky\": 0\n  }\n}\n"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "suite_id": "suite_330195ce",
+  "crawl_id": "a4faf729-6c74-4921-8e4d-46bbf678c1a9",
+  "test_count": 3,
+  "tests": [
+    {
+      "test_id": "nav_001",
+      "name": "Verify homepage loads correctly",
+      "description": "Validate that the homepage loads and displays correct title",
+      "page_url": "https://example.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "/",
+          "description": "Navigate to homepage",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "nav_002",
+      "name": "Verify 404 page for invalid URL",
+      "description": "Validate that accessing an invalid URL shows 404 page",
+      "page_url": "https://example.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "/invalid-page",
+          "description": "Navigate to non-existent page",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "perf_001",
+      "name": "Verify homepage performance",
+      "description": "Validate homepage load time and performance metrics",
+      "page_url": "https://example.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "/",
+          "description": "Navigate to homepage",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    }
+  ]
+}

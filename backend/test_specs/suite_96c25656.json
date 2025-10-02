@@ -1,0 +1,101 @@
+{
+  "suite_id": "suite_96c25656",
+  "crawl_id": "39c8acf6-c1c9-487b-96ec-caa39df4d9ff",
+  "test_count": 5,
+  "tests": [
+    {
+      "test_id": "CVS_HOME_001",
+      "name": "Verify CVS Homepage Loads Successfully",
+      "description": "Validate that the CVS homepage loads and displays key elements",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://www.cvs.com/",
+          "description": "Navigate to CVS homepage",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "CVS_SEARCH_001",
+      "name": "Perform Product Search",
+      "description": "Test the search functionality with a valid product name",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "fill",
+          "selector": "[data-testid='search-input']",
+          "selector_strategy": "test-id",
+          "value": "aspirin",
+          "description": "Enter search term",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "[data-testid='search-submit-button']",
+          "selector_strategy": "test-id",
+          "value": "",
+          "description": "Click search button",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "CVS_SEARCH_002",
+      "name": "Empty Search Validation",
+      "description": "Verify behavior when performing an empty search",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "[data-testid='search-submit-button']",
+          "selector_strategy": "test-id",
+          "value": "",
+          "description": "Click search button without entering search term",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "CVS_ACCOUNT_001",
+      "name": "Access Account Sign In Page",
+      "description": "Verify navigation to account sign in page",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "[data-testid='sign-in']",
+          "selector_strategy": "test-id",
+          "value": "",
+          "description": "Click sign in link",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "CVS_PHARMACY_001",
+      "name": "Navigate to Pharmacy Services",
+      "description": "Test navigation to pharmacy services section",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "[data-testid='pharmacy-services-link']",
+          "selector_strategy": "test-id",
+          "value": "",
+          "description": "Click Pharmacy Services link",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "suite_id": "suite_e0ceb188",
+  "crawl_id": "7c064f42-2a69-49c3-81d8-a8efd8fcfa6d",
+  "test_count": 2,
+  "tests": [
+    {
+      "test_id": "nav_001",
+      "name": "Verify navigation to main tutorials page",
+      "description": "Validate user can access the main tutorials landing page",
+      "page_url": "https://www.guru99.com/#tutorials-library",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://www.guru99.com/#tutorials-library",
+          "description": "Navigate to tutorials homepage",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "nav_002",
+      "name": "Verify page loads with valid title",
+      "description": "Validate the page title is correct",
+      "page_url": "https://www.guru99.com/#tutorials-library",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://www.guru99.com/#tutorials-library",
+          "description": "Navigate to tutorials homepage",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    }
+  ]
+}

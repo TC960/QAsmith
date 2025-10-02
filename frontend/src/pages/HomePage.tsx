@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './HomePage.css';
 
 const HomePage: React.FC = () => {
+  useEffect(() => {
+    window.localStorage.setItem('qa_progress_step', '1');
+    window.dispatchEvent(new Event('qa_progress_changed'));
+  }, []);
   return (
     <div className="home-page">
       <section className="hero">
@@ -10,7 +14,7 @@ const HomePage: React.FC = () => {
         <p className="hero-subtitle">
           Automatically generate comprehensive end-to-end tests for any website using AI
         </p>
-        <Link to="/crawl" className="cta-button">
+        <Link to="/crawl" className="cta-button" onClick={() => { window.localStorage.setItem('qa_progress_step', '2'); window.dispatchEvent(new Event('qa_progress_changed')); }}>
           Get Started
         </Link>
       </section>

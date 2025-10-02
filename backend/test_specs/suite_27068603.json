@@ -1,0 +1,335 @@
+{
+  "suite_id": "suite_27068603",
+  "crawl_id": "3c78ade2-5a04-48de-b2c8-576abdf01484",
+  "test_count": 5,
+  "tests": [
+    {
+      "test_id": "search_functionality",
+      "name": "Search bar shows suggestions and results",
+      "description": "Verify search functionality shows suggestions and navigates to results",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "selector": "",
+          "selector_strategy": null,
+          "value": null,
+          "description": "",
+          "url": "https://www.cvs.com/",
+          "assertion": null
+        },
+        {
+          "action": "fill",
+          "selector": "[data-testid='search-input']",
+          "selector_strategy": "test-id",
+          "value": "tylenol",
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "wait",
+          "selector": "",
+          "selector_strategy": null,
+          "value": "500",
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "expect",
+          "selector": "[data-testid='search-suggestions']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "text=tylenol extra strength",
+          "selector_strategy": "text",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "[data-testid='search-submit-button']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "expect",
+          "selector": "[data-testid='search-results']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "test_id": "account_login",
+      "name": "User login validation",
+      "description": "Verify login form validation and error messages",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "selector": "",
+          "selector_strategy": null,
+          "value": null,
+          "description": "",
+          "url": "https://www.cvs.com/",
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "[data-testid='sign-in-button']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "fill",
+          "selector": "[data-testid='login-email']",
+          "selector_strategy": "test-id",
+          "value": "invalid@email",
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "fill",
+          "selector": "[data-testid='login-password']",
+          "selector_strategy": "test-id",
+          "value": "pass",
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "[data-testid='login-submit']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "expect",
+          "selector": "[data-testid='error-message']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "test_id": "store_locator",
+      "name": "Store locator functionality",
+      "description": "Verify store locator search and results display",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "selector": "",
+          "selector_strategy": null,
+          "value": null,
+          "description": "",
+          "url": "https://www.cvs.com/",
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "[data-testid='store-locator-link']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "fill",
+          "selector": "[data-testid='store-search-input']",
+          "selector_strategy": "test-id",
+          "value": "10001",
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "[data-testid='find-store-submit']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "expect",
+          "selector": "[data-testid='store-results']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "[data-testid='store-address']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "test_id": "shopping_cart",
+      "name": "Add to cart functionality",
+      "description": "Verify adding item to cart and cart update",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "selector": "",
+          "selector_strategy": null,
+          "value": null,
+          "description": "",
+          "url": "https://www.cvs.com/",
+          "assertion": null
+        },
+        {
+          "action": "fill",
+          "selector": "[data-testid='search-input']",
+          "selector_strategy": "test-id",
+          "value": "bandages",
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "[data-testid='search-submit-button']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "[data-testid='add-to-cart-button']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "expect",
+          "selector": "[data-testid='cart-confirmation']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "[data-testid='cart-count']",
+          "selector_strategy": "test-id",
+          "value": "1",
+          "description": "",
+          "url": null,
+          "assertion": "toHaveText"
+        }
+      ]
+    },
+    {
+      "test_id": "prescription_refill",
+      "name": "Prescription refill form validation",
+      "description": "Verify prescription refill form validation and error messages",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "selector": "",
+          "selector_strategy": null,
+          "value": null,
+          "description": "",
+          "url": "https://www.cvs.com/",
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "[data-testid='pharmacy-services']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "[data-testid='refill-rx-button']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "fill",
+          "selector": "[data-testid='rx-number-input']",
+          "selector_strategy": "test-id",
+          "value": "123",
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "[data-testid='refill-submit']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "expect",
+          "selector": "[data-testid='rx-error-message']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Please enter a valid prescription number",
+          "selector_strategy": "text",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        }
+      ]
+    }
+  ]
+}

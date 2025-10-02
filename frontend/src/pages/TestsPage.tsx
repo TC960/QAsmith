@@ -67,6 +67,23 @@ const TestsPage: React.FC = () => {
     enabled: !!crawlId,
   });
 
+  // Update progress and dynamic nodes height
+  useEffect(() => {
+    if (crawlId) {
+      window.localStorage.setItem('qa_progress_step', '3'); // Generate Tests step when on Tests page
+      window.dispatchEvent(new Event('qa_progress_changed'));
+    }
+  }, [crawlId]);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const count = graphData?.nodes?.length || 0;
+    // Base height 200px + 56px per 4 items, clamp between 200 and 720
+    const rows = Math.ceil(count / 1); // each node-item is one row in current layout
+    const height = Math.min(720, Math.max(200, 120 + rows * 72));
+    root.style.setProperty('--nodes-max-height', `${height}px`);
+  }, [graphData]);
+
   // Generate tests mutation
   const generateTestsMutation = useMutation({
     mutationFn: async () => {
@@ -125,6 +142,8 @@ const TestsPage: React.FC = () => {
     },
     onSuccess: (data) => {
       setTestResults(data);
+      window.localStorage.setItem('qa_progress_step', '5');
+      window.dispatchEvent(new Event('qa_progress_changed'));
     },
     onError: (error) => {
       console.error('Test run failed:', error);
@@ -146,6 +165,65 @@ const TestsPage: React.FC = () => {
         ? prev.filter(p => p !== url)
         : [...prev, url]
     );
+  };
+
+  // Convert markdown text to sanitized HTML (basic renderer)
+  const renderMarkdown = (text: string): string => {
+    if (!text) return '';
+
+    let html = text;
+
+    // Escape HTML first to avoid injection, then unescape inside code blocks
+    html = html
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    // Fenced code blocks ```lang\ncode\n```
+    html = html.replace(/```[a-zA-Z0-9_-]*\n[\s\S]*?```/g, (block) => {
+      const content = block.replace(/^```[a-zA-Z0-9_-]*\n/, '').replace(/```$/, '');
+      const unescaped = content.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+      return `<pre><code>${unescaped}</code></pre>`;
+    });
+
+    // Headings
+    html = html
+      .replace(/^######\s+(.*)$/gm, '<h6>$1</h6>')
+      .replace(/^#####\s+(.*)$/gm, '<h5>$1</h5>')
+      .replace(/^####\s+(.*)$/gm, '<h4>$1</h4>')
+      .replace(/^###\s+(.*)$/gm, '<h3>$1</h3>')
+      .replace(/^##\s+(.*)$/gm, '<h2>$1</h2>')
+      .replace(/^#\s+(.*)$/gm, '<h1>$1</h1>');
+
+    // Bold/Italic
+    html = html
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/(?<!\*)\*(?!\*)([^*]+)\*(?!\*)/g, '<em>$1</em>');
+
+    // Inline code `code`
+    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+    // Links [text](url)
+    html = html.replace(/\[(.*?)\]\((https?:[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noreferrer noopener">$1</a>');
+
+    // Lists
+    html = html
+      .replace(/^(?:- |\* )(.*)$/gm, '<li>$1</li>')
+      .replace(/(<li>.*<\/li>\s*)+/g, (m) => `<ul>${m}</ul>`)
+      .replace(/^\d+\.\s+(.+)$/gm, '<li>$1</li>')
+      .replace(/(<li>.*<\/li>\s*)+/g, (m) => (m.includes('<ul>') ? m : `<ol>${m}</ol>`));
+
+    // Paragraphs: wrap top-level lines that are not already block elements
+    html = html
+      .split(/\n{2,}/)
+      .map((chunk) => {
+        if (/^\s*<\/?(h\d|ul|ol|li|pre|code|blockquote)/.test(chunk)) return chunk;
+        if (!chunk.trim()) return '';
+        return `<p>${chunk.replace(/\n/g, '<br/>')}</p>`;
+      })
+      .join('');
+
+    return html;
   };
 
   if (!crawlId) {
@@ -285,7 +363,11 @@ const TestsPage: React.FC = () => {
 
             <div className="test-actions">
               <button
-                onClick={handleGenerateTests}
+                onClick={() => {
+                  window.localStorage.setItem('qa_progress_step', '3');
+                  window.dispatchEvent(new Event('qa_progress_changed'));
+                  handleGenerateTests();
+                }}
                 disabled={selectedPages.length === 0 || generateTestsMutation.isPending}
                 className="generate-tests-btn"
               >
@@ -294,7 +376,11 @@ const TestsPage: React.FC = () => {
 
               {generatedSuiteId && (
                 <button
-                  onClick={() => runTestsMutation.mutate(generatedSuiteId)}
+                  onClick={() => {
+                    window.localStorage.setItem('qa_progress_step', '4');
+                    window.dispatchEvent(new Event('qa_progress_changed'));
+                    runTestsMutation.mutate(generatedSuiteId);
+                  }}
                   disabled={runTestsMutation.isPending}
                   className="run-tests-btn"
                 >
@@ -334,8 +420,37 @@ const TestsPage: React.FC = () => {
 
                 {testResults.ai_summary && (
                   <div className="ai-summary-box">
-                    <h3>🤖 AI Analysis</h3>
-                    <p className="ai-summary-text">{testResults.ai_summary}</p>
+                    <div className="ai-summary-header">
+                      <h3>🤖 AI Analysis</h3>
+                      <div className="ai-actions">
+                        <button
+                          type="button"
+                          className="ai-btn"
+                          onClick={() => {
+                            navigator.clipboard.writeText(testResults.ai_summary);
+                          }}
+                        >
+                          Copy
+                        </button>
+                        <button
+                          type="button"
+                          className="ai-btn"
+                          onClick={() => {
+                            const box = document.querySelector('.ai-summary-text');
+                            if (!box) return;
+                            box.classList.toggle('collapsed');
+                          }}
+                        >
+                          Toggle
+                        </button>
+                      </div>
+                    </div>
+                    <div
+                      className="ai-summary-text"
+                      dangerouslySetInnerHTML={{
+                        __html: renderMarkdown(testResults.ai_summary)
+                      }}
+                    />
                   </div>
                 )}
 

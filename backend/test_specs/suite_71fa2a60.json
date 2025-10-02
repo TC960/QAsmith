@@ -1,0 +1,58 @@
+{
+  "suite_id": "suite_71fa2a60",
+  "crawl_id": "622e8040-cef1-4167-8e45-f7ec3b7a8355",
+  "test_count": 3,
+  "tests": [
+    {
+      "test_id": "nav_001",
+      "name": "Navigate to homepage",
+      "description": "Verify user can access homepage",
+      "page_url": "https://rraval.vercel.app/work",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://rraval.vercel.app/",
+          "description": "Navigate to homepage",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "nav_002",
+      "name": "Navigate to non-existent work page",
+      "description": "Verify 404 page shown for invalid routes",
+      "page_url": "https://rraval.vercel.app/work",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://rraval.vercel.app/work",
+          "description": "Navigate to non-existent work page",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "nav_003",
+      "name": "Navigate to invalid URL",
+      "description": "Verify 404 handling for random invalid URLs",
+      "page_url": "https://rraval.vercel.app/work",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://rraval.vercel.app/invalid-page-xyz",
+          "description": "Navigate to invalid URL",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    }
+  ]
+}

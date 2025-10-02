@@ -1,0 +1,155 @@
+{
+  "suite_id": "suite_ea41d9cd",
+  "crawl_id": "7258ef39-e252-4f3d-bec8-859a4948bd62",
+  "test_count": 5,
+  "tests": [
+    {
+      "test_id": "CVS_HOME_001",
+      "name": "Verify CVS Homepage Loads Successfully",
+      "description": "Validate that the CVS homepage loads with all key elements visible",
+      "page_url": "http://cvs.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "http://cvs.com/",
+          "description": "Navigate to CVS homepage",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "CVS_SEARCH_001",
+      "name": "Verify Search Functionality",
+      "description": "Test the search functionality with a valid product name",
+      "page_url": "http://cvs.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "http://cvs.com/",
+          "description": "Navigate to CVS homepage",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "fill",
+          "selector": "[data-testid='search-input']",
+          "selector_strategy": "css",
+          "value": "aspirin",
+          "description": "Enter search term in search box",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "submit",
+          "selector": "[data-testid='search-submit']",
+          "selector_strategy": "css",
+          "value": "",
+          "description": "Submit search",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "CVS_PHARMACY_001",
+      "name": "Access Pharmacy Services Section",
+      "description": "Verify navigation to pharmacy services section",
+      "page_url": "http://cvs.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "http://cvs.com/",
+          "description": "Navigate to CVS homepage",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "Pharmacy",
+          "selector_strategy": "text",
+          "value": "",
+          "description": "Click on Pharmacy link in navigation",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "CVS_STORE_LOCATOR_001",
+      "name": "Test Store Locator Functionality",
+      "description": "Verify store locator search with valid zip code",
+      "page_url": "http://cvs.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "http://cvs.com/",
+          "description": "Navigate to CVS homepage",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "Store Locator",
+          "selector_strategy": "text",
+          "value": "",
+          "description": "Click on Store Locator link",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "fill",
+          "selector": "[data-testid='store-search-input']",
+          "selector_strategy": "css",
+          "value": "02110",
+          "description": "Enter ZIP code",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "submit",
+          "selector": "[data-testid='store-search-submit']",
+          "selector_strategy": "css",
+          "value": "",
+          "description": "Submit store search",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "CVS_MINUTE_CLINIC_001",
+      "name": "Access MinuteClinic Services",
+      "description": "Verify navigation to MinuteClinic services section",
+      "page_url": "http://cvs.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "http://cvs.com/",
+          "description": "Navigate to CVS homepage",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "MinuteClinic",
+          "selector_strategy": "text",
+          "value": "",
+          "description": "Click on MinuteClinic link",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    }
+  ]
+}

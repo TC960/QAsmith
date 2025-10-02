@@ -1,0 +1,88 @@
+{
+  "run_id": "run_suite_ce0bbe9b_87192e6a",
+  "suite_id": "suite_ce0bbe9b",
+  "timestamp": "2025-10-02T18:04:07.589183",
+  "execution_summary": {
+    "total_tests": 3,
+    "passed": 3,
+    "failed": 0,
+    "pass_rate": "100.0%",
+    "exit_code": 0
+  },
+  "test_specifications": [
+    {
+      "test_id": "HOME_001",
+      "name": "Verify homepage loads correctly",
+      "description": "Validate that the homepage loads and displays correct title",
+      "page_url": "http://example.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "http://example.com/",
+          "description": "Navigate to homepage",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "HOME_002",
+      "name": "Verify homepage direct URL access",
+      "description": "Validate that homepage can be accessed via direct URL",
+      "page_url": "http://example.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "http://example.com/",
+          "description": "Navigate directly to homepage URL",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "HOME_003",
+      "name": "Verify homepage refresh",
+      "description": "Validate that homepage can be refreshed successfully",
+      "page_url": "http://example.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "http://example.com/",
+          "description": "Refresh homepage",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    }
+  ],
+  "individual_results": [
+    {
+      "name": "Verify homepage loads correctly",
+      "status": "passed",
+      "error": null
+    },
+    {
+      "name": "Verify homepage direct URL access",
+      "status": "passed",
+      "error": null
+    },
+    {
+      "name": "Verify homepage refresh",
+      "status": "passed",
+      "error": null
+    }
+  ],
+  "ai_analysis": "# E2E Test Execution Report - Suite CE0BBE9B\n**Date:** [Current Date]\n\n## Executive Summary\nAll 3 homepage functionality tests executed successfully with 100% pass rate across navigation and page load scenarios. No blocking issues or performance degradation detected. Recommendation: SHIP with additional coverage recommendations.\n\n## Functionality Coverage Analysis\n**Tested Flows:**\n- Homepage initial load (HOME_001)\n- Direct URL access (HOME_002)\n- Page refresh behavior (HOME_003)\n\n**Coverage Gaps:**\n- Missing validation for page content/elements\n- No performance metrics collection\n- Absent error state handling\n- Limited browser compatibility testing\n- No network condition variations tested\n\n## Technical Analysis\n**Test Configuration:**\n- Environment: Production\n- Browser: Default Playwright configuration\n- Parallel Execution: Disabled\n- Timeout: 30000ms\n- Retries: 0\n\n**Test Execution Metrics:**\n- Execution Time: Not provided\n- Memory Usage: Not provided\n- Network Requests: Not tracked\n- Browser Instances: 1\n\n## Actionable Recommendations\n1. **Expand Test Coverage:**\n   - Add assertions for critical page elements\n   - Implement network condition simulation\n   - Include cross-browser testing matrix\n   - Add performance benchmark assertions\n\n2. **Technical Improvements:**\n   - Enable parallel execution for efficiency\n   - Implement retry mechanism for flaky scenarios\n   - Add network request monitoring\n   - Include screenshot capture on completion\n\n3. **Test Suite Enhancement:**\n   - Add data-driven variations for each test case\n   - Implement API response validation\n   - Add accessibility testing checks\n   - Include security headers verification\n\n4. **Monitoring Additions:**\n   - Implement performance metric tracking\n   - Add memory usage monitoring\n   - Include network request logging\n   - Set up trend analysis for execution times\n\nWhile current tests pass successfully, the limited scope of validation presents potential risks. Recommend implementing suggested improvements before next major release.",
+  "playwright_output": {
+    "stdout": "{\n  \"config\": {\n    \"rootDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend\",\n    \"forbidOnly\": false,\n    \"fullyParallel\": false,\n    \"globalSetup\": null,\n    \"globalTeardown\": null,\n    \"globalTimeout\": 0,\n    \"grep\": {},\n    \"grepInvert\": null,\n    \"maxFailures\": 0,\n    \"metadata\": {\n      \"actualWorkers\": 1\n    },\n    \"preserveOutput\": \"always\",\n    \"reporter\": [\n      [\n        \"json\"\n      ]\n    ],\n    \"reportSlowTests\": {\n      \"max\": 5,\n      \"threshold\": 300000\n    },\n    \"quiet\": false,\n    \"projects\": [\n      {\n        \"outputDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results\",\n        \"repeatEach\": 1,\n        \"retries\": 0,\n        \"metadata\": {\n          \"actualWorkers\": 1\n        },\n        \"id\": \"\",\n        \"name\": \"\",\n        \"testDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend\",\n        \"testIgnore\": [],\n        \"testMatch\": [\n          \"**/*.@(spec|test).?(c|m)[jt]s?(x)\"\n        ],\n        \"timeout\": 30000\n      }\n    ],\n    \"shard\": null,\n    \"updateSnapshots\": \"missing\",\n    \"updateSourceMethod\": \"patch\",\n    \"version\": \"1.55.1\",\n    \"workers\": 4,\n    \"webServer\": null\n  },\n  \"suites\": [\n    {\n      \"title\": \"test_specs/compiled/suite_ce0bbe9b.spec.ts\",\n      \"file\": \"test_specs/compiled/suite_ce0bbe9b.spec.ts\",\n      \"column\": 0,\n      \"line\": 0,\n      \"specs\": [],\n      \"suites\": [\n        {\n          \"title\": \"Generated E2E Tests\",\n          \"file\": \"test_specs/compiled/suite_ce0bbe9b.spec.ts\",\n          \"line\": 3,\n          \"column\": 6,\n          \"specs\": [\n            {\n              \"title\": \"Verify homepage loads correctly\",\n              \"ok\": true,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"passed\",\n                      \"duration\": 1219,\n                      \"errors\": [],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T18:03:53.293Z\",\n                      \"annotations\": [],\n                      \"attachments\": []\n                    }\n                  ],\n                  \"status\": \"expected\"\n                }\n              ],\n              \"id\": \"5935182bacbab62fd637-dac0236474e1aa9810ce\",\n              \"file\": \"test_specs/compiled/suite_ce0bbe9b.spec.ts\",\n              \"line\": 8,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Verify homepage direct URL access\",\n              \"ok\": true,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"passed\",\n                      \"duration\": 560,\n                      \"errors\": [],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T18:03:55.611Z\",\n                      \"annotations\": [],\n                      \"attachments\": []\n                    }\n                  ],\n                  \"status\": \"expected\"\n                }\n              ],\n              \"id\": \"5935182bacbab62fd637-b47d0ca2a59a724d3493\",\n              \"file\": \"test_specs/compiled/suite_ce0bbe9b.spec.ts\",\n              \"line\": 17,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Verify homepage refresh\",\n              \"ok\": true,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"passed\",\n                      \"duration\": 609,\n                      \"errors\": [],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T18:03:56.235Z\",\n                      \"annotations\": [],\n                      \"attachments\": []\n                    }\n                  ],\n                  \"status\": \"expected\"\n                }\n              ],\n              \"id\": \"5935182bacbab62fd637-dff0d830c65875dc1c1e\",\n              \"file\": \"test_specs/compiled/suite_ce0bbe9b.spec.ts\",\n              \"line\": 26,\n              \"column\": 7\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"errors\": [],\n  \"stats\": {\n    \"startTime\": \"2025-10-02T18:03:52.850Z\",\n    \"duration\": 4194.239,\n    \"expected\": 3,\n    \"skipped\": 0,\n    \"unexpected\": 0,\n    \"flaky\": 0\n  }\n}\n",
+    "stderr": "",
+    "raw_json": "{\n  \"config\": {\n    \"rootDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend\",\n    \"forbidOnly\": false,\n    \"fullyParallel\": false,\n    \"globalSetup\": null,\n    \"globalTeardown\": null,\n    \"globalTimeout\": 0,\n    \"grep\": {},\n    \"grepInvert\": null,\n    \"maxFailures\": 0,\n    \"metadata\": {\n      \"actualWorkers\": 1\n    },\n    \"preserveOutput\": \"always\",\n    \"reporter\": [\n      [\n        \"json\"\n      ]\n    ],\n    \"reportSlowTests\": {\n      \"max\": 5,\n      \"threshold\": 300000\n    },\n    \"quiet\": false,\n    \"projects\": [\n      {\n        \"outputDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results\",\n        \"repeatEach\": 1,\n        \"retries\": 0,\n        \"metadata\": {\n          \"actualWorkers\": 1\n        },\n        \"id\": \"\",\n        \"name\": \"\",\n        \"testDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend\",\n        \"testIgnore\": [],\n        \"testMatch\": [\n          \"**/*.@(spec|test).?(c|m)[jt]s?(x)\"\n        ],\n        \"timeout\": 30000\n      }\n    ],\n    \"shard\": null,\n    \"updateSnapshots\": \"missing\",\n    \"updateSourceMethod\": \"patch\",\n    \"version\": \"1.55.1\",\n    \"workers\": 4,\n    \"webServer\": null\n  },\n  \"suites\": [\n    {\n      \"title\": \"test_specs/compiled/suite_ce0bbe9b.spec.ts\",\n      \"file\": \"test_specs/compiled/suite_ce0bbe9b.spec.ts\",\n      \"column\": 0,\n      \"line\": 0,\n      \"specs\": [],\n      \"suites\": [\n        {\n          \"title\": \"Generated E2E Tests\",\n          \"file\": \"test_specs/compiled/suite_ce0bbe9b.spec.ts\",\n          \"line\": 3,\n          \"column\": 6,\n          \"specs\": [\n            {\n              \"title\": \"Verify homepage loads correctly\",\n              \"ok\": true,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"passed\",\n                      \"duration\": 1219,\n                      \"errors\": [],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T18:03:53.293Z\",\n                      \"annotations\": [],\n                      \"attachments\": []\n                    }\n                  ],\n                  \"status\": \"expected\"\n                }\n              ],\n              \"id\": \"5935182bacbab62fd637-dac0236474e1aa9810ce\",\n              \"file\": \"test_specs/compiled/suite_ce0bbe9b.spec.ts\",\n              \"line\": 8,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Verify homepage direct URL access\",\n              \"ok\": true,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"passed\",\n                      \"duration\": 560,\n                      \"errors\": [],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T18:03:55.611Z\",\n                      \"annotations\": [],\n                      \"attachments\": []\n                    }\n                  ],\n                  \"status\": \"expected\"\n                }\n              ],\n              \"id\": \"5935182bacbab62fd637-b47d0ca2a59a724d3493\",\n              \"file\": \"test_specs/compiled/suite_ce0bbe9b.spec.ts\",\n              \"line\": 17,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Verify homepage refresh\",\n              \"ok\": true,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"passed\",\n                      \"duration\": 609,\n                      \"errors\": [],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T18:03:56.235Z\",\n                      \"annotations\": [],\n                      \"attachments\": []\n                    }\n                  ],\n                  \"status\": \"expected\"\n                }\n              ],\n              \"id\": \"5935182bacbab62fd637-dff0d830c65875dc1c1e\",\n              \"file\": \"test_specs/compiled/suite_ce0bbe9b.spec.ts\",\n              \"line\": 26,\n              \"column\": 7\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"errors\": [],\n  \"stats\": {\n    \"startTime\": \"2025-10-02T18:03:52.850Z\",\n    \"duration\": 4194.239,\n    \"expected\": 3,\n    \"skipped\": 0,\n    \"unexpected\": 0,\n    \"flaky\": 0\n  }\n}\n"
+  }
+}

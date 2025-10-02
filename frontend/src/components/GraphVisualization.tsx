@@ -216,14 +216,14 @@ const GraphVisualization: React.FC<GraphVisualizationProps> = ({ graphData, onNo
       interaction: {
         hover: true,
         tooltipDelay: 100,
-        zoomView: true,
-        dragView: true,
+        zoomView: false,
+        dragView: false,
         hoverConnectedEdges: true, // Highlight edges on hover
         selectConnectedEdges: true,
-        dragNodes: true, // Allow dragging nodes
-        navigationButtons: true, // Show zoom controls
+        dragNodes: false, // Disallow dragging nodes
+        navigationButtons: false, // Hide zoom controls
         keyboard: {
-          enabled: true
+          enabled: false
         }
       },
       layout: {
@@ -280,7 +280,7 @@ const GraphVisualization: React.FC<GraphVisualizationProps> = ({ graphData, onNo
 
     network.on('stabilizationIterationsDone', () => {
       console.log('✅ GRAPH: Layout stabilized');
-      network.setOptions({ physics: { enabled: false } });
+      network.setOptions({ physics: { enabled: false }, interaction: { dragNodes: false, zoomView: false, dragView: false } });
     });
 
     // Cleanup

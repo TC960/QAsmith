@@ -1,0 +1,339 @@
+{
+  "run_id": "run_suite_f7adcfe4_58a41600",
+  "suite_id": "suite_f7adcfe4",
+  "timestamp": "2025-10-02T16:49:16.040245",
+  "execution_summary": {
+    "total_tests": 5,
+    "passed": 0,
+    "failed": 5,
+    "pass_rate": "0.0%",
+    "exit_code": 1
+  },
+  "test_specifications": [
+    {
+      "test_id": "search_pharmacy_products",
+      "name": "Search bar shows product suggestions",
+      "description": "Verify search functionality shows relevant product suggestions",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "selector": "",
+          "selector_strategy": null,
+          "value": null,
+          "description": "",
+          "url": "https://www.cvs.com/",
+          "assertion": null
+        },
+        {
+          "action": "fill",
+          "selector": "input[data-testid='search-input']",
+          "selector_strategy": "css",
+          "value": "tylenol",
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "wait",
+          "selector": "",
+          "selector_strategy": null,
+          "value": "500",
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "expect",
+          "selector": "[data-testid='search-suggestions']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Tylenol Extra Strength",
+          "selector_strategy": "text",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "test_id": "account_sign_in",
+      "name": "Sign in with invalid credentials shows error",
+      "description": "Verify login form validation for incorrect credentials",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "selector": "",
+          "selector_strategy": null,
+          "value": null,
+          "description": "",
+          "url": "https://www.cvs.com/",
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "[data-testid='sign-in-button']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "fill",
+          "selector": "#username",
+          "selector_strategy": "css",
+          "value": "test@example.com",
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "fill",
+          "selector": "#password",
+          "selector_strategy": "css",
+          "value": "wrongpassword123",
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "[data-testid='sign-in-submit']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "expect",
+          "selector": "[data-testid='error-message']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Invalid email or password",
+          "selector_strategy": "text",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "test_id": "store_locator",
+      "name": "Store locator finds nearby locations",
+      "description": "Verify store locator functionality returns results",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "selector": "",
+          "selector_strategy": null,
+          "value": null,
+          "description": "",
+          "url": "https://www.cvs.com/",
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "[data-testid='store-locator']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "fill",
+          "selector": "#store-search-input",
+          "selector_strategy": "css",
+          "value": "10001",
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "[data-testid='find-store-submit']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "expect",
+          "selector": "[data-testid='store-results']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Stores near",
+          "selector_strategy": "text",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "test_id": "shopping_cart",
+      "name": "Add item to cart shows confirmation",
+      "description": "Verify adding product to cart shows success message",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "selector": "",
+          "selector_strategy": null,
+          "value": null,
+          "description": "",
+          "url": "https://www.cvs.com/",
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "[data-testid='add-to-cart']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "expect",
+          "selector": "[data-testid='cart-confirmation']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Item added to cart",
+          "selector_strategy": "text",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "test_id": "prescription_refill",
+      "name": "Prescription refill form validation",
+      "description": "Verify prescription refill form validates required fields",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "selector": "",
+          "selector_strategy": null,
+          "value": null,
+          "description": "",
+          "url": "https://www.cvs.com/",
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "[data-testid='refill-rx']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "click",
+          "selector": "[data-testid='submit-refill']",
+          "selector_strategy": "test-id",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "expect",
+          "selector": "text=Prescription number is required",
+          "selector_strategy": "text",
+          "value": null,
+          "description": "",
+          "url": null,
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "fill",
+          "selector": "#rx-number",
+          "selector_strategy": "css",
+          "value": "12345",
+          "description": "",
+          "url": null,
+          "assertion": null
+        },
+        {
+          "action": "expect",
+          "selector": "#rx-number",
+          "selector_strategy": "css",
+          "value": "12345",
+          "description": "",
+          "url": null,
+          "assertion": "toHaveValue"
+        }
+      ]
+    }
+  ],
+  "individual_results": [
+    {
+      "name": "Search bar shows product suggestions",
+      "status": "failed",
+      "error": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+    },
+    {
+      "name": "Sign in with invalid credentials shows error",
+      "status": "failed",
+      "error": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+    },
+    {
+      "name": "Store locator finds nearby locations",
+      "status": "failed",
+      "error": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+    },
+    {
+      "name": "Add item to cart shows confirmation",
+      "status": "failed",
+      "error": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+    },
+    {
+      "name": "Prescription refill form validation",
+      "status": "failed",
+      "error": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+    }
+  ],
+  "ai_analysis": "# E2E Test Execution Report - Suite f7adcfe4\n**Date**: [Current Date]\n\n## Executive Summary\nAll 5 E2E tests failed with timeout errors across critical user journeys including search, authentication, and cart functionality. Tests consistently exceeded the 30-second timeout threshold, indicating severe performance degradation or connectivity issues. Given the 100% failure rate affecting core business flows, recommendation is to HOLD deployment and initiate immediate investigation.\n\n## Functionality Coverage Analysis\nTested Features:\n- Product search and autocomplete (\u2717 Failed)\n- User authentication validation (\u2717 Failed)\n- Store locator geolocation (\u2717 Failed)\n- Shopping cart operations (\u2717 Failed)\n- Prescription refill validation (\u2717 Failed)\n\nCoverage Gaps:\n- Checkout process not included\n- Mobile responsiveness not verified\n- Cross-browser compatibility untested\n\n## Root Cause Analysis\nPrimary Failure Pattern: Universal timeout errors (30s threshold)\nLikely Causes:\n1. Environmental Issues (HIGH)\n   - Possible DNS resolution failure to cvs.com\n   - Network connectivity degradation\n   - Application environment unresponsive\n\n2. Test Infrastructure (MEDIUM)\n   - Playwright configuration issues\n   - Resource constraints in test environment\n   - Missing wait conditions or improper timeout settings\n\nImpact: CRITICAL - Complete inability to validate production readiness\n\n## Actionable Recommendations\n1. Immediate Actions\n   - Verify application health and DNS resolution\n   - Test network connectivity to target environment\n   - Review Playwright timeout configurations\n   - Add logging for navigation timing metrics\n\n2. Test Framework Improvements\n   - Implement smart waiting strategies\n   - Add retry logic for flaky operations\n   - Configure detailed network logging\n   - Add performance timing assertions\n\n3. Infrastructure Updates\n   - Increase default timeout threshold to 45s\n   - Add environment health checks pre-execution\n   - Implement parallel test execution\n   - Add network traffic monitoring\n\n4. Test Coverage Expansion\n   - Add checkout flow validation\n   - Include cross-browser testing\n   - Add mobile viewport tests\n   - Implement API fallback tests\n\nNext Steps: Schedule immediate investigation with DevOps to verify environment health before re-executing test suite.",
+  "playwright_output": {
+    "stdout": "{\n  \"config\": {\n    \"rootDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend\",\n    \"forbidOnly\": false,\n    \"fullyParallel\": false,\n    \"globalSetup\": null,\n    \"globalTeardown\": null,\n    \"globalTimeout\": 0,\n    \"grep\": {},\n    \"grepInvert\": null,\n    \"maxFailures\": 0,\n    \"metadata\": {\n      \"actualWorkers\": 1\n    },\n    \"preserveOutput\": \"always\",\n    \"reporter\": [\n      [\n        \"json\"\n      ]\n    ],\n    \"reportSlowTests\": {\n      \"max\": 5,\n      \"threshold\": 300000\n    },\n    \"quiet\": false,\n    \"projects\": [\n      {\n        \"outputDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results\",\n        \"repeatEach\": 1,\n        \"retries\": 0,\n        \"metadata\": {\n          \"actualWorkers\": 1\n        },\n        \"id\": \"\",\n        \"name\": \"\",\n        \"testDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend\",\n        \"testIgnore\": [],\n        \"testMatch\": [\n          \"**/*.@(spec|test).?(c|m)[jt]s?(x)\"\n        ],\n        \"timeout\": 30000\n      }\n    ],\n    \"shard\": null,\n    \"updateSnapshots\": \"missing\",\n    \"updateSourceMethod\": \"patch\",\n    \"version\": \"1.55.1\",\n    \"workers\": 4,\n    \"webServer\": null\n  },\n  \"suites\": [\n    {\n      \"title\": \"test_specs/compiled/suite_f7adcfe4.spec.ts\",\n      \"file\": \"test_specs/compiled/suite_f7adcfe4.spec.ts\",\n      \"column\": 0,\n      \"line\": 0,\n      \"specs\": [],\n      \"suites\": [\n        {\n          \"title\": \"Generated E2E Tests\",\n          \"file\": \"test_specs/compiled/suite_f7adcfe4.spec.ts\",\n          \"line\": 3,\n          \"column\": 6,\n          \"specs\": [\n            {\n              \"title\": \"Search bar shows product suggestions\",\n              \"ok\": false,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"timedOut\",\n                      \"duration\": 30106,\n                      \"error\": {\n                        \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\",\n                        \"stack\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                      },\n                      \"errors\": [\n                        {\n                          \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                        },\n                        {\n                          \"location\": {\n                            \"file\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_f7adcfe4.spec.ts\",\n                            \"column\": 71,\n                            \"line\": 14\n                          },\n                          \"message\": \"Error: locator.fill: Test timeout of 30000ms exceeded.\\nCall log:\\n\\u001b[2m  - waiting for locator('input[data-testid=\\\\'search-input\\\\']').first()\\u001b[22m\\n\\n\\n  12 |     await page.goto('https://www.cvs.com/');\\n  13 |     // Step 2: ActionType.FILL\\n> 14 |     await page.locator('input[data-testid=\\\\'search-input\\\\']').first().fill('tylenol');\\n     |                                                                       ^\\n  15 |     // Step 3: ActionType.WAIT\\n  16 |     await page.waitForTimeout(500); // Wait 500ms for dynamic content\\n  17 |     // Step 4: ActionType.EXPECT\\n    at /Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_f7adcfe4.spec.ts:14:71\"\n                        }\n                      ],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T16:46:29.672Z\",\n                      \"annotations\": [],\n                      \"attachments\": [\n                        {\n                          \"name\": \"error-context\",\n                          \"contentType\": \"text/markdown\",\n                          \"path\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results/test_specs-compiled-suite_-7819e-r-shows-product-suggestions/error-context.md\"\n                        }\n                      ]\n                    }\n                  ],\n                  \"status\": \"unexpected\"\n                }\n              ],\n              \"id\": \"faf0fea27ab1a150608c-a31eb427aa5f477f6ff5\",\n              \"file\": \"test_specs/compiled/suite_f7adcfe4.spec.ts\",\n              \"line\": 8,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Sign in with invalid credentials shows error\",\n              \"ok\": false,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 1,\n                      \"parallelIndex\": 0,\n                      \"status\": \"timedOut\",\n                      \"duration\": 30086,\n                      \"error\": {\n                        \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\",\n                        \"stack\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                      },\n                      \"errors\": [\n                        {\n                          \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                        },\n                        {\n                          \"location\": {\n                            \"file\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_f7adcfe4.spec.ts\",\n                            \"column\": 68,\n                            \"line\": 31\n                          },\n                          \"message\": \"Error: locator.click: Test timeout of 30000ms exceeded.\\nCall log:\\n\\u001b[2m  - waiting for locator('[data-testid=\\\\'sign-in-button\\\\']').first()\\u001b[22m\\n\\n\\n  29 |     await page.goto('https://www.cvs.com/');\\n  30 |     // Step 2: ActionType.CLICK\\n> 31 |     await page.locator('[data-testid=\\\\'sign-in-button\\\\']').first().click();\\n     |                                                                    ^\\n  32 |     // Step 3: ActionType.FILL\\n  33 |     await page.locator('#username').first().fill('test@example.com');\\n  34 |     // Step 4: ActionType.FILL\\n    at /Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_f7adcfe4.spec.ts:31:68\"\n                        }\n                      ],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T16:47:00.902Z\",\n                      \"annotations\": [],\n                      \"attachments\": [\n                        {\n                          \"name\": \"error-context\",\n                          \"contentType\": \"text/markdown\",\n                          \"path\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results/test_specs-compiled-suite_-ead27-lid-credentials-shows-error/error-context.md\"\n                        }\n                      ]\n                    }\n                  ],\n                  \"status\": \"unexpected\"\n                }\n              ],\n              \"id\": \"faf0fea27ab1a150608c-554bd4554f7f439dbc5b\",\n              \"file\": \"test_specs/compiled/suite_f7adcfe4.spec.ts\",\n              \"line\": 25,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Store locator finds nearby locations\",\n              \"ok\": false,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 2,\n                      \"parallelIndex\": 0,\n                      \"status\": \"timedOut\",\n                      \"duration\": 30081,\n                      \"error\": {\n                        \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\",\n                        \"stack\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                      },\n                      \"errors\": [\n                        {\n                          \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                        },\n                        {\n                          \"location\": {\n                            \"file\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_f7adcfe4.spec.ts\",\n                            \"column\": 67,\n                            \"line\": 52\n                          },\n                          \"message\": \"Error: locator.click: Test timeout of 30000ms exceeded.\\nCall log:\\n\\u001b[2m  - waiting for locator('[data-testid=\\\\'store-locator\\\\']').first()\\u001b[22m\\n\\n\\n  50 |     await page.goto('https://www.cvs.com/');\\n  51 |     // Step 2: ActionType.CLICK\\n> 52 |     await page.locator('[data-testid=\\\\'store-locator\\\\']').first().click();\\n     |                                                                   ^\\n  53 |     // Step 3: ActionType.FILL\\n  54 |     await page.locator('#store-search-input').first().fill('10001');\\n  55 |     // Step 4: ActionType.CLICK\\n    at /Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_f7adcfe4.spec.ts:52:67\"\n                        }\n                      ],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T16:47:31.861Z\",\n                      \"annotations\": [],\n                      \"attachments\": [\n                        {\n                          \"name\": \"error-context\",\n                          \"contentType\": \"text/markdown\",\n                          \"path\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results/test_specs-compiled-suite_-5b054-ator-finds-nearby-locations/error-context.md\"\n                        }\n                      ]\n                    }\n                  ],\n                  \"status\": \"unexpected\"\n                }\n              ],\n              \"id\": \"faf0fea27ab1a150608c-20cf52a080a33e47a5d1\",\n              \"file\": \"test_specs/compiled/suite_f7adcfe4.spec.ts\",\n              \"line\": 46,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Add item to cart shows confirmation\",\n              \"ok\": false,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 3,\n                      \"parallelIndex\": 0,\n                      \"status\": \"timedOut\",\n                      \"duration\": 30086,\n                      \"error\": {\n                        \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\",\n                        \"stack\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                      },\n                      \"errors\": [\n                        {\n                          \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                        },\n                        {\n                          \"location\": {\n                            \"file\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_f7adcfe4.spec.ts\",\n                            \"column\": 65,\n                            \"line\": 71\n                          },\n                          \"message\": \"Error: locator.click: Test timeout of 30000ms exceeded.\\nCall log:\\n\\u001b[2m  - waiting for locator('[data-testid=\\\\'add-to-cart\\\\']').first()\\u001b[22m\\n\\n\\n  69 |     await page.goto('https://www.cvs.com/');\\n  70 |     // Step 2: ActionType.CLICK\\n> 71 |     await page.locator('[data-testid=\\\\'add-to-cart\\\\']').first().click();\\n     |                                                                 ^\\n  72 |     // Step 3: ActionType.EXPECT\\n  73 |     await expect(page.locator('[data-testid=\\\\'cart-confirmation\\\\']').first()).toBeVisible();\\n  74 |     // Step 4: ActionType.EXPECT\\n    at /Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_f7adcfe4.spec.ts:71:65\"\n                        }\n                      ],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T16:48:02.891Z\",\n                      \"annotations\": [],\n                      \"attachments\": [\n                        {\n                          \"name\": \"error-context\",\n                          \"contentType\": \"text/markdown\",\n                          \"path\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results/test_specs-compiled-suite_-dbb12--to-cart-shows-confirmation/error-context.md\"\n                        }\n                      ]\n                    }\n                  ],\n                  \"status\": \"unexpected\"\n                }\n              ],\n              \"id\": \"faf0fea27ab1a150608c-8068080d72515ddf214d\",\n              \"file\": \"test_specs/compiled/suite_f7adcfe4.spec.ts\",\n              \"line\": 65,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Prescription refill form validation\",\n              \"ok\": false,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 4,\n                      \"parallelIndex\": 0,\n                      \"status\": \"timedOut\",\n                      \"duration\": 30098,\n                      \"error\": {\n                        \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\",\n                        \"stack\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                      },\n                      \"errors\": [\n                        {\n                          \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                        },\n                        {\n                          \"location\": {\n                            \"file\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_f7adcfe4.spec.ts\",\n                            \"column\": 63,\n                            \"line\": 86\n                          },\n                          \"message\": \"Error: locator.click: Test timeout of 30000ms exceeded.\\nCall log:\\n\\u001b[2m  - waiting for locator('[data-testid=\\\\'refill-rx\\\\']').first()\\u001b[22m\\n\\n\\n  84 |     await page.goto('https://www.cvs.com/');\\n  85 |     // Step 2: ActionType.CLICK\\n> 86 |     await page.locator('[data-testid=\\\\'refill-rx\\\\']').first().click();\\n     |                                                               ^\\n  87 |     // Step 3: ActionType.CLICK\\n  88 |     await page.locator('[data-testid=\\\\'submit-refill\\\\']').first().click();\\n  89 |     // Step 4: ActionType.EXPECT\\n    at /Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_f7adcfe4.spec.ts:86:63\"\n                        }\n                      ],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T16:48:33.903Z\",\n                      \"annotations\": [],\n                      \"attachments\": [\n                        {\n                          \"name\": \"error-context\",\n                          \"contentType\": \"text/markdown\",\n                          \"path\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results/test_specs-compiled-suite_-615f6-tion-refill-form-validation/error-context.md\"\n                        }\n                      ]\n                    }\n                  ],\n                  \"status\": \"unexpected\"\n                }\n              ],\n              \"id\": \"faf0fea27ab1a150608c-c1466ee11eb3112b44be\",\n              \"file\": \"test_specs/compiled/suite_f7adcfe4.spec.ts\",\n              \"line\": 80,\n              \"column\": 7\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"errors\": [],\n  \"stats\": {\n    \"startTime\": \"2025-10-02T16:46:29.312Z\",\n    \"duration\": 155295.72600000002,\n    \"expected\": 0,\n    \"skipped\": 0,\n    \"unexpected\": 5,\n    \"flaky\": 0\n  }\n}\n",
+    "stderr": "",
+    "raw_json": "{\n  \"config\": {\n    \"rootDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend\",\n    \"forbidOnly\": false,\n    \"fullyParallel\": false,\n    \"globalSetup\": null,\n    \"globalTeardown\": null,\n    \"globalTimeout\": 0,\n    \"grep\": {},\n    \"grepInvert\": null,\n    \"maxFailures\": 0,\n    \"metadata\": {\n      \"actualWorkers\": 1\n    },\n    \"preserveOutput\": \"always\",\n    \"reporter\": [\n      [\n        \"json\"\n      ]\n    ],\n    \"reportSlowTests\": {\n      \"max\": 5,\n      \"threshold\": 300000\n    },\n    \"quiet\": false,\n    \"projects\": [\n      {\n        \"outputDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results\",\n        \"repeatEach\": 1,\n        \"retries\": 0,\n        \"metadata\": {\n          \"actualWorkers\": 1\n        },\n        \"id\": \"\",\n        \"name\": \"\",\n        \"testDir\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend\",\n        \"testIgnore\": [],\n        \"testMatch\": [\n          \"**/*.@(spec|test).?(c|m)[jt]s?(x)\"\n        ],\n        \"timeout\": 30000\n      }\n    ],\n    \"shard\": null,\n    \"updateSnapshots\": \"missing\",\n    \"updateSourceMethod\": \"patch\",\n    \"version\": \"1.55.1\",\n    \"workers\": 4,\n    \"webServer\": null\n  },\n  \"suites\": [\n    {\n      \"title\": \"test_specs/compiled/suite_f7adcfe4.spec.ts\",\n      \"file\": \"test_specs/compiled/suite_f7adcfe4.spec.ts\",\n      \"column\": 0,\n      \"line\": 0,\n      \"specs\": [],\n      \"suites\": [\n        {\n          \"title\": \"Generated E2E Tests\",\n          \"file\": \"test_specs/compiled/suite_f7adcfe4.spec.ts\",\n          \"line\": 3,\n          \"column\": 6,\n          \"specs\": [\n            {\n              \"title\": \"Search bar shows product suggestions\",\n              \"ok\": false,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 0,\n                      \"parallelIndex\": 0,\n                      \"status\": \"timedOut\",\n                      \"duration\": 30106,\n                      \"error\": {\n                        \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\",\n                        \"stack\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                      },\n                      \"errors\": [\n                        {\n                          \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                        },\n                        {\n                          \"location\": {\n                            \"file\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_f7adcfe4.spec.ts\",\n                            \"column\": 71,\n                            \"line\": 14\n                          },\n                          \"message\": \"Error: locator.fill: Test timeout of 30000ms exceeded.\\nCall log:\\n\\u001b[2m  - waiting for locator('input[data-testid=\\\\'search-input\\\\']').first()\\u001b[22m\\n\\n\\n  12 |     await page.goto('https://www.cvs.com/');\\n  13 |     // Step 2: ActionType.FILL\\n> 14 |     await page.locator('input[data-testid=\\\\'search-input\\\\']').first().fill('tylenol');\\n     |                                                                       ^\\n  15 |     // Step 3: ActionType.WAIT\\n  16 |     await page.waitForTimeout(500); // Wait 500ms for dynamic content\\n  17 |     // Step 4: ActionType.EXPECT\\n    at /Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_f7adcfe4.spec.ts:14:71\"\n                        }\n                      ],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T16:46:29.672Z\",\n                      \"annotations\": [],\n                      \"attachments\": [\n                        {\n                          \"name\": \"error-context\",\n                          \"contentType\": \"text/markdown\",\n                          \"path\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results/test_specs-compiled-suite_-7819e-r-shows-product-suggestions/error-context.md\"\n                        }\n                      ]\n                    }\n                  ],\n                  \"status\": \"unexpected\"\n                }\n              ],\n              \"id\": \"faf0fea27ab1a150608c-a31eb427aa5f477f6ff5\",\n              \"file\": \"test_specs/compiled/suite_f7adcfe4.spec.ts\",\n              \"line\": 8,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Sign in with invalid credentials shows error\",\n              \"ok\": false,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 1,\n                      \"parallelIndex\": 0,\n                      \"status\": \"timedOut\",\n                      \"duration\": 30086,\n                      \"error\": {\n                        \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\",\n                        \"stack\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                      },\n                      \"errors\": [\n                        {\n                          \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                        },\n                        {\n                          \"location\": {\n                            \"file\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_f7adcfe4.spec.ts\",\n                            \"column\": 68,\n                            \"line\": 31\n                          },\n                          \"message\": \"Error: locator.click: Test timeout of 30000ms exceeded.\\nCall log:\\n\\u001b[2m  - waiting for locator('[data-testid=\\\\'sign-in-button\\\\']').first()\\u001b[22m\\n\\n\\n  29 |     await page.goto('https://www.cvs.com/');\\n  30 |     // Step 2: ActionType.CLICK\\n> 31 |     await page.locator('[data-testid=\\\\'sign-in-button\\\\']').first().click();\\n     |                                                                    ^\\n  32 |     // Step 3: ActionType.FILL\\n  33 |     await page.locator('#username').first().fill('test@example.com');\\n  34 |     // Step 4: ActionType.FILL\\n    at /Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_f7adcfe4.spec.ts:31:68\"\n                        }\n                      ],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T16:47:00.902Z\",\n                      \"annotations\": [],\n                      \"attachments\": [\n                        {\n                          \"name\": \"error-context\",\n                          \"contentType\": \"text/markdown\",\n                          \"path\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results/test_specs-compiled-suite_-ead27-lid-credentials-shows-error/error-context.md\"\n                        }\n                      ]\n                    }\n                  ],\n                  \"status\": \"unexpected\"\n                }\n              ],\n              \"id\": \"faf0fea27ab1a150608c-554bd4554f7f439dbc5b\",\n              \"file\": \"test_specs/compiled/suite_f7adcfe4.spec.ts\",\n              \"line\": 25,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Store locator finds nearby locations\",\n              \"ok\": false,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 2,\n                      \"parallelIndex\": 0,\n                      \"status\": \"timedOut\",\n                      \"duration\": 30081,\n                      \"error\": {\n                        \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\",\n                        \"stack\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                      },\n                      \"errors\": [\n                        {\n                          \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                        },\n                        {\n                          \"location\": {\n                            \"file\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_f7adcfe4.spec.ts\",\n                            \"column\": 67,\n                            \"line\": 52\n                          },\n                          \"message\": \"Error: locator.click: Test timeout of 30000ms exceeded.\\nCall log:\\n\\u001b[2m  - waiting for locator('[data-testid=\\\\'store-locator\\\\']').first()\\u001b[22m\\n\\n\\n  50 |     await page.goto('https://www.cvs.com/');\\n  51 |     // Step 2: ActionType.CLICK\\n> 52 |     await page.locator('[data-testid=\\\\'store-locator\\\\']').first().click();\\n     |                                                                   ^\\n  53 |     // Step 3: ActionType.FILL\\n  54 |     await page.locator('#store-search-input').first().fill('10001');\\n  55 |     // Step 4: ActionType.CLICK\\n    at /Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_f7adcfe4.spec.ts:52:67\"\n                        }\n                      ],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T16:47:31.861Z\",\n                      \"annotations\": [],\n                      \"attachments\": [\n                        {\n                          \"name\": \"error-context\",\n                          \"contentType\": \"text/markdown\",\n                          \"path\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results/test_specs-compiled-suite_-5b054-ator-finds-nearby-locations/error-context.md\"\n                        }\n                      ]\n                    }\n                  ],\n                  \"status\": \"unexpected\"\n                }\n              ],\n              \"id\": \"faf0fea27ab1a150608c-20cf52a080a33e47a5d1\",\n              \"file\": \"test_specs/compiled/suite_f7adcfe4.spec.ts\",\n              \"line\": 46,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Add item to cart shows confirmation\",\n              \"ok\": false,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 3,\n                      \"parallelIndex\": 0,\n                      \"status\": \"timedOut\",\n                      \"duration\": 30086,\n                      \"error\": {\n                        \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\",\n                        \"stack\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                      },\n                      \"errors\": [\n                        {\n                          \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                        },\n                        {\n                          \"location\": {\n                            \"file\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_f7adcfe4.spec.ts\",\n                            \"column\": 65,\n                            \"line\": 71\n                          },\n                          \"message\": \"Error: locator.click: Test timeout of 30000ms exceeded.\\nCall log:\\n\\u001b[2m  - waiting for locator('[data-testid=\\\\'add-to-cart\\\\']').first()\\u001b[22m\\n\\n\\n  69 |     await page.goto('https://www.cvs.com/');\\n  70 |     // Step 2: ActionType.CLICK\\n> 71 |     await page.locator('[data-testid=\\\\'add-to-cart\\\\']').first().click();\\n     |                                                                 ^\\n  72 |     // Step 3: ActionType.EXPECT\\n  73 |     await expect(page.locator('[data-testid=\\\\'cart-confirmation\\\\']').first()).toBeVisible();\\n  74 |     // Step 4: ActionType.EXPECT\\n    at /Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_f7adcfe4.spec.ts:71:65\"\n                        }\n                      ],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T16:48:02.891Z\",\n                      \"annotations\": [],\n                      \"attachments\": [\n                        {\n                          \"name\": \"error-context\",\n                          \"contentType\": \"text/markdown\",\n                          \"path\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results/test_specs-compiled-suite_-dbb12--to-cart-shows-confirmation/error-context.md\"\n                        }\n                      ]\n                    }\n                  ],\n                  \"status\": \"unexpected\"\n                }\n              ],\n              \"id\": \"faf0fea27ab1a150608c-8068080d72515ddf214d\",\n              \"file\": \"test_specs/compiled/suite_f7adcfe4.spec.ts\",\n              \"line\": 65,\n              \"column\": 7\n            },\n            {\n              \"title\": \"Prescription refill form validation\",\n              \"ok\": false,\n              \"tags\": [],\n              \"tests\": [\n                {\n                  \"timeout\": 30000,\n                  \"annotations\": [],\n                  \"expectedStatus\": \"passed\",\n                  \"projectId\": \"\",\n                  \"projectName\": \"\",\n                  \"results\": [\n                    {\n                      \"workerIndex\": 4,\n                      \"parallelIndex\": 0,\n                      \"status\": \"timedOut\",\n                      \"duration\": 30098,\n                      \"error\": {\n                        \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\",\n                        \"stack\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                      },\n                      \"errors\": [\n                        {\n                          \"message\": \"\\u001b[31mTest timeout of 30000ms exceeded.\\u001b[39m\"\n                        },\n                        {\n                          \"location\": {\n                            \"file\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_f7adcfe4.spec.ts\",\n                            \"column\": 63,\n                            \"line\": 86\n                          },\n                          \"message\": \"Error: locator.click: Test timeout of 30000ms exceeded.\\nCall log:\\n\\u001b[2m  - waiting for locator('[data-testid=\\\\'refill-rx\\\\']').first()\\u001b[22m\\n\\n\\n  84 |     await page.goto('https://www.cvs.com/');\\n  85 |     // Step 2: ActionType.CLICK\\n> 86 |     await page.locator('[data-testid=\\\\'refill-rx\\\\']').first().click();\\n     |                                                               ^\\n  87 |     // Step 3: ActionType.CLICK\\n  88 |     await page.locator('[data-testid=\\\\'submit-refill\\\\']').first().click();\\n  89 |     // Step 4: ActionType.EXPECT\\n    at /Users/rohanraval/Documents/GitHub/QAsmith/backend/test_specs/compiled/suite_f7adcfe4.spec.ts:86:63\"\n                        }\n                      ],\n                      \"stdout\": [],\n                      \"stderr\": [],\n                      \"retry\": 0,\n                      \"startTime\": \"2025-10-02T16:48:33.903Z\",\n                      \"annotations\": [],\n                      \"attachments\": [\n                        {\n                          \"name\": \"error-context\",\n                          \"contentType\": \"text/markdown\",\n                          \"path\": \"/Users/rohanraval/Documents/GitHub/QAsmith/backend/test-results/test_specs-compiled-suite_-615f6-tion-refill-form-validation/error-context.md\"\n                        }\n                      ]\n                    }\n                  ],\n                  \"status\": \"unexpected\"\n                }\n              ],\n              \"id\": \"faf0fea27ab1a150608c-c1466ee11eb3112b44be\",\n              \"file\": \"test_specs/compiled/suite_f7adcfe4.spec.ts\",\n              \"line\": 80,\n              \"column\": 7\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"errors\": [],\n  \"stats\": {\n    \"startTime\": \"2025-10-02T16:46:29.312Z\",\n    \"duration\": 155295.72600000002,\n    \"expected\": 0,\n    \"skipped\": 0,\n    \"unexpected\": 5,\n    \"flaky\": 0\n  }\n}\n"
+  }
+}

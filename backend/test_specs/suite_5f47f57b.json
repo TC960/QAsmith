@@ -1,0 +1,92 @@
+{
+  "suite_id": "suite_5f47f57b",
+  "crawl_id": "bd0145f7-d84a-44cf-9675-d16c7840d3d1",
+  "test_count": 5,
+  "tests": [
+    {
+      "test_id": "HOME_001",
+      "name": "Verify home page loads correctly",
+      "description": "Validate that the home page loads and displays correct title",
+      "page_url": "https://example.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://example.com/",
+          "description": "Navigate to home page",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "HOME_002",
+      "name": "Verify page content",
+      "description": "Validate that the main content of the home page displays correctly",
+      "page_url": "https://example.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://example.com/",
+          "description": "Navigate to home page",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "HOME_003",
+      "name": "Verify page loads with trailing slash",
+      "description": "Validate that the home page loads correctly with trailing slash in URL",
+      "page_url": "https://example.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://example.com/",
+          "description": "Navigate to home page with trailing slash",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "HOME_004",
+      "name": "Verify page loads without trailing slash",
+      "description": "Validate that the home page loads correctly without trailing slash in URL",
+      "page_url": "https://example.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "https://example.com",
+          "description": "Navigate to home page without trailing slash",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    },
+    {
+      "test_id": "HOME_005",
+      "name": "Verify HTTP to HTTPS redirect",
+      "description": "Validate that HTTP requests redirect to HTTPS",
+      "page_url": "https://example.com/",
+      "steps": [
+        {
+          "action": "navigate",
+          "selector": "",
+          "selector_strategy": "text",
+          "value": "http://example.com",
+          "description": "Navigate to HTTP version of home page",
+          "url": null,
+          "assertion": null
+        }
+      ]
+    }
+  ]
+}
