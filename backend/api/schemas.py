@@ -57,8 +57,7 @@ class PathFindingResponse(BaseModel):
 class GenerateTestsRequest(BaseModel):
     """Request schema for /generate-tests endpoint."""
     crawl_id: str
-    start_url: str
-    end_url: str
+    page_urls: List[str]  # List of page URLs to generate tests for
 
 
 class TestGenerationResponse(BaseModel):
@@ -69,10 +68,33 @@ class TestGenerationResponse(BaseModel):
     tests: List[Dict[str, Any]]
 
 
+class CompileTestsRequest(BaseModel):
+    """Request schema for /compile-tests endpoint."""
+    suite_id: str
+
+
+class CompileTestsResponse(BaseModel):
+    """Response schema for /compile-tests endpoint."""
+    suite_id: str
+    spec_file_path: str
+    success: bool
+
+
 class RunTestsRequest(BaseModel):
     """Request schema for /run-tests endpoint."""
-    test_suite_id: str
-    tests: List[Dict[str, Any]]
+    suite_id: str
+
+
+class RunTestsResponse(BaseModel):
+    """Response schema for /run-tests endpoint."""
+    suite_id: str
+    run_id: str
+    total_tests: int
+    passed: int
+    failed: int
+    report_path: Optional[str] = None
+    ai_summary: Optional[str] = None
+    test_results: Optional[List[Dict[str, Any]]] = None
 
 
 class GraphVisualizationResponse(BaseModel):

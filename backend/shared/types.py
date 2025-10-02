@@ -15,6 +15,8 @@ class ActionType(str, Enum):
     HOVER = "hover"
     CHECK = "check"
     UNCHECK = "uncheck"
+    GOTO = "goto"
+    EXPECT = "expect"
 
 
 class SelectorStrategy(str, Enum):
@@ -73,11 +75,13 @@ class AppMap(BaseModel):
 class TestStep(BaseModel):
     """A single step in a test case."""
     action: ActionType
-    selector: str
-    selector_strategy: SelectorStrategy
+    selector: Optional[str] = ""
+    selector_strategy: Optional[SelectorStrategy] = None
     value: Optional[str] = None
-    description: str
+    description: str = ""
     expected_outcome: Optional[str] = None
+    url: Optional[str] = None  # For goto action
+    assertion: Optional[str] = None  # For expect action
 
 
 class TestCase(BaseModel):

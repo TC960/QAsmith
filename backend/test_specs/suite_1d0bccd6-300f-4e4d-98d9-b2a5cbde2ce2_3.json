@@ -1,0 +1,88 @@
+{
+  "suite_id": "suite_1d0bccd6-300f-4e4d-98d9-b2a5cbde2ce2_3",
+  "crawl_id": "1d0bccd6-300f-4e4d-98d9-b2a5cbde2ce2",
+  "test_count": 3,
+  "tests": [
+    {
+      "name": "Example Domain page loads correctly",
+      "description": "Verifies the example.com page loads with expected content",
+      "page_url": "https://example.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://example.com/"
+        },
+        {
+          "action": "expect",
+          "selector": "h1",
+          "assertion": "toHaveText",
+          "value": "Example Domain"
+        },
+        {
+          "action": "expect",
+          "selector": "p",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "More information link works correctly",
+      "description": "Verifies the 'More information' link is present and clickable",
+      "page_url": "https://example.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://example.com/"
+        },
+        {
+          "action": "expect",
+          "selector": "a",
+          "assertion": "toHaveText",
+          "value": "More information..."
+        },
+        {
+          "action": "expect",
+          "selector": "a",
+          "assertion": "toHaveAttribute",
+          "attribute": "href",
+          "value": "https://www.iana.org/domains/reserved"
+        },
+        {
+          "action": "click",
+          "selector": "a"
+        }
+      ]
+    },
+    {
+      "name": "Page responsiveness test",
+      "description": "Verifies the page layout remains correct at different viewport sizes",
+      "page_url": "https://example.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://example.com/"
+        },
+        {
+          "action": "setViewportSize",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "action": "expect",
+          "selector": "div",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "setViewportSize",
+          "width": 375,
+          "height": 667
+        },
+        {
+          "action": "expect",
+          "selector": "div",
+          "assertion": "toBeVisible"
+        }
+      ]
+    }
+  ]
+}

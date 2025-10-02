@@ -1,0 +1,124 @@
+{
+  "suite_id": "suite_b3599e3d-27c4-4090-91ec-3ff8f6dd5b82_5",
+  "crawl_id": "b3599e3d-27c4-4090-91ec-3ff8f6dd5b82",
+  "test_count": 5,
+  "tests": [
+    {
+      "name": "Homepage loads successfully",
+      "description": "Verify main homepage loads and core elements are visible",
+      "page_url": "https://ssyquia.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://ssyquia.com/"
+        },
+        {
+          "action": "expect",
+          "selector": "h1",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Sancho Syquia",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Social links are functional",
+      "description": "Verify LinkedIn and Email links work correctly",
+      "page_url": "https://ssyquia.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://ssyquia.com/"
+        },
+        {
+          "action": "expect",
+          "selector": "a[href*='linkedin.com']",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "a[href*='mailto:']",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Project links functionality",
+      "description": "Test READ MORE and VIEW WEBSITE links",
+      "page_url": "https://ssyquia.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://ssyquia.com/"
+        },
+        {
+          "action": "expect",
+          "selector": "text=READ MORE",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "text=VIEW WEBSITE",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Navigation interaction test",
+      "description": "Verify all navigation elements are clickable",
+      "page_url": "https://ssyquia.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://ssyquia.com/"
+        },
+        {
+          "action": "click",
+          "selector": "text=READ MORE"
+        },
+        {
+          "action": "click",
+          "selector": "text=VIEW WEBSITE >> nth=0"
+        },
+        {
+          "action": "click",
+          "selector": "text=VIEW WEBSITE >> nth=1"
+        }
+      ]
+    },
+    {
+      "name": "Page responsiveness",
+      "description": "Verify page elements remain visible at different viewport sizes",
+      "page_url": "https://ssyquia.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://ssyquia.com/"
+        },
+        {
+          "action": "setViewportSize",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "action": "expect",
+          "selector": "h1",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "setViewportSize",
+          "width": 375,
+          "height": 667
+        },
+        {
+          "action": "expect",
+          "selector": "h1",
+          "assertion": "toBeVisible"
+        }
+      ]
+    }
+  ]
+}

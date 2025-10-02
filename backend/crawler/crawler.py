@@ -44,7 +44,8 @@ class Crawler:
         try:
             print("🌐 CRAWLER: Launching Playwright browser...")
             async with async_playwright() as p:
-                browser = await p.chromium.launch(headless=True)
+                # Use Firefox for better macOS compatibility
+                browser = await p.firefox.launch(headless=True)
                 print("✅ CRAWLER: Browser launched successfully")
                 
                 page = await browser.new_page(
@@ -141,7 +142,7 @@ class Crawler:
             })
         
         try:
-            await page.goto(url, timeout=self.config.crawler.timeout, wait_until="networkidle")
+            await page.goto(url, timeout=self.config.crawler.timeout, wait_until="domcontentloaded")
             print(f"✅ PAGE: Successfully loaded {url}")
         except Exception as e:
             print(f"❌ PAGE: Failed to load {url}: {e}")

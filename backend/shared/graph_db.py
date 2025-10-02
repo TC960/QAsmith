@@ -295,83 +295,105 @@ class GraphDB:
             AppMap object compatible with test generator
         """
         with self.driver.session() as session:
-            result = session.run("""
+            # First, get crawl metadata
+            crawl_result = session.run("""
                 MATCH (c:Crawl {crawl_id: $crawl_id})
+                RETURN c.base_url as base_url, c.domain as domain
+            """, crawl_id=crawl_id)
+            crawl_record = crawl_result.single()
+            if not crawl_record:
+                raise ValueError(f"No crawl found with ID {crawl_id}")
+
+            # Then get all page data with elements and actions
+            result = session.run("""
                 MATCH (p:Page)
-                WHERE p.page_id IN $page_ids
+                WHERE p.page_id IN $page_ids AND p.crawl_id = $crawl_id
                 OPTIONAL MATCH (p)-[:HAS_ELEMENT]->(e:Element)
                 OPTIONAL MATCH (e)-[:CAN_PERFORM]->(a:Action)
                 RETURN
-                    c.base_url as base_url,
-                    c.domain as domain,
-                    collect(DISTINCT {
-                        url: p.url,
-                        title: p.title,
-                        screenshot_path: p.screenshot_path,
-                        elements: collect(DISTINCT {
-                            selector: e.selector,
-                            selector_strategy: e.selector_strategy,
-                            element_type: e.element_type,
-                            text: e.text,
-                            attributes: e.attributes,
-                            actions: collect(DISTINCT {
-                                action_type: a.action_type,
-                                target_url: a.target_url,
-                                value: a.value
-                            })
-                        })
-                    }) as pages
+                    p.page_id as page_id,
+                    p.url as url,
+                    p.title as title,
+                    p.screenshot_path as screenshot_path,
+                    e.element_id as element_id,
+                    e.selector as selector,
+                    e.selector_strategy as selector_strategy,
+                    e.element_type as element_type,
+                    e.text as text,
+                    e.attributes as attributes,
+                    a.action_type as action_type,
+                    a.target_url as target_url,
+                    a.value as value
+                ORDER BY p.page_id, e.element_id, a.action_id
             """, crawl_id=crawl_id, page_ids=page_ids)
 
-            record = result.single()
-            if not record:
-                raise ValueError(f"No data found for crawl {crawl_id}")
+            # Group results by page and element
+            pages_dict = {}
+            for record in result:
+                page_id = record["page_id"]
+
+                # Initialize page if not seen
+                if page_id not in pages_dict:
+                    pages_dict[page_id] = {
+                        "url": record["url"],
+                        "title": record["title"],
+                        "screenshot_path": record["screenshot_path"],
+                        "elements": {}
+                    }
+
+                # Add element if present
+                element_id = record["element_id"]
+                if element_id:
+                    if element_id not in pages_dict[page_id]["elements"]:
+                        pages_dict[page_id]["elements"][element_id] = {
+                            "selector": record["selector"],
+                            "selector_strategy": record["selector_strategy"],
+                            "element_type": record["element_type"],
+                            "text": record["text"],
+                            "attributes": record["attributes"],
+                            "actions": []
+                        }
+
+                    # Add action if present
+                    if record["action_type"]:
+                        pages_dict[page_id]["elements"][element_id]["actions"].append({
+                            "action_type": record["action_type"],
+                            "target_url": record["target_url"],
+                            "value": record["value"]
+                        })
+
+            if not pages_dict:
+                raise ValueError(f"No pages found for provided page IDs")
 
             # Convert to AppMap structure
             pages = []
-            for page_data in record["pages"]:
+            for page_id, page_data in pages_dict.items():
                 elements = []
-                for elem in page_data["elements"]:
-                    if elem["selector"]:  # Skip null elements
-                        actions = []
-                        for action in elem["actions"]:
-                            if action["action_type"]:  # Skip null actions
-                                actions.append(PageAction(
-                                    action_type=ActionType(action["action_type"]),
-                                    element=PageElement(
-                                        selector=elem["selector"],
-                                        selector_strategy=SelectorStrategy(elem["selector_strategy"]),
-                                        element_type=elem["element_type"],
-                                        text=elem["text"],
-                                        attributes=json.loads(elem["attributes"]) if elem["attributes"] else {}
-                                    ),
-                                    description=f"{action['action_type']} on {elem['element_type']}"
-                                ))
-                        elements.append(PageElement(
-                            selector=elem["selector"],
-                            selector_strategy=SelectorStrategy(elem["selector_strategy"]),
-                            element_type=elem["element_type"],
-                            text=elem["text"],
-                            attributes=json.loads(elem["attributes"]) if elem["attributes"] else {}
-                        ))
-
-                # Create actions from elements
                 actions = []
-                for elem in page_data["elements"]:
-                    if elem["selector"]:  # Skip null elements
-                        for action in elem["actions"]:
-                            if action["action_type"]:  # Skip null actions
-                                actions.append(PageAction(
-                                    action_type=ActionType(action["action_type"]),
-                                    element=PageElement(
-                                        selector=elem["selector"],
-                                        selector_strategy=SelectorStrategy(elem["selector_strategy"]),
-                                        element_type=elem["element_type"],
-                                        text=elem["text"],
-                                        attributes=json.loads(elem["attributes"]) if elem["attributes"] else {}
-                                    ),
-                                    description=f"{action['action_type']} on {elem['element_type']}"
-                                ))
+
+                # Process elements
+                for element_id, elem in page_data["elements"].items():
+                    elements.append(PageElement(
+                        selector=elem["selector"],
+                        selector_strategy=SelectorStrategy(elem["selector_strategy"].lower()),
+                        element_type=elem["element_type"],
+                        text=elem["text"],
+                        attributes=json.loads(elem["attributes"]) if elem["attributes"] else {}
+                    ))
+
+                    # Create PageAction for each action
+                    for action in elem["actions"]:
+                        actions.append(PageAction(
+                            action_type=ActionType(action["action_type"].lower()),
+                            element=PageElement(
+                                selector=elem["selector"],
+                                selector_strategy=SelectorStrategy(elem["selector_strategy"].lower()),
+                                element_type=elem["element_type"],
+                                text=elem["text"],
+                                attributes=json.loads(elem["attributes"]) if elem["attributes"] else {}
+                            ),
+                            description=f"{action['action_type']} on {elem['element_type']}"
+                        ))
 
                 pages.append(PageInfo(
                     url=page_data["url"],
@@ -382,7 +404,7 @@ class GraphDB:
                 ))
 
             return AppMap(
-                base_url=record["base_url"],
+                base_url=crawl_record["base_url"],
                 pages=pages,
                 crawl_timestamp=get_timestamp(),
                 total_pages=len(pages)

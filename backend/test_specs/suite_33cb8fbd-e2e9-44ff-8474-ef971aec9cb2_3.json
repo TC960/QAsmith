@@ -1,0 +1,77 @@
+{
+  "suite_id": "suite_33cb8fbd-e2e9-44ff-8474-ef971aec9cb2_3",
+  "crawl_id": "33cb8fbd-e2e9-44ff-8474-ef971aec9cb2",
+  "test_count": 3,
+  "tests": [
+    {
+      "name": "Example Domain Page Loads Successfully",
+      "description": "Verifies that the example.com page loads and displays correctly",
+      "page_url": "https://example.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://example.com/"
+        },
+        {
+          "action": "expect",
+          "selector": "h1",
+          "assertion": "toHaveText",
+          "value": "Example Domain"
+        },
+        {
+          "action": "expect",
+          "selector": "p",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "More Information Link Works",
+      "description": "Verifies that the 'More information' link exists and points to the correct URL",
+      "page_url": "https://example.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://example.com/"
+        },
+        {
+          "action": "expect",
+          "selector": "a",
+          "assertion": "toHaveAttribute",
+          "attribute": "href",
+          "value": "https://www.iana.org/domains/reserved"
+        },
+        {
+          "action": "expect",
+          "selector": "a",
+          "assertion": "toHaveText",
+          "value": "More information..."
+        }
+      ]
+    },
+    {
+      "name": "Page Accessibility",
+      "description": "Verifies basic accessibility features of the page",
+      "page_url": "https://example.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://example.com/"
+        },
+        {
+          "action": "expect",
+          "selector": "html",
+          "assertion": "toHaveAttribute",
+          "attribute": "lang",
+          "value": "en"
+        },
+        {
+          "action": "expect",
+          "selector": "title",
+          "assertion": "toHaveText",
+          "value": "Example Domain"
+        }
+      ]
+    }
+  ]
+}

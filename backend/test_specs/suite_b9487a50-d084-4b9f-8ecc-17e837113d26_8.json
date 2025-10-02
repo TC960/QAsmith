@@ -1,0 +1,177 @@
+{
+  "suite_id": "suite_b9487a50-d084-4b9f-8ecc-17e837113d26_8",
+  "crawl_id": "b9487a50-d084-4b9f-8ecc-17e837113d26",
+  "test_count": 8,
+  "tests": [
+    {
+      "name": "CVS Homepage Navigation Test",
+      "description": "Verifies main navigation links are working and accessible",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/"
+        },
+        {
+          "action": "expect",
+          "selector": "title",
+          "assertion": "toContainText",
+          "value": "CVS - Online Drugstore"
+        }
+      ]
+    },
+    {
+      "name": "Manage Prescriptions Link Test",
+      "description": "Verifies the Manage Prescriptions link functionality",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Manage Prescriptions')"
+        },
+        {
+          "action": "expect",
+          "selector": "h1",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Deals of the Week Navigation Test",
+      "description": "Validates navigation to Deals section",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Deals of the Week')"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Deals",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "MinuteClinic Services Link Test",
+      "description": "Checks MinuteClinic Services link and page load",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('MinuteClinic Services')"
+        },
+        {
+          "action": "expect",
+          "selector": "text=MinuteClinic",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Savings & Rewards Link Test",
+      "description": "Validates navigation to Savings & Rewards section",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Savings & Rewards')"
+        },
+        {
+          "action": "expect",
+          "selector": "text=ExtraCare",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Photo Services Link Test",
+      "description": "Verifies Photo services link functionality",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Photo')"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Photo",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Homepage Load Performance Test",
+      "description": "Verifies homepage loads within acceptable time",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/"
+        },
+        {
+          "action": "expect",
+          "selector": "body",
+          "assertion": "toBeVisible",
+          "timeout": 5000
+        }
+      ]
+    },
+    {
+      "name": "Homepage Links Accessibility Test",
+      "description": "Verifies all main navigation links are accessible",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/"
+        },
+        {
+          "action": "expect",
+          "selector": "a:text('Manage Prescriptions')",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "a:text('Deals of the Week')",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "a:text('MinuteClinic Services')",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "a:text('Savings & Rewards')",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "a:text('Photo')",
+          "assertion": "toBeVisible"
+        }
+      ]
+    }
+  ]
+}

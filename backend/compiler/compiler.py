@@ -63,28 +63,55 @@ class TestCompiler:
 
     def _compile_step(self, step: TestStep, step_number: int) -> str:
         """Compile a single test step."""
-        # Get selector code
-        selector_code = self._generate_selector(step.selector, step.selector_strategy)
-
         # Get action template
         action_template = TEST_STEP_TEMPLATES.get(step.action)
         if not action_template:
             return f"    // Unsupported action: {step.action}"
 
-        # Format action code
-        action_code = action_template.format(
-            selector=selector_code,
-            value=step.value or "",
-            description=step.description,
-        )
+        # Handle different action types
+        if step.action == ActionType.GOTO:
+            action_code = action_template.format(url=step.url or step.value or "")
+        elif step.action == ActionType.EXPECT:
+            # Format selector - escape single quotes
+            escaped_selector = step.selector.replace("'", "\\'") if step.selector else ""
+            selector_code = f"page.locator('{escaped_selector}')" if step.selector else "page"
+            # Format assertion value
+            escaped_value = step.value.replace("'", "\\'") if step.value else ""
+            value_str = f"'{escaped_value}'" if step.value else ""
+            if not value_str and step.assertion in ['toBeVisible', 'toBeHidden', 'toBeEnabled', 'toBeDisabled']:
+                value_str = ""  # No value needed for these assertions
+            action_code = action_template.format(
+                selector=selector_code,
+                assertion=step.assertion or "toBeVisible",
+                value=value_str
+            )
+        else:
+            # Regular actions with selectors - escape quotes
+            if step.selector:
+                escaped_selector = step.selector.replace("'", "\\'")
+                if step.selector_strategy:
+                    selector_code = self._generate_selector(escaped_selector, step.selector_strategy)
+                else:
+                    selector_code = f"page.locator('{escaped_selector}')"
+            else:
+                selector_code = "page"
 
-        return f"    // Step {step_number}: {step.description}\n{action_code}"
+            action_code = action_template.format(
+                selector=selector_code,
+                value=step.value or "",
+                description=step.description,
+            )
+
+        return f"    // Step {step_number}: {step.description or step.action}\n{action_code}"
 
     def _generate_selector(self, selector: str, strategy: SelectorStrategy) -> str:
         """Generate Playwright selector code based on strategy."""
+        if not strategy:
+            return f"page.locator('{selector}')"  # Default to CSS selector
+
         template = SELECTOR_TEMPLATES.get(strategy)
         if not template:
-            return f"'{selector}'"  # Default to CSS selector
+            return f"page.locator('{selector}')"  # Default to CSS selector
 
         return template.format(selector=selector)
 

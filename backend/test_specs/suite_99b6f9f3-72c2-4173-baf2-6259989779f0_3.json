@@ -1,0 +1,105 @@
+{
+  "suite_id": "suite_99b6f9f3-72c2-4173-baf2-6259989779f0_3",
+  "crawl_id": "99b6f9f3-72c2-4173-baf2-6259989779f0",
+  "test_count": 3,
+  "tests": [
+    {
+      "name": "Navigation Links Test",
+      "description": "Verifies all navigation links are working and redirect to correct pages",
+      "page_url": "https://rraval.vercel.app/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://rraval.vercel.app/"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Rohan RavalPersonal Portfolio",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "text=Work"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Work",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "text=Home"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Home",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "text=Contact"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Contact",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Homepage Load Test",
+      "description": "Verifies the homepage loads correctly with all essential elements",
+      "page_url": "https://rraval.vercel.app/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://rraval.vercel.app/"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Rohan RavalPersonal Portfolio",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Work",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Home",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Contact",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Logo Navigation Test",
+      "description": "Verifies the logo/name link returns to homepage",
+      "page_url": "https://rraval.vercel.app/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://rraval.vercel.app/"
+        },
+        {
+          "action": "click",
+          "selector": "text=Work"
+        },
+        {
+          "action": "click",
+          "selector": "text=Rohan RavalPersonal Portfolio"
+        },
+        {
+          "action": "expect",
+          "selector": "text=Home",
+          "assertion": "toBeVisible"
+        }
+      ]
+    }
+  ]
+}

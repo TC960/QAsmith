@@ -1,0 +1,106 @@
+{
+  "suite_id": "suite_b9487a50-d084-4b9f-8ecc-17e837113d26_4",
+  "crawl_id": "b9487a50-d084-4b9f-8ecc-17e837113d26",
+  "test_count": 4,
+  "tests": [
+    {
+      "name": "CVS Photo Homepage Navigation Test",
+      "description": "Tests basic navigation and visibility of main elements on CVS Photo page",
+      "page_url": "https://www.cvs.com/account/sso/v1/photo",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/account/sso/v1/photo"
+        },
+        {
+          "action": "expect",
+          "selector": "a[href*='#main-content']",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "a[href*='/photo/phot']",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "a[href*='/minuteclin']",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Store Locator Link Test",
+      "description": "Verifies the store locator link functionality",
+      "page_url": "https://www.cvs.com/account/sso/v1/photo",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/account/sso/v1/photo"
+        },
+        {
+          "action": "expect",
+          "selector": "a[href*='store-locator']",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "a[href*='store-locator']"
+        },
+        {
+          "action": "expect",
+          "selector": "body",
+          "assertion": "toContainText",
+          "value": "Store Locator"
+        }
+      ]
+    },
+    {
+      "name": "Skip to Main Content Test",
+      "description": "Tests the skip to main content accessibility feature",
+      "page_url": "https://www.cvs.com/account/sso/v1/photo",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/account/sso/v1/photo"
+        },
+        {
+          "action": "expect",
+          "selector": "a[href*='#main-content']",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "click",
+          "selector": "a[href*='#main-content']"
+        },
+        {
+          "action": "expect",
+          "selector": "#main-content",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Promotional Banner Test",
+      "description": "Verifies the visibility and content of promotional banner",
+      "page_url": "https://www.cvs.com/account/sso/v1/photo",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/account/sso/v1/photo"
+        },
+        {
+          "action": "expect",
+          "selector": "a:has-text('Fall for This Amazing Deal')",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "a:has-text('Fall for This Amazing Deal')",
+          "assertion": "toContainText",
+          "value": "$1"
+        }
+      ]
+    }
+  ]
+}

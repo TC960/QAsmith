@@ -36,6 +36,8 @@ SELECTOR_TEMPLATES = {
 TEST_STEP_TEMPLATES = {
     ActionType.NAVIGATE: "    await page.goto('{value}');",
 
+    ActionType.GOTO: "    await page.goto('{url}');",
+
     ActionType.CLICK: "    await {selector}.click();",
 
     ActionType.FILL: "    await {selector}.fill('{value}');",
@@ -49,6 +51,8 @@ TEST_STEP_TEMPLATES = {
     ActionType.CHECK: "    await {selector}.check();",
 
     ActionType.UNCHECK: "    await {selector}.uncheck();",
+
+    ActionType.EXPECT: "    await expect({selector}).{assertion}({value});",
 }
 
 

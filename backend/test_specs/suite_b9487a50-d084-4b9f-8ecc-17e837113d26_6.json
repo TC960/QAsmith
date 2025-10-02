@@ -1,0 +1,143 @@
+{
+  "suite_id": "suite_b9487a50-d084-4b9f-8ecc-17e837113d26_6",
+  "crawl_id": "b9487a50-d084-4b9f-8ecc-17e837113d26",
+  "test_count": 6,
+  "tests": [
+    {
+      "name": "Verify homepage main navigation links",
+      "description": "Tests that all main navigation links are visible and clickable",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/"
+        },
+        {
+          "action": "expect",
+          "selector": "a:text('Manage Prescriptions')",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "a:text('Deals of the Week')",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "a:text('MinuteClinic Services')",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "a:text('Savings & Rewards')",
+          "assertion": "toBeVisible"
+        },
+        {
+          "action": "expect",
+          "selector": "a:text('Photo')",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Test Manage Prescriptions navigation",
+      "description": "Verifies navigation to prescription management page",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Manage Prescriptions')"
+        },
+        {
+          "action": "expect",
+          "selector": ".prescription-management",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Test Deals navigation",
+      "description": "Verifies navigation to deals page",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Deals of the Week')"
+        },
+        {
+          "action": "expect",
+          "selector": ".deals-section",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Test MinuteClinic navigation",
+      "description": "Verifies navigation to MinuteClinic services page",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('MinuteClinic Services')"
+        },
+        {
+          "action": "expect",
+          "selector": ".minute-clinic-content",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Test Savings & Rewards navigation",
+      "description": "Verifies navigation to rewards page",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Savings & Rewards')"
+        },
+        {
+          "action": "expect",
+          "selector": ".rewards-section",
+          "assertion": "toBeVisible"
+        }
+      ]
+    },
+    {
+      "name": "Test Photo services navigation",
+      "description": "Verifies navigation to photo services page",
+      "page_url": "https://www.cvs.com/",
+      "steps": [
+        {
+          "action": "goto",
+          "url": "https://www.cvs.com/"
+        },
+        {
+          "action": "click",
+          "selector": "a:text('Photo')"
+        },
+        {
+          "action": "expect",
+          "selector": ".photo-services",
+          "assertion": "toBeVisible"
+        }
+      ]
+    }
+  ]
+}
